@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ssm.cm.nb.dao.NoticeBoardDao">
+	<resultMap type = "ssm.cm.nb.vo.NoticeBoardVO" id="NBoardVO">
+		<result property="nbNo" 			column="NB_NO" />
+		<result property="ttNo" 			column="TT_NO" />
+		<result property="nbTitle" 			column="NB_TITLE" />
+		<result property="nbContents" 		column="NB_CONTENTS" />
+		<result property="nbFile" 			column="NB_FILE" />
+		<result property="nbInsertdate" 	column="NB_INSERTDATE" />
+		<result property="nbUpdatedate" 	column="NB_UPDATEDATE" />
+		<result property="nbDeleteyn" 		column="NB_DELETEYN" />	
+	</resultMap>
+	
+	<select id ="nblist" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="NBoardVO">
+			SELECT NB_NO, TT_NO, NB_TITLE, NB_CONTENTS, NB_FILE, NB_INSERTDATE, NB_UPDATEDATE, NB_DELETEYN
+			FROM NOTICE_BOARD
+			WHERE NB_DELETEYN = 'Y'
+			ORDER BY 1
+	</select>
+	
+	<select id="nbChaebun" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="NBoardVO">
+		
+		SELECT
+		TO_CHAR(NVL(MAX(SUBSTR(NB_NO,-4)),0)+1) NB_NO
+		FROM NOTICE_BOARD
+		
+	</select>
+	
+	<insert id="nbInsert" parameterType="ssm.cm.nb.vo.NoticeBoardVO">
+	
+		INSERT INTO NOTICE_BOARD(NB_NO,TT_NO,NB_TITLE,NB_CONTENTS,NB_FILE,NB_INSERTDATE,NB_DELETEYN)
+		VALUES(#{nbNo},#{ttNo},#{nbTitle},#{nbContents},#{nbFile},SYSDATE,'Y')
+	
+	</insert>
+	
+	<select id="nbDetail" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="NBoardVO">
+		SELECT
+			NB_NO, TT_NO, NB_TITLE, NB_CONTENTS, NB_INSERTDATE, NB_UPDATEDATE,NB_DELETEYN
+		FROM NOTICE_BOARD
+		WHERE NB_NO =#{nbNo}
+		AND NB_DELETEYN='Y'
+	</select>
+	
+	<select id="pwdConfirm" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultType="int">
+		SELECT NVL((SELECT 1 FROM NOTICE_BOARD WHERE NB_NO = #{nbNo}),0)as result
+		FROM dual
+	</select>
+	
+</mapper>
