@@ -50,4 +50,18 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		result=noticeboarddao.pwdConfirm(nvo);
 		return result;
 	}
+
+	@Override
+	public int nbUpdate(NoticeBoardVO nvo) {
+		int result = 0;
+		result=noticeboarddao.nbUpdate(nvo);
+		return result;
+	}
+
+	@Override
+	public int nbDelete(NoticeBoardVO nvo) {
+		int result = 0;
+		result=noticeboarddao.nbDelete(nvo);
+		return result;
+	}
 }

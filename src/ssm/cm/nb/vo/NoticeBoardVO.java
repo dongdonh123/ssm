@@ -1,6 +1,8 @@
 package ssm.cm.nb.vo;
 
-public class NoticeBoardVO {
+import ssm.cm.common.vo.CommonVO;
+
+public class NoticeBoardVO extends CommonVO{
 
 	private String nbNo;
 	private String ttNo;

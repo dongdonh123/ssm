@@ -2,7 +2,11 @@
     pageEncoding="EUC-KR"%>
 <%@ page import="ssm.cm.nb.vo.NoticeBoardVO" %>    
 <%@ page import="java.util.List" %>    
-    
+   
+<%
+	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
+	NoticeBoardVO data =(NoticeBoardVO)request.getAttribute("data");
+%>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,9 +15,43 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		
+		/*검색 후 검색 대상과 검색 단어 출력*/
+		if("<%=data.getKeyword() %>" != ""){
+			$("#keyword").val("<%=data.getKeyword() %>");
+			$("#search").val("<%=data.getSearch() %>");
+		}
+		
+		/*검색 대상이 변경될 때마다 처리 이벤트*/
+		$("#search").change(function(){
+			if($("#search").val()=="all"){
+				$("#keyword").val("전체 데이터 조회합니다.");
+			}else if($("#search").val()!="all"){
+				$("#keyword").val("");
+				$("#keyword").focus();
+			}
+		});
+		
+		/*검색 버튼 클릭 시 처리 이벤트*/
+		$("#searchData").click(function(){
+			
+			goPage(1);
+		});
+		
 		$("#nbinsertbutton").click(function(){
 			$(location).attr('href',"/noticeboard/nbwirteform.ssm");
 		});
+		
+		function goPage(){
+			if($("#search").val()=="all"){
+				$("#keyword").val("");
+			}
+			$("#f_search").attr({
+				"method":"get",
+				"action":"/noticeboard/nblist.ssm"
+			});
+			$("#f_search").submit();
+		}
 		
 		/*제목 클릭시 상세 페이지 이동을 위한 처리 이벤트*/
 		$(".nbDetail").click(function(){
@@ -26,11 +64,37 @@
 	</script>
 </head>
 <body>
-<%
-	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
-%>
 	<div id="boardContainer">
 		<h1>공지사항 게시판</h1>
+		
+		<%-- ======================검색기능 시작============================ --%>
+		
+		<div id="boardSearch">
+			<form id="f_search" name="f_search">
+				<table summary="검색">
+					<colgroup>
+						<col width="70%"></col>
+						<col width="30%"></col>
+					</colgroup>
+					<tr>
+						<td>
+						<label>검색조건</label>
+						<select id="search" name="search">
+							<option value="all" selected>전체</option>
+							<option value="nbTitle">제목</option>
+							<option value="nbContents">내용</option>
+							<option value="ttNo">작성자</option>
+						</select>
+						
+						<input type="text" name="keyword" id="keyword" value="검색어를입력하세요" />
+						<input type="button" value="검색" id="searchData" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<%-- =======================검색기능 끝============================ --%>
 		
 		<div id="boardlist">
 			<table border ="1"summary="게시판 리스트">

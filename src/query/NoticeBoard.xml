@@ -14,14 +14,45 @@
 		<result property="nbFile" 			column="NB_FILE" />
 		<result property="nbInsertdate" 	column="NB_INSERTDATE" />
 		<result property="nbUpdatedate" 	column="NB_UPDATEDATE" />
-		<result property="nbDeleteyn" 		column="NB_DELETEYN" />	
+		<result property="nbDeleteyn" 		column="NB_DELETEYN" />
+		
 	</resultMap>
 	
+	<sql id="nbCommon" >
+		SELECT 
+				NB_NO, 
+				TT_NO, 
+				NB_TITLE, 
+				NB_INSERTDATE
+		FROM NOTICE_BOARD 
+		WHERE NB_DELETEYN ='Y'
+		<trim prefix="AND" >
+			<if test="'search'=='nbTitle' ">
+				<![CDATA[NB_TITLE LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='nbContents'">
+				<![CDATA[NB_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='ttNo'">
+				<![CDATA[TT_NO LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</trim>
+	</sql>
+
 	<select id ="nblist" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="NBoardVO">
-			SELECT NB_NO, TT_NO, NB_TITLE, NB_CONTENTS, NB_FILE, NB_INSERTDATE, NB_UPDATEDATE, NB_DELETEYN
-			FROM NOTICE_BOARD
-			WHERE NB_DELETEYN = 'Y'
-			ORDER BY 1
+			SELECT 
+					NB_NO, 
+					TT_NO, 
+					NB_TITLE, 
+					NB_INSERTDATE
+					
+			FROM 
+			(	SELECT 
+						list.*,
+						ROWNUM AS RNUM
+				FROM(<include refid="nbCommon"></include>
+					)list
+			)	
 	</select>
 	
 	<select id="nbChaebun" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="NBoardVO">
@@ -51,5 +82,25 @@
 		SELECT NVL((SELECT 1 FROM NOTICE_BOARD WHERE NB_NO = #{nbNo}),0)as result
 		FROM dual
 	</select>
+	
+	<update id="nbUpdate" parameterType="ssm.cm.nb.vo.NoticeBoardVO">
+	
+		UPDATE NOTICE_BOARD SET 
+								 NB_TITLE = #{nbTitle}
+								,NB_CONTENTS = #{nbContents}
+								,NB_FILE = #{nbFile}
+								,NB_UPDATEDATE = SYSDATE
+		WHERE 					 NB_NO = #{nbNo}						
+		AND  					 NB_DELETEYN = 'Y'
+	</update>
+	
+	<update id="nbDelete" parameterType="ssm.cm.nb.vo.NoticeBoardVO">
+	
+		UPDATE NOTICE_BOARD SET 
+								 NB_UPDATEDATE = SYSDATE
+								,NB_DELETEYN = 'N' 
+		WHERE 					 NB_NO = #{nbNo}						
+		AND  					 NB_DELETEYN = 'Y'
+	</update>
 	
 </mapper>

@@ -11,5 +11,7 @@ public interface NoticeBoardDao {
 	public int nbInsert(NoticeBoardVO nvo);
 	public NoticeBoardVO nbDetail(NoticeBoardVO nvo);
 	public int pwdConfirm(NoticeBoardVO nvo);
+	public int nbUpdate(NoticeBoardVO nvo);
+	public int nbDelete(NoticeBoardVO nvo);
 	
 }

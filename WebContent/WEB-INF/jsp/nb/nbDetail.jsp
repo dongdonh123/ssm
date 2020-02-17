@@ -63,9 +63,9 @@
 						}else if(resultData ==1){ //일치할 경우
 							$("#msg").text("");
 							if(butChk==1){
-								goUrl="/noticeboard/updateForm.do";
+								goUrl="/noticeboard/nbupdateForm.ssm";
 							}else if(butChk==2){
-								goUrl="/noticeboard/boardDelete.do";
+								goUrl="/noticeboard/nbDelete.ssm";
 							}
 							$("#f_data").attr("action",goUrl);
 							$("#f_data").submit();
@@ -83,7 +83,7 @@
 	%>
 	<h3>글상세</h3>
 	<form name="f_data" id="f_data" method="POST">
-		<input type="hidden" name="nbno" value="<%=nvo.getNbNo() %>" />
+		<input type="hidden" id="nbNo" name="nbNo" value="<%=nvo.getNbNo() %>" />
 		<input type="hidden" name="nbfile" value="<%=nvo.getNbFile() %>" />
 	</form>
 	
