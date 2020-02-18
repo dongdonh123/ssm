@@ -64,4 +64,11 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		result=noticeboarddao.nbDelete(nvo);
 		return result;
 	}
+
+	@Override
+	public int nbListCnt() {
+		int result = 0;
+		result=noticeboarddao.nbListCnt();
+		return result;
+	}
 }

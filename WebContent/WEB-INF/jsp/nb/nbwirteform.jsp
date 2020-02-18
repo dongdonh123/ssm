@@ -22,8 +22,8 @@
 				<td colspan="2">공지사항게시판 글입력하기<td>
 			</tr>
 			<tr>
-				<td>작성자</td>
-				<td><input type="text" id="ttno" name="ttno" value=""></td>
+				<td>작성자</td><!--  ttno는 세션에서 히든으로 넣기 -->
+				<td><input type="text" id="ttNo" name="ttNo" value="">ttno는 세션에서 히든으로 넣기(T8200003)</td>
 			</tr>
 			<tr>
 				<td>글제목</td>

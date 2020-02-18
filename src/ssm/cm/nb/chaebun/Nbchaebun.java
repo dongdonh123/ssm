@@ -2,21 +2,21 @@ package ssm.cm.nb.chaebun;
 
 public class Nbchaebun {
 
-	private static final String LESSON_STR = "K";
+	private static final String NB_STR = "NB";
 	
-	public static String nbchaebun(String lno){
+	public static String nbchaebun(String no){
 		System.out.println("채번클래스왔음");
-		System.out.println("내가 가져온 lno >> : " + lno);
+		System.out.println("내가 가져온 no >> : " + no);
 		
-		for(int i=lno.length();i<4;i++){//1 ,2,3 3번 
-			lno = "0" + lno;
+		for(int i=no.length();i<4;i++){//1 ,2,3 3번 
+			no = "0" + no;
 		}
 		
-		lno = LESSON_STR + lno;
+		no = NB_STR + no;
 		
-		System.out.println("완성된 lno >>> : " + lno);
+		System.out.println("완성된 no >>> : " + no);
 		
-		return lno;
+		return no;
 	}
 	
 }// end of ChaebunLesson class

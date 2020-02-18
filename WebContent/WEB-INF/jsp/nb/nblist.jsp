@@ -6,6 +6,7 @@
 <%
 	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
 	NoticeBoardVO data =(NoticeBoardVO)request.getAttribute("data");
+	int count =(int)request.getAttribute("count");
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -126,9 +127,10 @@
 					}else{
 						for (int i=0; i<nblist.size(); i++){
 							NoticeBoardVO nvo = nblist.get(i);
+							int cc = i+1;
 					%>	
 						<tr data-num=<%=nvo.getNbNo() %>>
-							<td><%=nvo.getNbNo() %></td>
+							<td><%=cc%> </td>
 							<td><span class="nbDetail"><%=nvo.getNbTitle() %></span></td>
 							<td><%=nvo.getNbInsertdate() %></td>
 							<td><%=nvo.getTtNo() %></td>

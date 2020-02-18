@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import ssm.cm.common.util.Util;
 import ssm.cm.nb.chaebun.Nbchaebun;
 import ssm.cm.nb.service.NoticeBoardService;
 import ssm.cm.nb.vo.NoticeBoardVO;
+import ssm.cm.nb.vo.TMEMBERVO;
 
 @Controller
 @RequestMapping(value="/noticeboard")
@@ -36,10 +38,23 @@ public class NoticeBoardController {
 		System.out.println("nvo.getSearch()>>>: "+ nvo.getSearch());
 		System.out.println("nvo.getKeyword()>>>: "+ nvo.getKeyword());
 		
-		List nblist=noticeboardservice.nblist(nvo);
+		//전체 레코드수
+		int count = noticeboardservice.nbListCnt();
 		
+		List nblist=noticeboardservice.nblist(nvo); 
+		
+		//for(int i = 0; i<nblist.size(); i++){
+			//NoticeBoardVO nvo1 =(NoticeBoardVO) nblist.get(i);
+			//System.out.println("nvo1.getNbNo()>>>: "+nvo1.getNbNo());
+		//}
+		
+		for(int i = 0; i<nblist.size(); i++){
+			TMEMBERVO nvo2 =(TMEMBERVO) nblist.get(i);
+			System.out.println("nvo2.getTtName()>>>: "+nvo2.getTTNAME());
+		}
 		model.addAttribute("nblist",nblist);
 		model.addAttribute("data",nvo);
+		model.addAttribute("count",count);
 		return "nb/nblist";
 	}
 	

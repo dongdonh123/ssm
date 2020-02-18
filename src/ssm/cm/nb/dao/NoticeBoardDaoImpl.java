@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import ssm.cm.nb.vo.NoticeBoardVO;
 
-@Repository("noticeboarddao")
 public class NoticeBoardDaoImpl implements NoticeBoardDao {
 
 	@Autowired
@@ -54,6 +53,12 @@ public class NoticeBoardDaoImpl implements NoticeBoardDao {
 	public int nbDelete(NoticeBoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.update("nbDelete");
+	}
+
+	@Override
+	public int nbListCnt() {
+		// TODO Auto-generated method stub
+		return session.selectOne("nbListCnt");
 	}
 
 }
