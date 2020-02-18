@@ -12,14 +12,7 @@ public class NoticeBoardVO extends CommonVO{
 	private String nbInsertdate;
 	private String nbUpdatedate;
 	private String nbDeleteyn;
-	private TMEMBERVO tmembervo;
 	
-	public TMEMBERVO getTmembervo() {
-		return tmembervo;
-	}
-	public void setTmembervo(TMEMBERVO tmembervo) {
-		this.tmembervo = tmembervo;
-	}	
 	public String getNbNo() {
 		return nbNo;
 	}

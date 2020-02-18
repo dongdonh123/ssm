@@ -42,7 +42,7 @@ public class NoticeBoardController {
 		int count = noticeboardservice.nbListCnt();
 		
 		List nblist=noticeboardservice.nblist(nvo); 
-		
+		System.out.println("nblist>>>: "+ nblist);
 		//for(int i = 0; i<nblist.size(); i++){
 			//NoticeBoardVO nvo1 =(NoticeBoardVO) nblist.get(i);
 			//System.out.println("nvo1.getNbNo()>>>: "+nvo1.getNbNo());
