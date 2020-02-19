@@ -6,62 +6,64 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ssm.cm.dao.FamilyLetterDao;
 import ssm.cm.dao.NoticeBoardDao;
+import ssm.cm.vo.FamilyLetterVO;
 import ssm.cm.vo.NoticeBoardVO;
 
 @Service
 @Transactional
-public class FamilyLetterServiceImpl implements NoticeBoardService {
+public class FamilyLetterServiceImpl implements FamilyLetterService {
 
 	@Autowired
-	private NoticeBoardDao noticeboarddao;
+	private FamilyLetterDao familyletterdao;
 	
 	@Override
-	public List<NoticeBoardVO> nblist(NoticeBoardVO nvo) {
-		List<NoticeBoardVO> nblist = null;
-		nblist =noticeboarddao.nblist(nvo);
-		return nblist;
+	public List<FamilyLetterVO> fllist(FamilyLetterVO fvo) {
+		List<FamilyLetterVO> fllist = null;
+		fllist =familyletterdao.fllist(fvo);
+		return fllist;
 	}
 
 	@Override
-	public NoticeBoardVO nbChaebun(NoticeBoardVO nvo) {
-		NoticeBoardVO nvo_ = null;
-		nvo_ =noticeboarddao.nbChaebun(nvo);
-		return nvo_;
+	public FamilyLetterVO flChaebun(FamilyLetterVO fvo) {
+		FamilyLetterVO fvo_ = null;
+		fvo_ =familyletterdao.flChaebun(fvo);
+		return fvo_;
 	}
 
 	@Override
-	public int nbInsert(NoticeBoardVO nvo) {
+	public int flInsert(FamilyLetterVO fvo) {
 		int result = 0;
-		result=noticeboarddao.nbInsert(nvo);
+		result=familyletterdao.flInsert(fvo);
 		return result;
 	}
 
 	@Override
-	public NoticeBoardVO nbDetail(NoticeBoardVO nvo) {
-		NoticeBoardVO nvo_ = null;
-		nvo_ =noticeboarddao.nbDetail(nvo);
-		return nvo_;
+	public FamilyLetterVO flDetail(FamilyLetterVO fvo) {
+		FamilyLetterVO fvo_ = null;
+		fvo_ =familyletterdao.flDetail(fvo);
+		return fvo_;
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(FamilyLetterVO fvo) {
 		int result = 0;
-		result=noticeboarddao.pwdConfirm(nvo);
+		result=familyletterdao.pwdConfirm(fvo);
 		return result;
 	}
 
 	@Override
-	public int nbUpdate(NoticeBoardVO nvo) {
+	public int flUpdate(FamilyLetterVO fvo) {
 		int result = 0;
-		result=noticeboarddao.nbUpdate(nvo);
+		result=familyletterdao.flUpdate(fvo);
 		return result;
 	}
 
 	@Override
-	public int nbDelete(NoticeBoardVO nvo) {
+	public int flDelete(FamilyLetterVO fvo) {
 		int result = 0;
-		result=noticeboarddao.nbDelete(nvo);
+		result=familyletterdao.flDelete(fvo);
 		return result;
 	}
 

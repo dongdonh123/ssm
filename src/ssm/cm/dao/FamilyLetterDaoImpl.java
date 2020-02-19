@@ -6,53 +6,53 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ssm.cm.vo.NoticeBoardVO;
+import ssm.cm.vo.FamilyLetterVO;
 
-public class FamilyLetterDaoImpl implements NoticeBoardDao {
+public class FamilyLetterDaoImpl implements FamilyLetterDao {
 
 	@Autowired
 	private SqlSession session;
 	
 	@Override
-	public List<NoticeBoardVO> nblist(NoticeBoardVO nvo) {
+	public List<FamilyLetterVO> fllist(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
-		return session.selectList("nblist");
+		return session.selectList("fllist");
 	}
 
 	@Override
-	public NoticeBoardVO nbChaebun(NoticeBoardVO nvo) {
+	public FamilyLetterVO flChaebun(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("nbChaebun");
+		return session.selectOne("flChaebun");
 	}
 
 	@Override
-	public int nbInsert(NoticeBoardVO nvo) {
+	public int flInsert(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
-		return session.insert("nbInsert");
+		return session.insert("flInsert");
 	}
 
 	@Override
-	public NoticeBoardVO nbDetail(NoticeBoardVO nvo) {
+	public FamilyLetterVO flDetail(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("nbDetail");
+		return session.selectOne("flDetail");
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}
 
 	@Override
-	public int nbUpdate(NoticeBoardVO nvo) {
+	public int flUpdate(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
-		return session.update("nbUpdate");
+		return session.update("flUpdate");
 	}
 
 	@Override
-	public int nbDelete(NoticeBoardVO nvo) {
+	public int flDelete(FamilyLetterVO fvo) {
 		// TODO Auto-generated method stub
-		return session.update("nbDelete");
+		return session.update("flDelete");
 	}
 
 

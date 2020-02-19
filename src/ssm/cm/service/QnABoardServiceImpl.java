@@ -7,61 +7,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ssm.cm.dao.NoticeBoardDao;
+import ssm.cm.dao.QnABoardDao;
 import ssm.cm.vo.NoticeBoardVO;
+import ssm.cm.vo.QnABoardVO;
 
 @Service
 @Transactional
-public class QnABoardServiceImpl implements NoticeBoardService {
+public class QnABoardServiceImpl implements QnABoardService {
 
 	@Autowired
-	private NoticeBoardDao noticeboarddao;
+	private QnABoardDao qnaboarddao;
 	
 	@Override
-	public List<NoticeBoardVO> nblist(NoticeBoardVO nvo) {
-		List<NoticeBoardVO> nblist = null;
-		nblist =noticeboarddao.nblist(nvo);
+	public List<QnABoardVO> nblist(QnABoardVO nvo) {
+		List<QnABoardVO> nblist = null;
+		nblist =qnaboarddao.qblist(nvo);
 		return nblist;
 	}
 
 	@Override
-	public NoticeBoardVO nbChaebun(NoticeBoardVO nvo) {
-		NoticeBoardVO nvo_ = null;
-		nvo_ =noticeboarddao.nbChaebun(nvo);
+	public QnABoardVO nbChaebun(QnABoardVO nvo) {
+		QnABoardVO nvo_ = null;
+		nvo_ =qnaboarddao.qbChaebun(nvo);
 		return nvo_;
 	}
 
 	@Override
-	public int nbInsert(NoticeBoardVO nvo) {
+	public int nbInsert(QnABoardVO nvo) {
 		int result = 0;
-		result=noticeboarddao.nbInsert(nvo);
+		result=qnaboarddao.qbInsert(nvo);
 		return result;
 	}
 
 	@Override
-	public NoticeBoardVO nbDetail(NoticeBoardVO nvo) {
-		NoticeBoardVO nvo_ = null;
-		nvo_ =noticeboarddao.nbDetail(nvo);
+	public QnABoardVO nbDetail(QnABoardVO nvo) {
+		QnABoardVO nvo_ = null;
+		nvo_ =qnaboarddao.qbDetail(nvo);
 		return nvo_;
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(QnABoardVO nvo) {
 		int result = 0;
-		result=noticeboarddao.pwdConfirm(nvo);
+		result=qnaboarddao.pwdConfirm(nvo);
 		return result;
 	}
 
 	@Override
-	public int nbUpdate(NoticeBoardVO nvo) {
+	public int nbUpdate(QnABoardVO nvo) {
 		int result = 0;
-		result=noticeboarddao.nbUpdate(nvo);
+		result=qnaboarddao.qbUpdate(nvo);
 		return result;
 	}
 
 	@Override
-	public int nbDelete(NoticeBoardVO nvo) {
+	public int nbDelete(QnABoardVO nvo) {
 		int result = 0;
-		result=noticeboarddao.nbDelete(nvo);
+		result=qnaboarddao.qbDelete(nvo);
 		return result;
 	}
 

@@ -1,7 +1,7 @@
 package ssm.cm.vo;
 
 import ssm.cm.vo.CommonVO;
-import ssm.mi.vo.TmemberVO;
+import ssm.mi.vo.SmemberVO;
 
 public class SchedulNoticeVO extends CommonVO{
 
@@ -13,12 +13,12 @@ public class SchedulNoticeVO extends CommonVO{
 	private String snInsertdate;
 	private String snUpdatedate;
 	private String snDeleteyn;
-	private TmemberVO tMembervo;
+	private SmemberVO tMembervo;
 	
-	public TmemberVO gettMembervo() {
+	public SmemberVO gettMembervo() {
 		return tMembervo;
 	}
-	public void settMembervo(TmemberVO tMembervo) {
+	public void settMembervo(SmemberVO tMembervo) {
 		this.tMembervo = tMembervo;
 	}
 	

@@ -4,53 +4,52 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
-import ssm.cm.vo.NoticeBoardVO;
+import ssm.cm.vo.QnABoardVO;
 
-public class QnABoardDaoImpl implements NoticeBoardDao {
+public class QnABoardDaoImpl implements QnABoardDao {
 
 	@Autowired
 	private SqlSession session;
 	
 	@Override
-	public List<NoticeBoardVO> nblist(NoticeBoardVO nvo) {
+	public List<QnABoardVO> qblist(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.selectList("nblist");
 	}
 
 	@Override
-	public NoticeBoardVO nbChaebun(NoticeBoardVO nvo) {
+	public QnABoardVO qbChaebun(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("nbChaebun");
 	}
 
 	@Override
-	public int nbInsert(NoticeBoardVO nvo) {
+	public int qbInsert(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.insert("nbInsert");
 	}
 
 	@Override
-	public NoticeBoardVO nbDetail(NoticeBoardVO nvo) {
+	public QnABoardVO qbDetail(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("nbDetail");
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}
 
 	@Override
-	public int nbUpdate(NoticeBoardVO nvo) {
+	public int qbUpdate(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.update("nbUpdate");
 	}
 
 	@Override
-	public int nbDelete(NoticeBoardVO nvo) {
+	public int qbDelete(QnABoardVO nvo) {
 		// TODO Auto-generated method stub
 		return session.update("nbDelete");
 	}

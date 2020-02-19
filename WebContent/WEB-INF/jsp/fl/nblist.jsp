@@ -127,7 +127,7 @@
 							<td><%=cc%> </td>
 							<td><span class="nbDetail"><%=nvo.getNbTitle() %></span></td>
 							<td><%=nvo.getNbInsertdate() %></td>
-							<td><%=nvo.gettMembervo().getTtName() %></td>
+							<td><%=nvo.gettMembervo() %></td>
 						</tr>
 					<% 		
 						}

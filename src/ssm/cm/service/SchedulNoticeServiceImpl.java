@@ -7,61 +7,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ssm.cm.dao.NoticeBoardDao;
+import ssm.cm.dao.SchedulNoticeDao;
 import ssm.cm.vo.NoticeBoardVO;
+import ssm.cm.vo.SchedulNoticeVO;
 
 @Service
 @Transactional
-public class SchedulNoticeServiceImpl implements NoticeBoardService {
+public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 
 	@Autowired
-	private NoticeBoardDao noticeboarddao;
+	private SchedulNoticeDao schedulnoticedao;
 	
 	@Override
-	public List<NoticeBoardVO> nblist(NoticeBoardVO nvo) {
-		List<NoticeBoardVO> nblist = null;
-		nblist =noticeboarddao.nblist(nvo);
+	public List<SchedulNoticeVO> snlist(SchedulNoticeVO nvo) {
+		List<SchedulNoticeVO> nblist = null;
+		nblist =schedulnoticedao.snlist(nvo);
 		return nblist;
 	}
 
 	@Override
-	public NoticeBoardVO nbChaebun(NoticeBoardVO nvo) {
-		NoticeBoardVO nvo_ = null;
-		nvo_ =noticeboarddao.nbChaebun(nvo);
+	public SchedulNoticeVO snChaebun(SchedulNoticeVO nvo) {
+		SchedulNoticeVO nvo_ = null;
+		nvo_ =schedulnoticedao.snChaebun(nvo);
 		return nvo_;
 	}
 
 	@Override
-	public int nbInsert(NoticeBoardVO nvo) {
+	public int snInsert(SchedulNoticeVO nvo) {
 		int result = 0;
-		result=noticeboarddao.nbInsert(nvo);
+		result=schedulnoticedao.snInsert(nvo);
 		return result;
 	}
 
 	@Override
-	public NoticeBoardVO nbDetail(NoticeBoardVO nvo) {
-		NoticeBoardVO nvo_ = null;
-		nvo_ =noticeboarddao.nbDetail(nvo);
+	public SchedulNoticeVO snDetail(SchedulNoticeVO nvo) {
+		SchedulNoticeVO nvo_ = null;
+		nvo_ =schedulnoticedao.snDetail(nvo);
 		return nvo_;
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(SchedulNoticeVO nvo) {
 		int result = 0;
-		result=noticeboarddao.pwdConfirm(nvo);
+		result=schedulnoticedao.pwdConfirm(nvo);
 		return result;
 	}
 
 	@Override
-	public int nbUpdate(NoticeBoardVO nvo) {
+	public int snUpdate(SchedulNoticeVO nvo) {
 		int result = 0;
-		result=noticeboarddao.nbUpdate(nvo);
+		result=schedulnoticedao.snUpdate(nvo);
 		return result;
 	}
 
 	@Override
-	public int nbDelete(NoticeBoardVO nvo) {
+	public int snDelete(SchedulNoticeVO nvo) {
 		int result = 0;
-		result=noticeboarddao.nbDelete(nvo);
+		result=schedulnoticedao.snDelete(nvo);
 		return result;
 	}
 

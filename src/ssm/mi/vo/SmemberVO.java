@@ -2,133 +2,128 @@ package ssm.mi.vo;
 
 public class SmemberVO {
 
-   private String ttNo;
-   private String ttName;
-   private String ttBirth;
-   private String ttGender;
-   private String ttAuthority;
-   private String sjtCode;
-   private String ttId;
-   private String ttPw;
-   private String ttTransferyear;
-   private String ttPn;
-   private String ttEmail;
-   private String ttImage;
-   private String ttGrade;
-   private String ttClass;
-   private String ttDeleteyn;
-   private String ttInsertdate;
-   private String ttUpdatedate;
-   private String ttAdmindate;
+   private String ssNo;
+   private String ssName;
+   private String ssGrade;
+   private String ssBirth;
+   private String ssGender;
+   private String ssAuthority;
+   private String ssId;
+   private String ssPw;
+   private String ssPn;
+   private String ssEmail;
+   private String ssPostno;
+   private String ssAddress;
+   private String ssImage;
+   private String ssDeleteyn;
+   private String ssInsertdate;
+   private String ssUpdatedate;
+   private String ssAdmindate;
    
-	public String getTtNo() {
-		return ttNo;
+	public String getSsNo() {
+		return ssNo;
 	}
-	public void setTtNo(String ttNo) {
-		this.ttNo = ttNo;
+	public void setSsNo(String ssNo) {
+		this.ssNo = ssNo;
 	}
-	public String getTtName() {
-		return ttName;
+	public String getSsName() {
+		return ssName;
 	}
-	public void setTtName(String ttName) {
-		this.ttName = ttName;
+	public void setSsName(String ssName) {
+		this.ssName = ssName;
 	}
-	public String getTtBirth() {
-		return ttBirth;
+	public String getSsGrade() {
+		return ssGrade;
 	}
-	public void setTtBirth(String ttBirth) {
-		this.ttBirth = ttBirth;
+	public void setSsGrade(String ssGrade) {
+		this.ssGrade = ssGrade;
 	}
-	public String getTtGender() {
-		return ttGender;
+	public String getSsBirth() {
+		return ssBirth;
 	}
-	public void setTtGender(String ttGender) {
-		this.ttGender = ttGender;
+	public void setSsBirth(String ssBirth) {
+		this.ssBirth = ssBirth;
 	}
-	public String getTtAuthority() {
-		return ttAuthority;
+	public String getSsGender() {
+		return ssGender;
 	}
-	public void setTtAuthority(String ttAuthority) {
-		this.ttAuthority = ttAuthority;
+	public void setSsGender(String ssGender) {
+		this.ssGender = ssGender;
 	}
-	public String getSjtCode() {
-		return sjtCode;
+	public String getSsAuthority() {
+		return ssAuthority;
 	}
-	public void setSjtCode(String sjtCode) {
-		this.sjtCode = sjtCode;
+	public void setSsAuthority(String ssAuthority) {
+		this.ssAuthority = ssAuthority;
 	}
-	public String getTtId() {
-		return ttId;
+	public String getSsId() {
+		return ssId;
 	}
-	public void setTtId(String ttId) {
-		this.ttId = ttId;
+	public void setSsId(String ssId) {
+		this.ssId = ssId;
 	}
-	public String getTtPw() {
-		return ttPw;
+	public String getSsPw() {
+		return ssPw;
 	}
-	public void setTtPw(String ttPw) {
-		this.ttPw = ttPw;
+	public void setSsPw(String ssPw) {
+		this.ssPw = ssPw;
 	}
-	public String getTtTransferyear() {
-		return ttTransferyear;
+	public String getSsPn() {
+		return ssPn;
 	}
-	public void setTtTransferyear(String ttTransferyear) {
-		this.ttTransferyear = ttTransferyear;
+	public void setSsPn(String ssPn) {
+		this.ssPn = ssPn;
 	}
-	public String getTtPn() {
-		return ttPn;
+	public String getSsEmail() {
+		return ssEmail;
 	}
-	public void setTtPn(String ttPn) {
-		this.ttPn = ttPn;
+	public void setSsEmail(String ssEmail) {
+		this.ssEmail = ssEmail;
 	}
-	public String getTtEmail() {
-		return ttEmail;
+	public String getSsPostno() {
+		return ssPostno;
 	}
-	public void setTtEmail(String ttEmail) {
-		this.ttEmail = ttEmail;
+	public void setSsPostno(String ssPostno) {
+		this.ssPostno = ssPostno;
 	}
-	public String getTtImage() {
-		return ttImage;
+	public String getSsAddress() {
+		return ssAddress;
 	}
-	public void setTtImage(String ttImage) {
-		this.ttImage = ttImage;
+	public void setSsAddress(String ssAddress) {
+		this.ssAddress = ssAddress;
 	}
-	public String getTtGrade() {
-		return ttGrade;
+	public String getSsImage() {
+		return ssImage;
 	}
-	public void setTtGrade(String ttGrade) {
-		this.ttGrade = ttGrade;
+	public void setSsImage(String ssImage) {
+		this.ssImage = ssImage;
 	}
-	public String getTtClass() {
-		return ttClass;
+	public String getSsDeleteyn() {
+		return ssDeleteyn;
 	}
-	public void setTtClass(String ttClass) {
-		this.ttClass = ttClass;
+	public void setSsDeleteyn(String ssDeleteyn) {
+		this.ssDeleteyn = ssDeleteyn;
 	}
-	public String getTtDeleteyn() {
-		return ttDeleteyn;
+	public String getSsInsertdate() {
+		return ssInsertdate;
 	}
-	public void setTtDeleteyn(String ttDeleteyn) {
-		this.ttDeleteyn = ttDeleteyn;
+	public void setSsInsertdate(String ssInsertdate) {
+		this.ssInsertdate = ssInsertdate;
 	}
-	public String getTtInsertdate() {
-		return ttInsertdate;
+	public String getSsUpdatedate() {
+		return ssUpdatedate;
 	}
-	public void setTtInsertdate(String ttInsertdate) {
-		this.ttInsertdate = ttInsertdate;
+	public void setSsUpdatedate(String ssUpdatedate) {
+		this.ssUpdatedate = ssUpdatedate;
 	}
-	public String getTtUpdatedate() {
-		return ttUpdatedate;
+	public String getSsAdmindate() {
+		return ssAdmindate;
 	}
-	public void setTtUpdatedate(String ttUpdatedate) {
-		this.ttUpdatedate = ttUpdatedate;
+	public void setSsAdmindate(String ssAdmindate) {
+		this.ssAdmindate = ssAdmindate;
 	}
-	public String getTtAdmindate() {
-		return ttAdmindate;
-	}
-	public void setTtAdmindate(String ttAdmindate) {
-		this.ttAdmindate = ttAdmindate;
-	}
+   
+   
 	
 	
 	
