@@ -5,9 +5,14 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="ssm.cm.nb.dao.NoticeBoardDao">
-
-	<resultMap type="ssm.cm.nb.vo.NoticeBoardVO" id="nbVO">
+<mapper namespace="ssm.cm.dao.NoticeBoardDao">
+	
+	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
+	    <result property="ttNo" 			column="TTNO"/>
+	    <result property="ttName" 			column="TTNAME"/>
+	</resultMap>
+	
+	<resultMap type="ssm.cm.vo.NoticeBoardVO" id="nbVO">
 	    <result property="nbNo" 			column="NBNO"/>
 	    <result property="nbTitle" 			column="NBTITLE"/>
 	    <result property="nbContents" 		column="NBCONTENTS"/>
@@ -16,13 +21,8 @@
 	    <result property="nbInsertdate" 	column="NBINSERTDATE"/>
 	    <result property="nbUpdatedate" 	column="NBUPDATEDATE"/>
 	    <result property="nbDeleteyn" 		column="NBDELETEYN"/>
+	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
- 
-	<!--  <resultMap type="ssm.cm.nb.vo.TMEMBERVO" id="tmVo">
-	    <result column="TTNO" property="ttNo"/>
-	    <result column="TTNAME" property="ttName"/>
-    	<collection property="nb" resultMap="nb"/>
-	</resultMap>-->
 	
 	<sql id="nbCommon" >
 		SELECT 
@@ -46,8 +46,8 @@
 			</if>
 		</trim>
 	</sql>
-
-	<select id ="nblist" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="nbVO">
+	
+	<select id ="nblist" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
 			SELECT 
 					NBNO, 
 					TTNAME, 
@@ -63,7 +63,7 @@
 			)
 	</select>
 	
-	<select id="nbChaebun" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="nbVO">
+	<select id="nbChaebun" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
 		
 		SELECT
 		TO_CHAR(NVL(MAX(SUBSTR(NBNO,-4)),0)+1) NBNO
@@ -71,27 +71,19 @@
 		
 	</select>
 	
-	<insert id="nbInsert" parameterType="ssm.cm.nb.vo.NoticeBoardVO">
+	<insert id="nbInsert" parameterType="ssm.cm.vo.NoticeBoardVO">
 	
 		INSERT INTO NOTICE_BOARD(NBNO,TTNO,NBTITLE,NBCONTENTS,NBFILE,NBINSERTDATE,NBDELETEYN)
 		VALUES(#{nbNo},#{ttNo},#{nbTitle},#{nbContents},#{nbFile},SYSDATE,'Y')
 	
 	</insert>
 	
-	<select id="nbDetail" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultMap="nbVO">
-		SELECT
-			NBNO, TTNO, NBTITLE, NBCONTENTS, NBINSERTDATE, NBUPDATEDATE,NBDELETEYN
-		FROM NOTICE_BOARD
-		WHERE NBNO =#{nbNo}
-		AND NBDELETEYN='Y'
-	</select>
-	
-	<select id="pwdConfirm" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultType="int">
+	<select id="pwdConfirm" parameterType="ssm.cm.vo.NoticeBoardVO" resultType="int">
 		SELECT NVL((SELECT 1 FROM NOTICE_BOARD WHERE NBNO = #{nbNo}),0)as result
 		FROM dual
 	</select>
 	
-	<update id="nbUpdate" parameterType="ssm.cm.nb.vo.NoticeBoardVO">
+	<update id="nbUpdate" parameterType="ssm.cm.vo.NoticeBoardVO">
 	
 		UPDATE NOTICE_BOARD SET 
 								 NBTITLE = #{nbTitle}
@@ -102,7 +94,7 @@
 		AND  					 NBDELETEYN = 'Y'
 	</update>
 	
-	<update id="nbDelete" parameterType="ssm.cm.nb.vo.NoticeBoardVO">
+	<update id="nbDelete" parameterType="ssm.cm.vo.NoticeBoardVO">
 	
 		UPDATE NOTICE_BOARD SET 
 								 NBUPDATEDATE = SYSDATE
@@ -111,14 +103,19 @@
 		AND  					 NBDELETEYN = 'Y'
 	</update>
 	
-	<select id="nbListCnt" parameterType="ssm.cm.nb.vo.NoticeBoardVO" resultType="int">
-		SELECT NVL(count(1),0) FROM
-		(	SELECT list.*,ROWNUM AS RNUM
-			FROM (
-					<include refid="nbCommon"></include>
-					ORDER BY NBNO desc
-			)list
-		)	
+	<select id="nbDetail" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
+		SELECT
+				A.NBNO, 
+				B.TTNAME, 
+				A.NBTITLE, 
+				A.NBCONTENTS, 
+				A.NBINSERTDATE, 
+				A.NBUPDATEDATE,
+				A.NBDELETEYN
+		FROM NOTICE_BOARD A, T_MEMBER B
+		WHERE NBNO =#{nbNo}
+		AND NBDELETEYN='Y'
+		AND A.TTNO = B.TTNO
 	</select>
 	
 </mapper>

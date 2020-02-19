@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+ <a href="/schedulnotice/snlist.ssm">[학교일정 게시판]</a>
  <a href="/noticeboard/nblist.ssm">[공지사항 게시판]</a>
+ <a href="/familyletter/fllist.ssm">[가정통신문 게시판]</a>
+ <a href="/qnaboard/qblist.ssm">[Q&A 게시판]</a>
 </body>
 </html>
