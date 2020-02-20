@@ -4,7 +4,7 @@ public class QnABoardChaebun {
 
 	private static final String QB_STR = "QB";
 	
-	public static String nbchaebun(String no){
+	public static String qbchaebun(String no){
 		System.out.println("채번클래스왔음");
 		System.out.println("내가 가져온 no >> : " + no);
 		

@@ -90,7 +90,7 @@ public class NoticeBoardController {
 		}
 		boolean bResult = result > 0;
 			
-		if(bResult) url="/noticeboard/nblist.ssm";
+		if(bResult) url="/nb/nblist.ssm";
 		System.out.println("url >>>: " + url);		
 		return "redirect:"+url;
 	}

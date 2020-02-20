@@ -4,7 +4,7 @@ public class SchedulNoticeChaebun {
 
 	private static final String SN_STR = "SN";
 	
-	public static String nbchaebun(String no){
+	public static String snchaebun(String no){
 		System.out.println("채번클래스왔음");
 		System.out.println("내가 가져온 no >> : " + no);
 		

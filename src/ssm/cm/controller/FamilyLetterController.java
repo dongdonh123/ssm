@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import ssm.cm.chaebun.FamilyLetterChaebun;
 import ssm.cm.chaebun.NoticeBoardChaebun;
 import ssm.cm.service.FamilyLetterService;
 import ssm.cm.service.NoticeBoardService;
@@ -29,7 +30,7 @@ public class FamilyLetterController {
 	private FamilyLetterService familyletterservice;
 	
 	/*전체 조회*/
-	@RequestMapping(value="fllist")
+	@RequestMapping(value="/fllist")
 	public String nblist(@ModelAttribute FamilyLetterVO fvo, Model model){
 		System.out.println("컨트롤러 왔당");
 		
@@ -47,152 +48,148 @@ public class FamilyLetterController {
 		return "fl/fllist";
 	}
 	
-//	/*글쓰기 폼 출력*/
-//	@RequestMapping(value="nbwirteform")
-//	public String nbwirteform(){
-//		System.out.println(" nbwirteform 컨트롤러 왔당");
-//		return "nb/nbwirteform";
-//	}
-//	
-//	/*글쓰기 구현*/
-//	@RequestMapping(value="nbwirte")
-//	public String nbinsert(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
-//		System.out.println("컨트롤러 nbwirte왔당");
-//		String url="";
-//		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
-//		String daFileName="";
-//		int result=0;
-//		boolean bval= false;
-//		int size=10*1024*1024;
-//		try{
-//			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
-//			
-//			Enumeration files=multi.getFileNames();
-//			String file=(String)files.nextElement();//입력한 파일명받아오는거
-//			String fileName=multi.getFilesystemName(file);//멀티파트참조변수로 바꾸는거
-//			daFileName="../"+"upload"+"/"+fileName;//경로추가해 합치는거
-//			
-//			String ttNo=multi.getParameter("ttNo");
-//			String nbTitle=multi.getParameter("nbTitle");
-//			String nbContents=multi.getParameter("nbContents");
-//			
-//			nvo.setTtNo(ttNo);
-//			nvo.setNbTitle(nbTitle);
-//			nvo.setNbContents(nbContents);
-//			nvo.setNbFile(daFileName);
-//			
-//			NoticeBoardVO nvo_ =noticeboardservice.nbChaebun(nvo); 
-//			System.out.println(nvo_.getNbNo());
-//			String no =nvo_.getNbNo();
-//			nvo.setNbNo(NoticeBoardChaebun.nbchaebun(no));
-//			System.out.println(nvo.getNbNo());
-//			result=noticeboardservice.nbInsert(nvo);
-//		}catch(Exception e){
-//			System.out.println("에러는 >>>: " + e);
-//		}
-//		boolean bResult = result > 0;
-//			
-//		if(bResult) url="/noticeboard/nblist.ssm";
-//		System.out.println("url >>>: " + url);		
-//		return "redirect:"+url;
-//	}
-//	
-//	@RequestMapping(value="/nbDetail")
-//	public String nbDetail(@ModelAttribute NoticeBoardVO nvo, Model model){
-//		System.out.println("컨트롤러 nbDetail왔당");
-//		System.out.println("no 가져왔니 >>>: "+nvo.getNbNo());
-//		
-//		NoticeBoardVO nbdetail = null;
-//		nbdetail = noticeboardservice.nbDetail(nvo);
-//		
-//		nbdetail.setNbContents(nbdetail.getNbContents().toString().replaceAll("\n","<br>"));
-//		
-//		model.addAttribute("nbdetail",nbdetail);
-//		return "nb/nbDetail";
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value="/pwdConfirm")
-//	public String pwdConfirm(@ModelAttribute NoticeBoardVO nvo){
-//		System.out.println("컨트롤러 pwd왔다");
-//		
-//		//아래 변수에는 입력 성공에 대한 상태값 저장(1or0)
-//		int result = 0;
-//		result= noticeboardservice.pwdConfirm(nvo);
-//		
-//		System.out.println("result 몇이야>>>" + result);
-//		return result+"";
-//		
-//	}
-//	
-//	@RequestMapping(value="/nbupdateForm")
-//	public String updateForm(@ModelAttribute NoticeBoardVO nvo, Model model){
-//		System.out.println("컨트롤러 nbupdateForm왔다");
-//		System.out.println("no 가져왔니 >>>: "+nvo.getNbNo());
-//		
-//		NoticeBoardVO updateData =null;
-//		updateData= noticeboardservice.nbDetail(nvo);
-//		
-//		model.addAttribute("updateData",updateData);
-//		return "nb/nbupdateform";
-//		
-//	}
-//	
-//	/*글쓰기 구현*/
-//	@RequestMapping(value="nbupdate")
-//	public String nbupdate(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
-//		System.out.println("컨트롤러 nbupdate왔당");
-//		
-//		String url="";
-//		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
-//		String daFileName="";
-//		int result=0;
-//		boolean bval= false;
-//		int size=10*1024*1024;
-//		try{
-//			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
-//			
-//			Enumeration files=multi.getFileNames();
-//			String file=(String)files.nextElement();//입력한 파일명받아오는거
-//			String fileName=multi.getFilesystemName(file);//멀티파트참조변수로 바꾸는거
-//			daFileName="../"+"upload"+"/"+fileName;//경로추가해 합치는거
-//			
-//			String nbTitle=multi.getParameter("nbTitle");
-//			String nbContents=multi.getParameter("nbContents");
-//			String nbNo=multi.getParameter("nbNo");
-//			
-//			nvo.setNbTitle(nbTitle);
-//			nvo.setNbContents(nbContents);
-//			nvo.setNbFile(daFileName);
-//			nvo.setNbNo(nbNo);
-//			
-//			System.out.println("no담겼지?" + nvo.getNbNo());
-//			System.out.println("no담겼지?" + nvo.getNbTitle());
-//			System.out.println("no담겼지?" + nvo.getNbContents());
-//			System.out.println("no담겼지?" + nvo.getNbFile());
-//			result=noticeboardservice.nbUpdate(nvo);
-//		}catch(Exception e){
-//			System.out.println("에러는 >>>: " + e);
-//		}
-//		boolean bResult = result > 0;
-//			
-//		if(bResult) url="/noticeboard/nblist.ssm";
-//		return "redirect:"+url;
-//	}
-//	
-//	@RequestMapping(value="/nbDelete")
-//	public String nbDelete(@ModelAttribute NoticeBoardVO nvo){
-//		System.out.println("컨트롤러 nbDelete왔다");
-//		String url="";
-//		int result = 0;
-//		
-//		result= noticeboardservice.nbDelete(nvo);
-//		
-//		boolean bResult = result > 0;
-//		
-//		if(bResult) url="/noticeboard/nblist.ssm";
-//		return "redirect:"+url;
-//		
-//		
-//	}
+	/*글쓰기 폼 출력*/
+	@RequestMapping(value="flwirteform")
+	public String flwirteform(){
+		System.out.println(" flwirteform 컨트롤러 왔당");
+		return "fl/flwirteform";
+	}
+	
+	/*글쓰기 구현*/
+	@RequestMapping(value="/flwirte")
+	public String flinsert(@ModelAttribute FamilyLetterVO fvo, HttpServletRequest req){
+		System.out.println("컨트롤러 flwirte왔당");
+		String url="";
+		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
+		String daFileName="";
+		int result=0;
+		boolean bval= false;
+		int size=10*1024*1024;
+		try{
+			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
+			
+			Enumeration files=multi.getFileNames();
+			String file=(String)files.nextElement();//입력한 파일명받아오는거
+			String fileName=multi.getFilesystemName(file);//멀티파트참조변수로 바꾸는거
+			daFileName="../"+"upload"+"/"+fileName;//경로추가해 합치는거
+			
+			String ttNo=multi.getParameter("ttNo");
+			String flTitle=multi.getParameter("flTitle");
+			String flContents=multi.getParameter("flContents");
+			
+			fvo.setTtNo(ttNo);
+			fvo.setFlTitle(flTitle);
+			fvo.setFlContents(flContents);
+			fvo.setFlFile(daFileName);
+			
+			FamilyLetterVO fvo_ =familyletterservice.flChaebun(fvo); 
+			System.out.println(fvo_.getFlNo());
+			String no =fvo_.getFlNo();
+			fvo.setFlNo(FamilyLetterChaebun.flchaebun(no));
+			System.out.println(fvo.getFlNo());
+			result=familyletterservice.flInsert(fvo);
+		}catch(Exception e){
+			System.out.println("에러는 >>>: " + e);
+		}
+		boolean bResult = result > 0;
+			
+		if(bResult) url="/familyletter/fllist.ssm";
+		System.out.println("url >>>: " + url);		
+		return "redirect:"+url;
+	}
+	
+	@RequestMapping(value="/flDetail")
+	public String nbDetail(@ModelAttribute FamilyLetterVO fvo, Model model){
+		System.out.println("컨트롤러 flDetail왔당");
+		System.out.println("no 가져왔니 >>>: "+fvo.getFlNo());
+		
+		FamilyLetterVO fldetail = null;
+		fldetail = familyletterservice.flDetail(fvo);
+		
+		fldetail.setFlContents(fldetail.getFlContents().toString().replaceAll("\n","<br>"));
+		
+		model.addAttribute("fldetail",fldetail);
+		return "fl/flDetail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/pwdConfirm")
+	public String pwdConfirm(@ModelAttribute FamilyLetterVO fvo){
+		System.out.println("컨트롤러 pwd왔다");
+		
+		//아래 변수에는 입력 성공에 대한 상태값 저장(1or0)
+		int result = 0;
+		result= familyletterservice.pwdConfirm(fvo);
+		
+		System.out.println("result 몇이야>>>" + result);
+		return result+"";
+		
+	}
+	
+	@RequestMapping(value="/flupdateForm")
+	public String updateForm(@ModelAttribute FamilyLetterVO fvo, Model model){
+		System.out.println("컨트롤러 flupdateForm왔다");
+		System.out.println("no 가져왔니 >>>: "+fvo.getFlNo());
+		
+		FamilyLetterVO updateData =null;
+		updateData= familyletterservice.flDetail(fvo);
+		
+		model.addAttribute("updateData",updateData);
+		return "fl/flupdateform";
+		
+	}
+	
+	
+	@RequestMapping(value="flupdate")
+	public String nbupdate(@ModelAttribute FamilyLetterVO fvo, HttpServletRequest req){
+		System.out.println("컨트롤러 flupdate왔당");
+		
+		String url="";
+		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
+		String daFileName="";
+		int result=0;
+		boolean bval= false;
+		int size=10*1024*1024;
+		try{
+			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
+			
+			Enumeration files=multi.getFileNames();
+			String file=(String)files.nextElement();//입력한 파일명받아오는거
+			String fileName=multi.getFilesystemName(file);//멀티파트참조변수로 바꾸는거
+			daFileName="../"+"upload"+"/"+fileName;//경로추가해 합치는거
+			
+			String flTitle=multi.getParameter("flTitle");
+			String flContents=multi.getParameter("flContents");
+			String flNo=multi.getParameter("flNo");
+			
+			fvo.setFlTitle(flTitle);
+			fvo.setFlContents(flContents);
+			fvo.setFlFile(daFileName);
+			fvo.setFlNo(flNo);
+			
+			result=familyletterservice.flUpdate(fvo);
+		}catch(Exception e){
+			System.out.println("에러는 >>>: " + e);
+		}
+		boolean bResult = result > 0;
+			
+		if(bResult) url="/familyletter/fllist.ssm";
+		return "redirect:"+url;
+	}
+	
+	@RequestMapping(value="/flDelete")
+	public String flDelete(@ModelAttribute FamilyLetterVO fvo){
+		System.out.println("컨트롤러 flDelete왔다");
+		String url="";
+		int result = 0;
+		
+		result= familyletterservice.flDelete(fvo);
+		
+		boolean bResult = result > 0;
+		
+		if(bResult) url="/familyletter/fllist.ssm";
+		return "redirect:"+url;
+		
+		
+	}
 }

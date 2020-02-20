@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/kk/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
+	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    
@@ -15,7 +15,7 @@
 	    	nhn.husky.EZCreator.createInIFrame({
 	    	 oAppRef: oEditors,
 	    	 elPlaceHolder: "nbContents",
-	    	 sSkinURI: "/kk/SmartEditor2Skin_ko_KR.html",
+	    	 sSkinURI: "/navereditor/SmartEditor2Skin_ko_KR.html",
 	    	 fCreator: "createSEditor2"
 	    	});
 	    	

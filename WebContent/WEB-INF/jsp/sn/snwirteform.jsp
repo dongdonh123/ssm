@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/kk/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
+	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    
@@ -14,16 +14,16 @@
 	    	var oEditors = [];
 	    	nhn.husky.EZCreator.createInIFrame({
 	    	 oAppRef: oEditors,
-	    	 elPlaceHolder: "nbContents",
-	    	 sSkinURI: "/kk/SmartEditor2Skin_ko_KR.html",
+	    	 elPlaceHolder: "snContents",
+	    	 sSkinURI: "/navereditor/SmartEditor2Skin_ko_KR.html",
 	    	 fCreator: "createSEditor2"
 	    	});
 	    	
 	    	$("#submitbutton").click(function(){
 	    		
-	    		oEditors.getById["nbContents"].exec("UPDATE_CONTENTS_FIELD", []);
+	    		oEditors.getById["snContents"].exec("UPDATE_CONTENTS_FIELD", []);
 	    		
-	    		$("#nbwirteform").attr('action','/noticeboard/nbwirte.ssm').submit();
+	    		$("#snwirteform").attr('action','/schedulnotice/snwirte.ssm').submit();
 	    	});
 	    });
 	    
@@ -32,7 +32,7 @@
     </script>
 </head>
 <body>
-	<form id="nbwirteform" name="nbwirteform" enctype="multipart/form-data" method="post">
+	<form id="snwirteform" name="snwirteform" enctype="multipart/form-data" method="post">
 		<table border="1">
 			<colgroup>
 				<col width="100px"></col>
@@ -47,15 +47,15 @@
 			</tr>
 			<tr>
 				<td>글제목</td>
-				<td><input type="text" id="nbTitle" name="nbTitle"></td>
+				<td><input type="text" id="snTitle" name="snTitle"></td>
 			</tr>
 			<tr>
 				<td>글내용</td>
-				<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" >에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea></td>
+				<td><textarea name="snContents" id="snContents" rows="10" cols="100" ></textarea></td>
 			</tr>
 			<tr>
 				<td>첨부파일1</td>
-				<td><input type="file" id="nbFile" name="nbFile"></td>
+				<td><input type="file" id="snFile" name="snFile"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
