@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
+<%@ page import="ssm.cm.vo.QnABoardVO" %>    
 <%@ page import="java.util.List" %>    
    
 <%
-	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
-	NoticeBoardVO data =(NoticeBoardVO)request.getAttribute("data");
+	List<QnABoardVO> qblist =(List<QnABoardVO>)request.getAttribute("qblist");
+	QnABoardVO data =(QnABoardVO)request.getAttribute("data");
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,8 +32,8 @@
 			goPage(1);
 		});
 		
-		$("#nbinsertbutton").click(function(){
-			$(location).attr('href',"/noticeboard/nbwirteform.ssm");
+		$("#insertbutton").click(function(){
+			$(location).attr('href',"/qnaboard/qbwirteform.ssm");
 		});
 		
 		function goPage(){
@@ -43,16 +43,16 @@
 			alert($("#search").val());
 			$("#f_search").attr({
 				"method":"get",
-				"action":"/noticeboard/nblist.ssm"
+				"action":"/qnaboard/qblist.ssm"
 			});
 			$("#f_search").submit();
 		}
 		
 		/*제목 클릭시 상세 페이지 이동을 위한 처리 이벤트*/
-		$(".nbDetail").click(function(){
-			var nbNo = $(this).parents("tr").attr("data-num");
-			$("#nbNo").val(nbNo);
-			$("#nbdetailForm").attr('action',"/noticeboard/nbDetail.ssm")
+		$(".qbDetail").click(function(){
+			var qbNo = $(this).parents("tr").attr("data-num");
+			$("#qbNo").val(qbNo);
+			$("#qbdetailForm").attr('action',"/qnaboard/qbDetail.ssm")
 			.submit();
 		});
 	});
@@ -76,9 +76,9 @@
 						<label>검색조건</label>
 						<select id="search" name="search">
 							<option value="all">전체</option>
-							<option value="nbTitle">제목</option>
-							<option value="nbContents">내용</option>
-							<option value="ttNo">작성자</option>
+							<option value="qbTitle">제목</option>
+							<option value="qbContents">내용</option>
+							<option value="ssNo">작성자</option>
 						</select>
 						
 						<input type="text" name="keyword" id="keyword" value="검색어를입력하세요" />
@@ -109,7 +109,7 @@
 				</thead>
 				<tbody>
 					<%
-					if(nblist.size()==0){
+					if(qblist.size()==0){
 					%>
 					<tr>
 						<td>0</td>
@@ -119,15 +119,15 @@
 					</tr>
 					<%
 					}else{
-						for (int i=0; i<nblist.size(); i++){
-							NoticeBoardVO nvo = nblist.get(i);
+						for (int i=0; i<qblist.size(); i++){
+							QnABoardVO qvo = qblist.get(i);
 							int cc = i+1;
 					%>	
-						<tr data-num=<%=nvo.getNbNo() %>>
+						<tr data-num=<%=qvo.getQbNo() %>>
 							<td><%=cc%> </td>
-							<td><span class="nbDetail"><%=nvo.getNbTitle() %></span></td>
-							<td><%=nvo.getNbInsertdate() %></td>
-							<td><%=nvo.gettMembervo().getTtName() %></td>
+							<td><span class="qbDetail"><%=qvo.getQbTitle() %></span></td>
+							<td><%=qvo.getQbInsertdate() %></td>
+							<td><%=qvo.getsMembervo().getSsName() %></td>
 						</tr>
 					<% 		
 						}
@@ -135,12 +135,12 @@
 					%>
 				</tbody>
 			</table>
-			<form id="nblistform" name="nblistform">
-				<input type="button" id="nbinsertbutton" name="nbinsertbutton" value="글쓰기">
+			<form id="qblistform" name="qblistform">
+				<input type="button" id="insertbutton" name="insertbutton" value="글쓰기">
 			</form>
 			<!-- 상세 페이지 이동을 위한 form -->
-			<form name="nbdetailForm" id="nbdetailForm">
-			<input type="hidden" name="nbNo" id="nbNo">
+			<form name="qbdetailForm" id="qbdetailForm">
+			<input type="hidden" name="qbNo" id="qbNo">
 			</form>
 		</div>
 	</div>

@@ -19,51 +19,51 @@ public class QnABoardServiceImpl implements QnABoardService {
 	private QnABoardDao qnaboarddao;
 	
 	@Override
-	public List<QnABoardVO> nblist(QnABoardVO nvo) {
-		List<QnABoardVO> nblist = null;
-		nblist =qnaboarddao.qblist(nvo);
-		return nblist;
+	public List<QnABoardVO> qblist(QnABoardVO qvo) {
+		List<QnABoardVO> qblist = null;
+		qblist =qnaboarddao.qblist(qvo);
+		return qblist;
 	}
 
 	@Override
-	public QnABoardVO nbChaebun(QnABoardVO nvo) {
-		QnABoardVO nvo_ = null;
-		nvo_ =qnaboarddao.qbChaebun(nvo);
-		return nvo_;
+	public QnABoardVO qbChaebun(QnABoardVO qvo) {
+		QnABoardVO qvo_ = null;
+		qvo_ =qnaboarddao.qbChaebun(qvo);
+		return qvo_;
 	}
 
 	@Override
-	public int nbInsert(QnABoardVO nvo) {
+	public int qbInsert(QnABoardVO qvo) {
 		int result = 0;
-		result=qnaboarddao.qbInsert(nvo);
+		result=qnaboarddao.qbInsert(qvo);
 		return result;
 	}
 
 	@Override
-	public QnABoardVO nbDetail(QnABoardVO nvo) {
-		QnABoardVO nvo_ = null;
-		nvo_ =qnaboarddao.qbDetail(nvo);
-		return nvo_;
+	public QnABoardVO qbDetail(QnABoardVO qvo) {
+		QnABoardVO qvo_ = null;
+		qvo_ =qnaboarddao.qbDetail(qvo);
+		return qvo_;
 	}
 
 	@Override
-	public int pwdConfirm(QnABoardVO nvo) {
+	public int pwdConfirm(QnABoardVO qvo) {
 		int result = 0;
-		result=qnaboarddao.pwdConfirm(nvo);
+		result=qnaboarddao.pwdConfirm(qvo);
 		return result;
 	}
 
 	@Override
-	public int nbUpdate(QnABoardVO nvo) {
+	public int qbUpdate(QnABoardVO qvo) {
 		int result = 0;
-		result=qnaboarddao.qbUpdate(nvo);
+		result=qnaboarddao.qbUpdate(qvo);
 		return result;
 	}
 
 	@Override
-	public int nbDelete(QnABoardVO nvo) {
+	public int qbDelete(QnABoardVO qvo) {
 		int result = 0;
-		result=qnaboarddao.qbDelete(nvo);
+		result=qnaboarddao.qbDelete(qvo);
 		return result;
 	}
 

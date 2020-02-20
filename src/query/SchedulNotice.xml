@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="ssm.cm.dao.NoticeBoardDao">
+<mapper namespace="ssm.cm.dao.SchedulNoticeDao">
+	
+	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
+	    <result property="ttNo" 			column="TTNO"/>
+	    <result property="ttName" 			column="TTNAME"/>
+	</resultMap>
+	
+	<resultMap type="ssm.cm.vo.SchedulNoticeVO" id="snVO">
+	    <result property="snNo" 			column="SNNO"/>
+	    <result property="snTitle" 			column="SNTITLE"/>
+	    <result property="snContents" 		column="SNCONTENTS"/>
+	    <result property="ttNo" 			column="TTNO"/>
+	    <result property="snDate" 			column="SNDATE"/>
+	    <result property="snInsertdate" 	column="SNINSERTDATE"/>
+	    <result property="snUpdatedate" 	column="SNUPDATEDATE"/>
+	    <result property="snDeleteyn" 		column="SNDELETEYN"/>
+	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
+	</resultMap>
+	
+	<sql id="snCommon" >
+		SELECT 
+				A.SNNO, 
+				B.TTNAME, 
+				A.SNTITLE, 
+				A.SNINSERTDATE
+		FROM SCHEDULE_NOTICE A, T_MEMBER B 
+		WHERE SNDELETEYN ='Y'
+		AND A.TTNO = B.TTNO
+		
+		<trim prefix="AND" >
+			<if test="search=='snTitle' ">
+				<![CDATA[SNTITLE LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='snContents'">
+				<![CDATA[SNCONTENTS LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='ttNo'">
+				<![CDATA[TTNO LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</trim>
+	</sql>
+	
+	<select id ="snlist" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
+			SELECT 
+					SNNO, 
+					TTNAME, 
+					SNTITLE, 
+					SNINSERTDATE
+					
+			FROM 
+			  (	SELECT 
+						list.*,
+						ROWNUM AS RNUM
+				FROM(<include refid="snCommon"></include>
+					)list
+			)
+	</select>
+	
+	<select id="snChaebun" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
+		
+		SELECT
+		TO_CHAR(NVL(MAX(SUBSTR(SNNO,-4)),0)+1) SNNO
+		FROM SCHEDULE_NOTICE
+		
+	</select>
+	
+	<insert id="snInsert" parameterType="ssm.cm.vo.SchedulNoticeVO">
+	
+		INSERT INTO SCHEDULE_NOTICE(SNNO,TTNO,SNTITLE,SNCONTENTS,SNDATE,SNINSERTDATE,SNDELETEYN)
+		VALUES(#{snNo},#{ttNo},#{snTitle},#{snContents},#{nbDate},SYSDATE,'Y')
+	
+	</insert>
+	
+	<select id="pwdConfirm" parameterType="ssm.cm.vo.SchedulNoticeVO" resultType="int">
+		SELECT NVL((SELECT 1 FROM SCHEDULE_NOTICE WHERE SNNO = #{snNo}),0)as result
+		FROM dual
+	</select>
+	
+	<update id="snUpdate" parameterType="ssm.cm.vo.SchedulNoticeVO">
+	
+		UPDATE SCHEDULE_NOTICE SET 
+								 SNTITLE = #{snTitle}
+								,SNCONTENTS = #{snContents}
+								,SNDATE = #{snDate}
+								,SNUPDATEDATE = SYSDATE
+		WHERE 					 sNNO = #{snNo}						
+		AND  					 SNDELETEYN = 'Y'
+	</update>
+	
+	<update id="snDelete" parameterType="ssm.cm.vo.SchedulNoticeVO">
+	
+		UPDATE SCHEDULE_NOTICE SET 
+								 SNUPDATEDATE = SYSDATE
+								,SNDELETEYN = 'N' 
+		WHERE 					 SNNO = #{snNo}						
+		AND  					 SNDELETEYN = 'Y'
+	</update>
+	
+	<select id="snDetail" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
+		SELECT
+				A.SNNO, 
+				B.TTNAME, 
+				A.SNTITLE, 
+				A.SNCONTENTS, 
+				A.SNINSERTDATE, 
+				A.SNUPDATEDATE,
+				A.SNDELETEYN
+		FROM SCHEDULE_NOTICE A, T_MEMBER B
+		WHERE SNNO =#{snNo}
+		AND SNDELETEYN='Y'
+		AND A.TTNO = B.TTNO
+	</select>
 	
 </mapper>

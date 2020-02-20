@@ -6,11 +6,11 @@ import ssm.cm.vo.NoticeBoardVO;
 import ssm.cm.vo.QnABoardVO;
 
 public interface QnABoardService {
-	public List<QnABoardVO> nblist(QnABoardVO nvo);
-	public QnABoardVO nbChaebun(QnABoardVO nvo);
-	public int nbInsert(QnABoardVO nvo);
-	public QnABoardVO nbDetail(QnABoardVO nvo);
-	public int pwdConfirm(QnABoardVO nvo);
-	public int nbUpdate(QnABoardVO nvo);
-	public int nbDelete(QnABoardVO nvo);
+	public List<QnABoardVO> qblist(QnABoardVO qvo);
+	public QnABoardVO qbChaebun(QnABoardVO qvo);
+	public int qbInsert(QnABoardVO qvo);
+	public QnABoardVO qbDetail(QnABoardVO qvo);
+	public int pwdConfirm(QnABoardVO qvo);
+	public int qbUpdate(QnABoardVO qvo);
+	public int qbDelete(QnABoardVO qvo);
 }

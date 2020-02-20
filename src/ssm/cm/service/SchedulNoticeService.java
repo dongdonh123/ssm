@@ -6,11 +6,11 @@ import ssm.cm.vo.NoticeBoardVO;
 import ssm.cm.vo.SchedulNoticeVO;
 
 public interface SchedulNoticeService {
-	public List<SchedulNoticeVO> snlist(SchedulNoticeVO nvo);
-	public SchedulNoticeVO snChaebun(SchedulNoticeVO nvo);
-	public int snInsert(SchedulNoticeVO nvo);
-	public SchedulNoticeVO snDetail(SchedulNoticeVO nvo);
-	public int pwdConfirm(SchedulNoticeVO nvo);
-	public int snUpdate(SchedulNoticeVO nvo);
-	public int snDelete(SchedulNoticeVO nvo);
+	public List<SchedulNoticeVO> snlist(SchedulNoticeVO svo);
+	public SchedulNoticeVO snChaebun(SchedulNoticeVO svo);
+	public int snInsert(SchedulNoticeVO svo);
+	public SchedulNoticeVO snDetail(SchedulNoticeVO svo);
+	public int pwdConfirm(SchedulNoticeVO svo);
+	public int snUpdate(SchedulNoticeVO svo);
+	public int snDelete(SchedulNoticeVO svo);
 }

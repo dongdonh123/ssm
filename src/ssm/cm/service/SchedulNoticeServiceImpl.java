@@ -19,51 +19,51 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 	private SchedulNoticeDao schedulnoticedao;
 	
 	@Override
-	public List<SchedulNoticeVO> snlist(SchedulNoticeVO nvo) {
-		List<SchedulNoticeVO> nblist = null;
-		nblist =schedulnoticedao.snlist(nvo);
-		return nblist;
+	public List<SchedulNoticeVO> snlist(SchedulNoticeVO svo) {
+		List<SchedulNoticeVO> snlist = null;
+		snlist =schedulnoticedao.snlist(svo);
+		return snlist;
 	}
 
 	@Override
-	public SchedulNoticeVO snChaebun(SchedulNoticeVO nvo) {
-		SchedulNoticeVO nvo_ = null;
-		nvo_ =schedulnoticedao.snChaebun(nvo);
-		return nvo_;
+	public SchedulNoticeVO snChaebun(SchedulNoticeVO svo) {
+		SchedulNoticeVO svo_ = null;
+		svo_ =schedulnoticedao.snChaebun(svo);
+		return svo_;
 	}
 
 	@Override
-	public int snInsert(SchedulNoticeVO nvo) {
+	public int snInsert(SchedulNoticeVO svo) {
 		int result = 0;
-		result=schedulnoticedao.snInsert(nvo);
+		result=schedulnoticedao.snInsert(svo);
 		return result;
 	}
 
 	@Override
-	public SchedulNoticeVO snDetail(SchedulNoticeVO nvo) {
-		SchedulNoticeVO nvo_ = null;
-		nvo_ =schedulnoticedao.snDetail(nvo);
-		return nvo_;
+	public SchedulNoticeVO snDetail(SchedulNoticeVO svo) {
+		SchedulNoticeVO svo_ = null;
+		svo_ =schedulnoticedao.snDetail(svo);
+		return svo_;
 	}
 
 	@Override
-	public int pwdConfirm(SchedulNoticeVO nvo) {
+	public int pwdConfirm(SchedulNoticeVO svo) {
 		int result = 0;
-		result=schedulnoticedao.pwdConfirm(nvo);
+		result=schedulnoticedao.pwdConfirm(svo);
 		return result;
 	}
 
 	@Override
-	public int snUpdate(SchedulNoticeVO nvo) {
+	public int snUpdate(SchedulNoticeVO svo) {
 		int result = 0;
-		result=schedulnoticedao.snUpdate(nvo);
+		result=schedulnoticedao.snUpdate(svo);
 		return result;
 	}
 
 	@Override
-	public int snDelete(SchedulNoticeVO nvo) {
+	public int snDelete(SchedulNoticeVO svo) {
 		int result = 0;
-		result=schedulnoticedao.snDelete(nvo);
+		result=schedulnoticedao.snDelete(svo);
 		return result;
 	}
 

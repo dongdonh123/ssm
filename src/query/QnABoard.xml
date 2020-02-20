@@ -1,9 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="ssm.cm.dao.NoticeBoardDao">
+<mapper namespace="ssm.cm.dao.QnABoardDao">
+	
+	<resultMap type="ssm.mi.vo.SmemberVO" id="SmemberVO">
+	    <result property="ssNo" 			column="SSNO"/>
+	    <result property="ssName" 			column="SSNAME"/>
+	</resultMap>
+	
+	<resultMap type="ssm.cm.vo.QnABoardVO" id="qbVO">
+	    <result property="qbNo" 			column="QBNO"/>
+	    <result property="qbTitle" 			column="QBTITLE"/>
+	    <result property="qbContents" 		column="QBCONTENTS"/>
+	    <result property="ssNo" 			column="SSNO"/>
+	    <result property="qbFile" 			column="QBFILE"/>
+	    <result property="qbInsertdate" 	column="QBINSERTDATE"/>
+	    <result property="qbUpdatedate" 	column="QBUPDATEDATE"/>
+	    <result property="qbDeleteyn" 		column="QBDELETEYN"/>
+	    <result property="qbSecretyn" 		column="QBSECRETYN"/>
+	    <collection property="sMembervo" 	resultMap="SmemberVO"/>
+	</resultMap>
+	
+	<sql id="qbCommon" >
+		SELECT 
+				A.QBNO, 
+				B.SSNAME, 
+				A.QBTITLE, 
+				A.QBINSERTDATE
+		FROM QNA_BOARD A, S_MEMBER B 
+		WHERE QBDELETEYN ='Y'
+		AND A.SSNO = B.SSNO
+		
+		<trim prefix="AND" >
+			<if test="search=='qbTitle' ">
+				<![CDATA[QBTITLE LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='qbContents'">
+				<![CDATA[QBCONTENTS LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='ssNo'">
+				<![CDATA[SSNO LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</trim>
+	</sql>
+	
+	<select id ="qblist" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
+			SELECT 
+					QBNO, 
+					SSNAME, 
+					QBTITLE, 
+					QBINSERTDATE
+					
+			FROM 
+			  (	SELECT 
+						list.*,
+						ROWNUM AS RNUM
+				FROM(<include refid="qbCommon"></include>
+					)list
+			)
+	</select>
+	
+	<select id="qbChaebun" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
+		
+		SELECT
+		TO_CHAR(NVL(MAX(SUBSTR(QBNO,-4)),0)+1) QBNO
+		FROM QNA_BOARD
+		
+	</select>
+	
+	<insert id="qbInsert" parameterType="ssm.cm.vo.QnABoardVO">
+	
+		INSERT INTO QNA_BOARD(QBNO,SSNO,QBTITLE,QBCONTENTS,QBFILE,QBINSERTDATE,QBDELETEYN)
+		VALUES(#{qbNo},#{ssNo},#{qbTitle},#{qbContents},#{qbFile},SYSDATE,'Y')
+	
+	</insert>
+	
+	<select id="pwdConfirm" parameterType="ssm.cm.vo.QnABoardVO" resultType="int">
+		SELECT NVL((SELECT 1 FROM QNA_BOARD WHERE QBNO = #{qbNo}),0)as result
+		FROM dual
+	</select>
+	
+	<update id="qbUpdate" parameterType="ssm.cm.vo.QnABoardVO">
+	
+		UPDATE QNA_BOARD SET 
+								 QBTITLE = #{qbTitle}
+								,QBCONTENTS = #{qbContents}
+								,QBFILE = #{qbFile}
+								,QBUPDATEDATE = SYSDATE
+		WHERE 					 QBNO = #{qbNo}						
+		AND  					 QBDELETEYN = 'Y'
+	</update>
+	
+	<update id="qbDelete" parameterType="ssm.cm.vo.QnABoardVO">
+	
+		UPDATE SCHEDULE_NOTICE SET 
+								 QBUPDATEDATE = SYSDATE
+								,QBDELETEYN = 'N' 
+		WHERE 					 QBNO = #{qbNo}						
+		AND  					 QBDELETEYN = 'Y'
+	</update>
+	
+	<select id="qbDetail" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
+		SELECT
+				A.QBNO, 
+				B.SSNAME, 
+				A.QBTITLE, 
+				A.QBCONTENTS, 
+				A.QBINSERTDATE, 
+				A.QBUPDATEDATE,
+				A.QBDELETEYN
+		FROM QNA_BOARD A, S_MEMBER B
+		WHERE SSNO =#{ssNo}
+		AND QBDELETEYN='Y'
+		AND A.SSNO = B.SSNO
+	</select>
 	
 </mapper>

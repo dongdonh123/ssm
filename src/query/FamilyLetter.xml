@@ -12,109 +12,109 @@
 	    <result property="ttName" 			column="TTNAME"/>
 	</resultMap>
 	
-	<resultMap type="ssm.cm.vo.NoticeBoardVO" id="nbVO">
-	    <result property="nbNo" 			column="NBNO"/>
-	    <result property="nbTitle" 			column="NBTITLE"/>
-	    <result property="nbContents" 		column="NBCONTENTS"/>
+	<resultMap type="ssm.cm.vo.FamilyLetterVO" id="flVO">
+	    <result property="flNo" 			column="FLNO"/>
+	    <result property="flTitle" 			column="FLTITLE"/>
+	    <result property="flContents" 		column="FLCONTENTS"/>
 	    <result property="ttNo" 			column="TTNO"/>
-	    <result property="nbFile" 			column="NBFILE"/>
-	    <result property="nbInsertdate" 	column="NBINSERTDATE"/>
-	    <result property="nbUpdatedate" 	column="NBUPDATEDATE"/>
-	    <result property="nbDeleteyn" 		column="NBDELETEYN"/>
+	    <result property="flFile" 			column="FLFILE"/>
+	    <result property="flInsertdate" 	column="FLINSERTDATE"/>
+	    <result property="flUpdatedate" 	column="FLUPDATEDATE"/>
+	    <result property="flDeleteyn" 		column="FLDELETEYN"/>
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
-	<sql id="nbCommon" >
+	<sql id="flCommon" >
 		SELECT 
-				A.NBNO, 
+				A.FLNO, 
 				B.TTNAME, 
-				A.NBTITLE, 
-				A.NBINSERTDATE
-		FROM NOTICE_BOARD A, T_MEMBER B 
-		WHERE NBDELETEYN ='Y'
+				A.FLTITLE, 
+				A.FLINSERTDATE
+		FROM FAMILY_LETTER A, T_MEMBER B 
+		WHERE FLDELETEYN ='Y'
 		AND A.TTNO = B.TTNO
 		
 		<trim prefix="AND" >
-			<if test="search=='nbTitle' ">
-				<![CDATA[NBTITLE LIKE '%'|| #{keyword} ||'%']]>
+			<if test="search=='flTitle' ">
+				<![CDATA[FLTITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-			<if test="search=='nbContents'">
-				<![CDATA[NBCONTENTS LIKE '%'|| #{keyword} ||'%']]>
+			<if test="search=='flContents'">
+				<![CDATA[FLCONTENTS LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-			<if test="search=='ttNo'">
+			<if test="search=='flNo'">
 				<![CDATA[TTNO LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
 	</sql>
 	
-	<select id ="nblist" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
+	<select id ="fllist" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
 			SELECT 
-					NBNO, 
+					FLNO, 
 					TTNAME, 
-					NBTITLE, 
-					NBINSERTDATE
+					FLTITLE, 
+					FLINSERTDATE
 					
 			FROM 
 			  (	SELECT 
 						list.*,
 						ROWNUM AS RNUM
-				FROM(<include refid="nbCommon"></include>
-					)list
+				FROM(<include refid="flCommon"></include>
+			   )list
 			)
 	</select>
 	
-	<select id="nbChaebun" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
+	<select id="flChaebun" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
 		
 		SELECT
-		TO_CHAR(NVL(MAX(SUBSTR(NBNO,-4)),0)+1) NBNO
-		FROM NOTICE_BOARD
+		TO_CHAR(NVL(MAX(SUBSTR(FLNO,-4)),0)+1) FLNO
+		FROM FAMILY_LETTER
 		
 	</select>
 	
-	<insert id="nbInsert" parameterType="ssm.cm.vo.NoticeBoardVO">
+	<insert id="flInsert" parameterType="ssm.cm.vo.FamilyLetterVO">
 	
-		INSERT INTO NOTICE_BOARD(NBNO,TTNO,NBTITLE,NBCONTENTS,NBFILE,NBINSERTDATE,NBDELETEYN)
-		VALUES(#{nbNo},#{ttNo},#{nbTitle},#{nbContents},#{nbFile},SYSDATE,'Y')
+		INSERT INTO FAMILY_LETTER(FLNO,TTNO,FLTITLE,FLCONTENTS,FLFILE,FLINSERTDATE,FLDELETEYN)
+		VALUES(#{flNo},#{ttNo},#{flTitle},#{flContents},#{flFile},SYSDATE,'Y')
 	
 	</insert>
 	
-	<select id="pwdConfirm" parameterType="ssm.cm.vo.NoticeBoardVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM NOTICE_BOARD WHERE NBNO = #{nbNo}),0)as result
+	<select id="pwdConfirm" parameterType="ssm.cm.vo.FamilyLetterVO" resultType="int">
+		SELECT NVL((SELECT 1 FROM FAMILY_LETTER WHERE FLNO = #{flNo}),0)as result
 		FROM dual
 	</select>
 	
-	<update id="nbUpdate" parameterType="ssm.cm.vo.NoticeBoardVO">
+	<update id="flUpdate" parameterType="ssm.cm.vo.FamilyLetterVO">
 	
-		UPDATE NOTICE_BOARD SET 
-								 NBTITLE = #{nbTitle}
-								,NBCONTENTS = #{nbContents}
-								,NBFILE = #{nbFile}
-								,NBUPDATEDATE = SYSDATE
-		WHERE 					 NBNO = #{nbNo}						
-		AND  					 NBDELETEYN = 'Y'
+		UPDATE FAMILY_LETTER SET 
+								 FLTITLE = #{flTitle}
+								,FLCONTENTS = #{flContents}
+								,FLFILE = #{flFile}
+								,FLUPDATEDATE = SYSDATE
+		WHERE 					 FLNO = #{flNo}						
+		AND  					 FLDELETEYN = 'Y'
 	</update>
 	
-	<update id="nbDelete" parameterType="ssm.cm.vo.NoticeBoardVO">
+	<update id="flDelete" parameterType="ssm.cm.vo.FamilyLetterVO">
 	
-		UPDATE NOTICE_BOARD SET 
-								 NBUPDATEDATE = SYSDATE
-								,NBDELETEYN = 'N' 
-		WHERE 					 NBNO = #{nbNo}						
-		AND  					 NBDELETEYN = 'Y'
+		UPDATE FAMILY_LETTER SET 
+								 FLUPDATEDATE = SYSDATE
+								,FLDELETEYN = 'N' 
+		WHERE 					 FLNO = #{flNo}						
+		AND  					 FLDELETEYN = 'Y'
 	</update>
 	
-	<select id="nbDetail" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
+	<select id="flDetail" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
 		SELECT
-				A.NBNO, 
+				A.FLNO, 
 				B.TTNAME, 
-				A.NBTITLE, 
-				A.NBCONTENTS, 
-				A.NBINSERTDATE, 
-				A.NBUPDATEDATE,
-				A.NBDELETEYN
-		FROM NOTICE_BOARD A, T_MEMBER B
-		WHERE NBNO =#{nbNo}
-		AND NBDELETEYN='Y'
+				A.FLTITLE, 
+				A.FLCONTENTS, 
+				A.FLINSERTDATE, 
+				A.FLUPDATEDATE,
+				A.FLDELETEYN
+		FROM FAMILY_LETTER A, T_MEMBER B
+		WHERE FLNO =#{flNo}
+		AND FLDELETEYN='Y'
 		AND A.TTNO = B.TTNO
 	</select>
 	

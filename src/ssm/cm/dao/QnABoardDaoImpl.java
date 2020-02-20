@@ -13,45 +13,45 @@ public class QnABoardDaoImpl implements QnABoardDao {
 	private SqlSession session;
 	
 	@Override
-	public List<QnABoardVO> qblist(QnABoardVO nvo) {
+	public List<QnABoardVO> qblist(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
-		return session.selectList("nblist");
+		return session.selectList("qblist");
 	}
 
 	@Override
-	public QnABoardVO qbChaebun(QnABoardVO nvo) {
+	public QnABoardVO qbChaebun(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("nbChaebun");
+		return session.selectOne("qbChaebun");
 	}
 
 	@Override
-	public int qbInsert(QnABoardVO nvo) {
+	public int qbInsert(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
-		return session.insert("nbInsert");
+		return session.insert("qbInsert");
 	}
 
 	@Override
-	public QnABoardVO qbDetail(QnABoardVO nvo) {
+	public QnABoardVO qbDetail(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("nbDetail");
+		return session.selectOne("qbDetail");
 	}
 
 	@Override
-	public int pwdConfirm(QnABoardVO nvo) {
+	public int pwdConfirm(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}
 
 	@Override
-	public int qbUpdate(QnABoardVO nvo) {
+	public int qbUpdate(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
-		return session.update("nbUpdate");
+		return session.update("qbUpdate");
 	}
 
 	@Override
-	public int qbDelete(QnABoardVO nvo) {
+	public int qbDelete(QnABoardVO qvo) {
 		// TODO Auto-generated method stub
-		return session.update("nbDelete");
+		return session.update("qbDelete");
 	}
 
 

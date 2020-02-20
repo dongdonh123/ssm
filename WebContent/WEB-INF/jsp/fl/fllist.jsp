@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
+<%@ page import="ssm.cm.vo.FamilyLetterVO" %>    
 <%@ page import="java.util.List" %>    
    
 <%
-	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
-	NoticeBoardVO data =(NoticeBoardVO)request.getAttribute("data");
+	List<FamilyLetterVO> fllist =(List<FamilyLetterVO>)request.getAttribute("fllist");
+FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,8 +32,8 @@
 			goPage(1);
 		});
 		
-		$("#nbinsertbutton").click(function(){
-			$(location).attr('href',"/noticeboard/nbwirteform.ssm");
+		$("#insertbutton").click(function(){
+			$(location).attr('href',"/familyletter/flwirteform.ssm");
 		});
 		
 		function goPage(){
@@ -43,16 +43,16 @@
 			alert($("#search").val());
 			$("#f_search").attr({
 				"method":"get",
-				"action":"/noticeboard/nblist.ssm"
+				"action":"/familyletter/fllist.ssm"
 			});
 			$("#f_search").submit();
 		}
 		
 		/*제목 클릭시 상세 페이지 이동을 위한 처리 이벤트*/
-		$(".nbDetail").click(function(){
-			var nbNo = $(this).parents("tr").attr("data-num");
-			$("#nbNo").val(nbNo);
-			$("#nbdetailForm").attr('action',"/noticeboard/nbDetail.ssm")
+		$(".flDetail").click(function(){
+			var flNo = $(this).parents("tr").attr("data-num");
+			$("#flNo").val(flNo);
+			$("#fldetailForm").attr('action',"/familyletter/flDetail.ssm")
 			.submit();
 		});
 	});
@@ -60,7 +60,7 @@
 </head>
 <body>
 	<div id="boardContainer">
-		<h1>공지사항 게시판</h1>
+		<h1>가정통신문 게시판</h1>
 		
 		<%-- ======================검색기능 시작============================ --%>
 		
@@ -76,8 +76,8 @@
 						<label>검색조건</label>
 						<select id="search" name="search">
 							<option value="all">전체</option>
-							<option value="nbTitle">제목</option>
-							<option value="nbContents">내용</option>
+							<option value="flTitle">제목</option>
+							<option value="flContents">내용</option>
 							<option value="ttNo">작성자</option>
 						</select>
 						
@@ -109,7 +109,7 @@
 				</thead>
 				<tbody>
 					<%
-					if(nblist.size()==0){
+					if(fllist.size()==0){
 					%>
 					<tr>
 						<td>0</td>
@@ -119,15 +119,15 @@
 					</tr>
 					<%
 					}else{
-						for (int i=0; i<nblist.size(); i++){
-							NoticeBoardVO nvo = nblist.get(i);
+						for (int i=0; i<fllist.size(); i++){
+							FamilyLetterVO nvo = fllist.get(i);
 							int cc = i+1;
 					%>	
-						<tr data-num=<%=nvo.getNbNo() %>>
+						<tr data-num=<%=nvo.getFlNo() %>>
 							<td><%=cc%> </td>
-							<td><span class="nbDetail"><%=nvo.getNbTitle() %></span></td>
-							<td><%=nvo.getNbInsertdate() %></td>
-							<td><%=nvo.gettMembervo() %></td>
+							<td><span class="flDetail"><%=nvo.getFlTitle() %></span></td>
+							<td><%=nvo.getFlInsertdate() %></td>
+							<td><%=nvo.gettMembervo().getTtName() %></td>
 						</tr>
 					<% 		
 						}
@@ -135,12 +135,12 @@
 					%>
 				</tbody>
 			</table>
-			<form id="nblistform" name="nblistform">
-				<input type="button" id="nbinsertbutton" name="nbinsertbutton" value="글쓰기">
+			<form id="fllistform" name="fllistform">
+				<input type="button" id="insertbutton" name="insertbutton" value="글쓰기">
 			</form>
 			<!-- 상세 페이지 이동을 위한 form -->
-			<form name="nbdetailForm" id="nbdetailForm">
-			<input type="hidden" name="nbNo" id="nbNo">
+			<form name="fldetailForm" id="fldetailForm">
+			<input type="hidden" name="flNo" id="flNo">
 			</form>
 		</div>
 	</div>
