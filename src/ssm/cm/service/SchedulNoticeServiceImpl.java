@@ -26,9 +26,9 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 	}
 
 	@Override
-	public SchedulNoticeVO snChaebun(SchedulNoticeVO svo) {
+	public SchedulNoticeVO snChaebun() {
 		SchedulNoticeVO svo_ = null;
-		svo_ =schedulnoticedao.snChaebun(svo);
+		svo_ =schedulnoticedao.snChaebun();
 		return svo_;
 	}
 

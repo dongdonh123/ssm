@@ -8,51 +8,51 @@
 <mapper namespace="ssm.cm.dao.SchedulNoticeDao">
 	
 	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
-	    <result property="ttNo" 			column="TTNO"/>
-	    <result property="ttName" 			column="TTNAME"/>
+	    <result property="ttNo" 			column="TT_NO"/>
+	    <result property="ttName" 			column="TT_NAME"/>
 	</resultMap>
 	
 	<resultMap type="ssm.cm.vo.SchedulNoticeVO" id="snVO">
-	    <result property="snNo" 			column="SNNO"/>
-	    <result property="snTitle" 			column="SNTITLE"/>
-	    <result property="snContents" 		column="SNCONTENTS"/>
-	    <result property="ttNo" 			column="TTNO"/>
-	    <result property="snDate" 			column="SNDATE"/>
-	    <result property="snInsertdate" 	column="SNINSERTDATE"/>
-	    <result property="snUpdatedate" 	column="SNUPDATEDATE"/>
-	    <result property="snDeleteyn" 		column="SNDELETEYN"/>
+	    <result property="snNo" 			column="SN_NO"/>
+	    <result property="snTitle" 			column="SN_TITLE"/>
+	    <result property="snContents" 		column="SN_CONTENTS"/>
+	    <result property="ttNo" 			column="TT_NO"/>
+	    <result property="snDate" 			column="SN_DATE"/>
+	    <result property="snInsertdate" 	column="SN_INSERTDATE"/>
+	    <result property="snUpdatedate" 	column="SN_UPDATEDATE"/>
+	    <result property="snDeleteyn" 		column="SN_DELETEYN"/>
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
 	<sql id="snCommon" >
 		SELECT 
-				A.SNNO, 
-				B.TTNAME, 
-				A.SNTITLE, 
-				A.SNINSERTDATE
+				A.SN_NO, 
+				B.TT_NAME, 
+				A.SN_TITLE, 
+				A.SN_INSERTDATE
 		FROM SCHEDULE_NOTICE A, T_MEMBER B 
-		WHERE SNDELETEYN ='Y'
-		AND A.TTNO = B.TTNO
+		WHERE SN_DELETEYN ='Y'
+		AND A.TT_NO = B.TT_NO
 		
 		<trim prefix="AND" >
 			<if test="search=='snTitle' ">
-				<![CDATA[SNTITLE LIKE '%'|| #{keyword} ||'%']]>
+				<![CDATA[SN_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 			<if test="search=='snContents'">
-				<![CDATA[SNCONTENTS LIKE '%'|| #{keyword} ||'%']]>
+				<![CDATA[SN_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 			<if test="search=='ttNo'">
-				<![CDATA[TTNO LIKE '%'|| #{keyword} ||'%']]>
+				<![CDATA[TT_NO LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
 	</sql>
 	
 	<select id ="snlist" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 			SELECT 
-					SNNO, 
-					TTNAME, 
-					SNTITLE, 
-					SNINSERTDATE
+					SN_NO, 
+					TT_NAME, 
+					SN_TITLE, 
+					SN_INSERTDATE
 					
 			FROM 
 			  (	SELECT 
@@ -66,56 +66,57 @@
 	<select id="snChaebun" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 		
 		SELECT
-		TO_CHAR(NVL(MAX(SUBSTR(SNNO,-4)),0)+1) SNNO
+		TO_CHAR(NVL(MAX(SUBSTR(SN_NO,-4)),0)+1) SN_NO
 		FROM SCHEDULE_NOTICE
 		
 	</select>
 	
 	<insert id="snInsert" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
-		INSERT INTO SCHEDULE_NOTICE(SNNO,TTNO,SNTITLE,SNCONTENTS,SNDATE,SNINSERTDATE,SNDELETEYN)
-		VALUES(#{snNo},#{ttNo},#{snTitle},#{snContents},#{nbDate},SYSDATE,'Y')
+		INSERT INTO SCHEDULE_NOTICE(SN_NO,TT_NO,SN_TITLE,SN_CONTENTS,SN_DATE,SN_INSERTDATE,SN_DELETEYN)
+		VALUES(#{snNo},#{ttNo},#{snTitle},#{snContents},#{snDate},SYSDATE,'Y')
 	
 	</insert>
 	
 	<select id="pwdConfirm" parameterType="ssm.cm.vo.SchedulNoticeVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM SCHEDULE_NOTICE WHERE SNNO = #{snNo}),0)as result
+		SELECT NVL((SELECT 1 FROM SCHEDULE_NOTICE WHERE SN_NO = #{snNo}),0)as result
 		FROM dual
 	</select>
 	
 	<update id="snUpdate" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
 		UPDATE SCHEDULE_NOTICE SET 
-								 SNTITLE = #{snTitle}
-								,SNCONTENTS = #{snContents}
-								,SNDATE = #{snDate}
-								,SNUPDATEDATE = SYSDATE
-		WHERE 					 sNNO = #{snNo}						
-		AND  					 SNDELETEYN = 'Y'
+								 SN_TITLE = #{snTitle}
+								,SN_CONTENTS = #{snContents}
+								,SN_DATE = #{snDate}
+								,SN_UPDATEDATE = SYSDATE
+		WHERE 					 SN_NO = #{snNo}						
+		AND  					 SN_DELETEYN = 'Y'
 	</update>
 	
 	<update id="snDelete" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
 		UPDATE SCHEDULE_NOTICE SET 
-								 SNUPDATEDATE = SYSDATE
-								,SNDELETEYN = 'N' 
-		WHERE 					 SNNO = #{snNo}						
-		AND  					 SNDELETEYN = 'Y'
+								 SN_UPDATEDATE = SYSDATE
+								,SN_DELETEYN = 'N' 
+		WHERE 					 SN_NO = #{snNo}						
+		AND  					 SN_DELETEYN = 'Y'
 	</update>
 	
 	<select id="snDetail" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 		SELECT
-				A.SNNO, 
-				B.TTNAME, 
-				A.SNTITLE, 
-				A.SNCONTENTS, 
-				A.SNINSERTDATE, 
-				A.SNUPDATEDATE,
-				A.SNDELETEYN
+				A.SN_NO, 
+				B.TT_NAME, 
+				A.SN_TITLE, 
+				A.SN_DATE, 
+				A.SN_CONTENTS, 
+				A.SN_INSERTDATE, 
+				A.SN_UPDATEDATE,
+				A.SN_DELETEYN
 		FROM SCHEDULE_NOTICE A, T_MEMBER B
-		WHERE SNNO =#{snNo}
-		AND SNDELETEYN='Y'
-		AND A.TTNO = B.TTNO
+		WHERE SN_NO =#{snNo}
+		AND SN_DELETEYN='Y'
+		AND A.TT_NO = B.TT_NO
 	</select>
 	
 </mapper>

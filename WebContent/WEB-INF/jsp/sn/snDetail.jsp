@@ -64,11 +64,15 @@
 							$("#msg").text("");
 							if(butChk==1){
 								goUrl="/schedulnotice/snupdateForm.ssm";
+								window.open("","pop1","width=600,height=450");
+								$("#f_data").attr("action",goUrl);
+								$("#f_data").attr("target","pop1");
+								$("#f_data").submit();
 							}else if(butChk==2){
 								goUrl="/schedulnotice/snDelete.ssm";
+								$("#f_data").attr("action",goUrl);
+								$("#f_data").submit();
 							}
-							$("#f_data").attr("action",goUrl);
-							$("#f_data").submit();
 						}
 					}
 				});	
@@ -108,6 +112,10 @@
 					<td>제목</td>
 					<td colspan="3"><%=svo.getSnTitle() %></td>
 				</tr>
+				<tr>
+					<td>날짜</td>
+					<td colspan="3"><%=svo.getSnDate() %></td>
+				</tr>
 				<tr height="300px">
 					<td>내용</td>
 					<td colspan="3" ><%=svo.getSnContents() %></td>
@@ -122,7 +130,6 @@
 			<td>
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
-						<input type="hidden" name="snNo" id="snNo" value="<%=svo.getSnNo() %>" />
 						<label for="ttpw" id="l_pwd">비밀번호 : </label>
 						<input type="password" name="snNo" id="snNo" />
 						<input type="button" name="pwdBut" id="pwdBut" value="확인" />

@@ -7,7 +7,7 @@ import ssm.cm.vo.SchedulNoticeVO;
 
 public interface SchedulNoticeService {
 	public List<SchedulNoticeVO> snlist(SchedulNoticeVO svo);
-	public SchedulNoticeVO snChaebun(SchedulNoticeVO svo);
+	public SchedulNoticeVO snChaebun();
 	public int snInsert(SchedulNoticeVO svo);
 	public SchedulNoticeVO snDetail(SchedulNoticeVO svo);
 	public int pwdConfirm(SchedulNoticeVO svo);

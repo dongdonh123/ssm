@@ -129,7 +129,6 @@
 			<td>
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
-						<input type="hidden" name="nbno" id="nbno" value="<%=nvo.getNbNo() %>" />
 						<label for="ttpw" id="l_pwd">비밀번호 : </label>
 						<input type="password" name="nbNo" id="nbNo" />
 						<input type="button" name="pwdBut" id="pwdBut" value="확인" />

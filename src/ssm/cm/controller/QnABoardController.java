@@ -62,37 +62,14 @@ public class QnABoardController {
 	public String qbinsert(@ModelAttribute QnABoardVO qvo, HttpServletRequest req){
 		System.out.println("컨트롤러 qbwirte왔당");
 		String url="";
-		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
-		String daFileName="";
 		int result=0;
-		boolean bval= false;
-		int size=10*1024*1024;
-		try{
-			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
 			
-			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//입력한 파일명받아오는거
-			String fileName=multi.getFilesystemName(file);//멀티파트참조변수로 바꾸는거
-			daFileName="../"+"upload"+"/"+fileName;//경로추가해 합치는거
-			
-			String ssNo=multi.getParameter("ssNo");
-			String qbTitle=multi.getParameter("qbTitle");
-			String qbContents=multi.getParameter("qbContents");
-			
-			qvo.setSsNo(ssNo);
-			qvo.setQbTitle(qbTitle);
-			qvo.setQbContents(qbContents);
-			qvo.setQbFile(daFileName);
-			
-			QnABoardVO qvo_ =qnaboardservice.qbChaebun(qvo); 
-			System.out.println(qvo_.getQbNo());
-			String no =qvo_.getQbNo();
-			qvo.setQbNo(QnABoardChaebun.qbchaebun(no));
-			System.out.println(qvo.getQbNo());
-			result=qnaboardservice.qbInsert(qvo);
-		}catch(Exception e){
-			System.out.println("에러는 >>>: " + e);
-		}
+		QnABoardVO qvo_ =qnaboardservice.qbChaebun(qvo); 
+		System.out.println(qvo_.getQbNo());
+		String no =qvo_.getQbNo();
+		qvo.setQbNo(QnABoardChaebun.qbchaebun(no));
+		System.out.println(qvo.getQbNo());
+		result=qnaboardservice.qbInsert(qvo);
 		boolean bResult = result > 0;
 			
 		if(bResult) url="/qb/qblist.ssm";
@@ -166,7 +143,6 @@ public class QnABoardController {
 			
 			qvo.setQbTitle(qbTitle);
 			qvo.setQbContents(qbContents);
-			qvo.setQbFile(daFileName);
 			qvo.setQbNo(nbNo);
 			
 			result=qnaboardservice.qbUpdate(qvo);

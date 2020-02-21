@@ -9,7 +9,6 @@ public class QnABoardVO extends CommonVO{
 	private String ssNo;
 	private String qbTitle;
 	private String qbContents;
-	private String qbFile;
 	private String qbInsertdate;
 	private String qbUpdatedate;
 	private String qbDeleteyn;
@@ -64,12 +63,7 @@ public class QnABoardVO extends CommonVO{
 	public void setQbDeleteyn(String qbDeleteyn) {
 		this.qbDeleteyn = qbDeleteyn;
 	}
-	public String getQbFile() {
-		return qbFile;
-	}
-	public void setQbFile(String qbFile) {
-		this.qbFile = qbFile;
-	}
+	
 	
 	
 	

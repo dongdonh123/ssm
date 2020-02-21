@@ -8,52 +8,51 @@
 <mapper namespace="ssm.cm.dao.QnABoardDao">
 	
 	<resultMap type="ssm.mi.vo.SmemberVO" id="SmemberVO">
-	    <result property="ssNo" 			column="SSNO"/>
-	    <result property="ssName" 			column="SSNAME"/>
+	    <result property="ssNo" 			column="SS_NO"/>
+	    <result property="ssName" 			column="SS_NAME"/>
 	</resultMap>
 	
 	<resultMap type="ssm.cm.vo.QnABoardVO" id="qbVO">
-	    <result property="qbNo" 			column="QBNO"/>
-	    <result property="qbTitle" 			column="QBTITLE"/>
-	    <result property="qbContents" 		column="QBCONTENTS"/>
-	    <result property="ssNo" 			column="SSNO"/>
-	    <result property="qbFile" 			column="QBFILE"/>
-	    <result property="qbInsertdate" 	column="QBINSERTDATE"/>
-	    <result property="qbUpdatedate" 	column="QBUPDATEDATE"/>
-	    <result property="qbDeleteyn" 		column="QBDELETEYN"/>
-	    <result property="qbSecretyn" 		column="QBSECRETYN"/>
+	    <result property="qbNo" 			column="QB_NO"/>
+	    <result property="qbTitle" 			column="QB_TITLE"/>
+	    <result property="qbContents" 		column="QB_CONTENTS"/>
+	    <result property="ssNo" 			column="SS_NO"/>
+	    <result property="qbInsertdate" 	column="QB_INSERTDATE"/>
+	    <result property="qbUpdatedate" 	column="QB_UPDATEDATE"/>
+	    <result property="qbDeleteyn" 		column="QB_DELETEYN"/>
+	    <result property="qbSecretyn" 		column="QB_SECRETYN"/>
 	    <collection property="sMembervo" 	resultMap="SmemberVO"/>
 	</resultMap>
 	
 	<sql id="qbCommon" >
 		SELECT 
-				A.QBNO, 
-				B.SSNAME, 
-				A.QBTITLE, 
-				A.QBINSERTDATE
+				A.QB_NO, 
+				B.SS_NAME, 
+				A.QB_TITLE, 
+				A.QB_INSERTDATE
 		FROM QNA_BOARD A, S_MEMBER B 
-		WHERE QBDELETEYN ='Y'
-		AND A.SSNO = B.SSNO
+		WHERE QB_DELETEYN ='Y'
+		AND A.SS_NO = B.SS_NO
 		
 		<trim prefix="AND" >
 			<if test="search=='qbTitle' ">
-				<![CDATA[QBTITLE LIKE '%'|| #{keyword} ||'%']]>
+				<![CDATA[QB_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 			<if test="search=='qbContents'">
-				<![CDATA[QBCONTENTS LIKE '%'|| #{keyword} ||'%']]>
+				<![CDATA[QB_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 			<if test="search=='ssNo'">
-				<![CDATA[SSNO LIKE '%'|| #{keyword} ||'%']]>
+				<![CDATA[SS_NO LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
 	</sql>
 	
 	<select id ="qblist" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
 			SELECT 
-					QBNO, 
-					SSNAME, 
-					QBTITLE, 
-					QBINSERTDATE
+					QB_NO, 
+					SS_NAME, 
+					QB_TITLE, 
+					QB_INSERTDATE
 					
 			FROM 
 			  (	SELECT 
@@ -67,56 +66,55 @@
 	<select id="qbChaebun" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
 		
 		SELECT
-		TO_CHAR(NVL(MAX(SUBSTR(QBNO,-4)),0)+1) QBNO
+		TO_CHAR(NVL(MAX(SUBSTR(QB_NO,-4)),0)+1) QB_NO
 		FROM QNA_BOARD
 		
 	</select>
 	
 	<insert id="qbInsert" parameterType="ssm.cm.vo.QnABoardVO">
 	
-		INSERT INTO QNA_BOARD(QBNO,SSNO,QBTITLE,QBCONTENTS,QBFILE,QBINSERTDATE,QBDELETEYN)
-		VALUES(#{qbNo},#{ssNo},#{qbTitle},#{qbContents},#{qbFile},SYSDATE,'Y')
+		INSERT INTO QNA_BOARD(QB_NO,SS_NO,QB_TITLE,QB_CONTENTS,QB_INSERTDATE,QB_DELETEYN)
+		VALUES(#{qbNo},#{ssNo},#{qbTitle},#{qbContents},SYSDATE,'Y')
 	
 	</insert>
 	
 	<select id="pwdConfirm" parameterType="ssm.cm.vo.QnABoardVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM QNA_BOARD WHERE QBNO = #{qbNo}),0)as result
+		SELECT NVL((SELECT 1 FROM QNA_BOARD WHERE QB_NO = #{qbNo}),0)as result
 		FROM dual
 	</select>
 	
 	<update id="qbUpdate" parameterType="ssm.cm.vo.QnABoardVO">
 	
 		UPDATE QNA_BOARD SET 
-								 QBTITLE = #{qbTitle}
-								,QBCONTENTS = #{qbContents}
-								,QBFILE = #{qbFile}
-								,QBUPDATEDATE = SYSDATE
-		WHERE 					 QBNO = #{qbNo}						
-		AND  					 QBDELETEYN = 'Y'
+								 QB_TITLE = #{qbTitle}
+								,QB_CONTENTS = #{qbContents}
+								,QB_UPDATEDATE = SYSDATE
+		WHERE 					 QB_NO = #{qbNo}						
+		AND  					 QB_DELETEYN = 'Y'
 	</update>
 	
 	<update id="qbDelete" parameterType="ssm.cm.vo.QnABoardVO">
 	
 		UPDATE SCHEDULE_NOTICE SET 
-								 QBUPDATEDATE = SYSDATE
-								,QBDELETEYN = 'N' 
-		WHERE 					 QBNO = #{qbNo}						
-		AND  					 QBDELETEYN = 'Y'
+								 QB_UPDATEDATE = SYSDATE
+								,QB_DELETEYN = 'N' 
+		WHERE 					 QB_NO = #{qbNo}						
+		AND  					 QB_DELETEYN = 'Y'
 	</update>
 	
 	<select id="qbDetail" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
 		SELECT
-				A.QBNO, 
-				B.SSNAME, 
-				A.QBTITLE, 
-				A.QBCONTENTS, 
-				A.QBINSERTDATE, 
-				A.QBUPDATEDATE,
-				A.QBDELETEYN
+				A.QB_NO, 
+				B.SS_NAME, 
+				A.QB_TITLE, 
+				A.QB_CONTENTS, 
+				A.QB_INSERTDATE, 
+				A.QB_UPDATEDATE,
+				A.QB_DELETEYN
 		FROM QNA_BOARD A, S_MEMBER B
-		WHERE SSNO =#{ssNo}
-		AND QBDELETEYN='Y'
-		AND A.SSNO = B.SSNO
+		WHERE SS_NO =#{ssNo}
+		AND QB_DELETEYN='Y'
+		AND A.SS_NO = B.SS_NO
 	</select>
 	
 </mapper>

@@ -21,7 +21,7 @@ public class SchedulNoticeDaoImpl implements SchedulNoticeDao {
 	}
 
 	@Override
-	public SchedulNoticeVO snChaebun(SchedulNoticeVO svo) {
+	public SchedulNoticeVO snChaebun() {
 		// TODO Auto-generated method stub
 		return session.selectOne("snChaebun");
 	}

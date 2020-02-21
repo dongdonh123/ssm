@@ -15,6 +15,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
+		$("#calendarMode").hide(); 
 		
 		/*검색 대상이 변경될 때마다 처리 이벤트*/
 		$("#search").change(function(){
@@ -33,7 +34,8 @@
 		});
 		
 		$("#insertbutton").click(function(){
-			$(location).attr('href',"/schedulnotice/snwirteform.ssm");
+			
+			window.open("/schedulnotice/snwirteform.ssm","pop1","width=600,height=450");
 		});
 		
 		function goPage(){
@@ -55,11 +57,26 @@
 			$("#sndetailForm").attr('action',"/schedulnotice/snDetail.ssm")
 			.submit();
 		});
-	});
+		
+	});	
+	
+	function showbutton(actionName){
+		if('L' == actionName){
+			$("#calendarMode").hide(); 
+			$("#boardMode").show();
+		}
+		if('C' == actionName){
+			$("#boardMode").hide(); 
+			$("#calendarMode").show(); 
+		}
+	}
+
+
+	
 	</script>
 </head>
 <body>
-	<div id="boardContainer">
+	<div id="boardMode">
 		<h1>학교일정 게시판</h1>
 		
 		<%-- ======================검색기능 시작============================ --%>
@@ -83,9 +100,14 @@
 						
 						<input type="text" name="keyword" id="keyword" value="검색어를입력하세요" />
 						<input type="button" value="검색" id="searchBut" />
+						<input type="button" id="insertbutton" name="insertbutton" value="글쓰기">
 						</td>
 					</tr>
 				</table>
+			</form>
+			<form id="ajaxform" name="ajaxform" align="left">
+				<input type="button" onclick="showbutton('L')" value="목록형" disabled>
+				<input type="button" onclick="showbutton('C')" value="캘린더형">
 			</form>
 		</div>
 		
@@ -118,9 +140,11 @@
 						<td></td>
 					</tr>
 					<%
+					
 					}else{
-						for (int i=0; i<snlist.size(); i++){
-							SchedulNoticeVO svo = snlist.get(i);
+						int ss = snlist.size();
+						for (int i=(ss-1); i>=0; i--){
+							SchedulNoticeVO svo = (SchedulNoticeVO)snlist.get(i);
 							int cc = i+1;
 					%>	
 						<tr data-num=<%=svo.getSnNo() %>>
@@ -135,9 +159,6 @@
 					%>
 				</tbody>
 			</table>
-			<form id="snlistform" name="snlistform">
-				<input type="button" id="insertbutton" name="insertbutton" value="글쓰기">
-			</form>
 			<!-- 상세 페이지 이동을 위한 form -->
 			<form name="sndetailForm" id="sndetailForm">
 			<input type="hidden" name="snNo" id="snNo">
@@ -145,5 +166,47 @@
 		</div>
 	</div>
 	
+	
+	<div id="calendarMode">
+		<h1>학교일정 게시판</h1>
+		
+		<%-- ======================검색기능 시작============================ --%>
+		
+		<div id="boardSearch">
+			<form id="f_search" name="f_search">
+				<table summary="검색">
+					<colgroup>
+						<col width="70%"></col>
+						<col width="30%"></col>
+					</colgroup>
+					<tr>
+						<td>
+						<label>검색조건</label>
+						<select id="search" name="search">
+							<option value="all">전체</option>
+							<option value="snTitle">제목</option>
+							<option value="snContents">내용</option>
+							<option value="ttNo">작성자</option>
+						</select>
+						
+						<input type="text" name="keyword" id="keyword" value="검색어를입력하세요" />
+						<input type="button" value="검색" id="searchBut" />
+						<input type="button" id="insertbutton" name="insertbutton" value="글쓰기">
+						</td>
+					</tr>
+				</table>
+			</form>
+			<form id="ajaxform" name="ajaxform" align="left">
+				<input type="button" onclick="showbutton('L')" value="목록형" >
+				<input type="button" onclick="showbutton('C')" value="캘린더형" disabled>
+			</form>
+		</div>
+		
+		<%-- =======================검색기능 끝============================ --%>
+		
+		<div>
+			캘린더 모드 여기에 캘린더 api넣을거야
+		</div>
+	</div>
 </body>
 </html>
