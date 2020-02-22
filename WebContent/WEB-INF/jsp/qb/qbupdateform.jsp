@@ -1,61 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
+<%@ page import="ssm.cm.vo.QnABoardVO" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/kk/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    $(document).ready(function(){
 	    
-	    	var oEditors = [];
-	    	nhn.husky.EZCreator.createInIFrame({
-	    	 oAppRef: oEditors,
-	    	 elPlaceHolder: "nbContents",
-	    	 sSkinURI: "/kk/SmartEditor2Skin_ko_KR.html",
-	    	 fCreator: "createSEditor2"
-	    	});
+	    	
 	    	
 	    	$("#submitbutton").click(function(){
 	    		
-	    		oEditors.getById["nbContents"].exec("UPDATE_CONTENTS_FIELD", []);
-	    		$("#nbupdateform").attr('action','/noticeboard/nbupdate.ssm').submit();
+	    		$("#qbupdateform").attr('action','/qnaboard/qbupdate.ssm').submit();
 	    	});
 	    });
     </script>
 </head>
 <body>
 	<%
-	NoticeBoardVO nvo =(NoticeBoardVO)request.getAttribute("updateData");
+	QnABoardVO qvo =(QnABoardVO)request.getAttribute("updateData");
 	%>
-	<form id="nbupdateform" name="nbupdateform" enctype="multipart/form-data" method="post">
+	<form id="qbupdateform" name="qbupdateform">
 		<table border="1">
-			<colgroup>
-				<col width="100px"></col>
-				<col width="800px"></col>
-			</colgroup>
 			<tr>
-				<td colspan="2">공지사항게시판 글수정하기<td>
+				<td colspan="2">Q&A게시판 글수정하기<td>
 			</tr>
 			<tr>
 				<td>글제목</td>
-				<td><input type="text" id="nbTitle" name="nbTitle" size="110"value="<%=nvo.getNbTitle()%>"></td>
+				<td><input type="text" id="qbTitle" name="qbTitle" value="<%=qvo.getQbTitle()%>"></td>
 			</tr>
 			<tr>
 				<td>글내용</td>
-			<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" ><%=nvo.getNbContents()%></textarea></td>
+			<td><textarea name="qbContents" id="qbContents" rows="10" cols="50" ><%=qvo.getQbContents()%></textarea></td>
 			</tr>
 			<tr>
-				<td>첨부파일1</td>
-				<td><input type="file" id="nbFile" name="nbFile"></td>
+				<td>비밀글 설정</td>
+				<td>
+					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="N">공개글
+					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="Y" checked>비밀글
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
 					<input type="button" id ="submitbutton" name="submitbutton" value="수정">
-					<input type="hidden" id ="nbNo" name="nbNo" value="<%=nvo.getNbNo()%>">
+					<input type="hidden" id ="qbNo" name="qbNo" value="<%=qvo.getQbNo()%>">
 				</td>
 			</tr>
 		</table>

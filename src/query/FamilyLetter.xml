@@ -31,7 +31,7 @@
 				A.FL_TITLE, 
 				A.FL_INSERTDATE
 		FROM FAMILY_LETTER A, T_MEMBER B 
-		WHERE FLDELETEYN ='Y'
+		WHERE FL_DELETEYN ='Y'
 		AND A.TT_NO = B.TT_NO
 		
 		<trim prefix="AND" >
@@ -41,8 +41,8 @@
 			<if test="search=='flContents'">
 				<![CDATA[FL_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-			<if test="search=='flNo'">
-				<![CDATA[TT_NO LIKE '%'|| #{keyword} ||'%']]>
+			<if test="search=='ttName'">
+				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
 	</sql>

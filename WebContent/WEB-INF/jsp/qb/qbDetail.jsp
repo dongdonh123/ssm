@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-<%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
+<%@ page import="ssm.cm.vo.QnABoardVO" %>    
     
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,7 @@
 			
 			/* 목록 버튼 클릭 시 처리 이벤트 */
 			$("#boardList").click(function(){
-				location.href="/noticeboard/nblist.ssm";
+				location.href="/qnaboard/qblist.ssm";
 			});
 			
 		});//end of 펑션
@@ -50,7 +50,7 @@
 		function pwdConfirm(){
 			
 				$.ajax({
-					url:"/noticeboard/pwdConfirm.ssm",
+					url:"/qnaboard/pwdConfirm.ssm",
 					type:"POST",
 					data:$("#pwcheckform").serialize(),
 					error:function(){
@@ -63,9 +63,9 @@
 						}else if(resultData ==1){ //일치할 경우
 							$("#msg").text("");
 							if(butChk==1){
-								goUrl="/noticeboard/nbupdateForm.ssm";
+								goUrl="/qnaboard/qbupdateForm.ssm";
 							}else if(butChk==2){
-								goUrl="/noticeboard/nbDelete.ssm";
+								goUrl="/qnaboard/qbDelete.ssm";
 							}
 							$("#f_data").attr("action",goUrl);
 							$("#f_data").submit();
@@ -79,12 +79,11 @@
 </head>
 <body>
 	<%
-	NoticeBoardVO nvo =(NoticeBoardVO)request.getAttribute("nbdetail");
+	QnABoardVO qvo =(QnABoardVO)request.getAttribute("qbdetail");
 	%>
 	<h3>글상세</h3>
 	<form name="f_data" id="f_data" method="POST">
-		<input type="hidden" id="nbNo" name="nbNo" value="<%=nvo.getNbNo() %>" />
-		<input type="hidden" name="nbfile" value="<%=nvo.getNbFile() %>" />
+		<input type="hidden" id="qbNo" name="qbNo" value="<%=qvo.getQbNo() %>" />
 	</form>
 	
 	<%-- ========================비밀번호 확인 버튼 및 버튼 추가 종료 ================================ --%>
@@ -94,30 +93,25 @@
 		<table border="1">
 			<colgroup>
 				<col width="100px" />
-				<col width="100px" />
-				<col width="300px" />
-				<col width="300px" />
+				<col width="200px" />
+				<col width="250px" />
+				<col width="250px" />
 				</colgroup>
 			<tbody>
 				<tr>
 					<td>작성자</td>
-					<td><%=nvo.gettMembervo().getTtName() %></td>
-					<td>작성일:<%=nvo.getNbInsertdate() %></td>
-					<td>수정일:<%=nvo.getNbUpdatedate() %></td>
+					<td><%=qvo.getsMembervo().getSsName() %></td>
+					<td>작성일:<%=qvo.getQbInsertdate() %></td>
+					<td>수정일:<%=qvo.getQbUpdatedate() %></td>
 				</tr>
 				<tr>
 					<td>제목</td>
-					<td colspan="3"><%=nvo.getNbTitle() %></td>
+					<td><%=qvo.getQbTitle() %></td>
+					<td colspan="2">비밀글설정 <%=qvo.getQbSecretyn() %></td>
 				</tr>
 				<tr height="300px">
 					<td>내용</td>
-					<td colspan="3" ><%=nvo.getNbContents() %></td>
-				</tr>
-				<tr>
-					<td>첨부파일 파일</td>
-					<td colspan="3">
-						<img src=<%=nvo.getNbFile() %> border=0 width="320" height="400">
-					</td>
+					<td colspan="3" ><%=qvo.getQbContents() %></td>
 				</tr>
 			</tbody>
 		</table>
@@ -129,9 +123,8 @@
 			<td>
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
-						<input type="hidden" name="nbno" id="nbno" value="<%=nvo.getNbNo() %>" />
-						<label for="ttpw" id="l_pwd">비밀번호 : </label>
-						<input type="password" name="nbNo" id="nbNo" />
+						<label for="sspw" id="l_pwd">비밀번호 : </label>
+						<input type="password" name="qbNo" id="qbNo" />
 						<input type="button" name="pwdBut" id="pwdBut" value="확인" />
 						<input type="button" name="cancelBut" id="cancelBut" value="취소" />
 						

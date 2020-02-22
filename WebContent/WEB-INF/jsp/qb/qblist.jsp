@@ -60,7 +60,7 @@
 </head>
 <body>
 	<div id="boardContainer">
-		<h1>공지사항 게시판</h1>
+		<h1>Q&A 게시판</h1>
 		
 		<%-- ======================검색기능 시작============================ --%>
 		
@@ -78,7 +78,7 @@
 							<option value="all">전체</option>
 							<option value="qbTitle">제목</option>
 							<option value="qbContents">내용</option>
-							<option value="ssNo">작성자</option>
+							<option value="ssName">작성자</option>
 						</select>
 						
 						<input type="text" name="keyword" id="keyword" value="검색어를입력하세요" />

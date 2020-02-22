@@ -41,8 +41,8 @@
 			<if test="search=='nbContents'">
 				<![CDATA[NB_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-			<if test="search=='ttNo'">
-				<![CDATA[TT_NO LIKE '%'|| #{keyword} ||'%']]>
+			<if test="search=='ttName'">
+				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
 	</sql>

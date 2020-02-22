@@ -5,25 +5,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/kk/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    
 	    $(document).ready(function(){
-	    
-	    	var oEditors = [];
-	    	nhn.husky.EZCreator.createInIFrame({
-	    	 oAppRef: oEditors,
-	    	 elPlaceHolder: "nbContents",
-	    	 sSkinURI: "/kk/SmartEditor2Skin_ko_KR.html",
-	    	 fCreator: "createSEditor2"
-	    	});
 	    	
 	    	$("#submitbutton").click(function(){
 	    		
-	    		oEditors.getById["nbContents"].exec("UPDATE_CONTENTS_FIELD", []);
-	    		
-	    		$("#nbwirteform").attr('action','/noticeboard/nbwirte.ssm').submit();
+	    		$("#qbwirteform").attr('action','/qnaboard/qbwirte.ssm').submit();
 	    	});
 	    });
 	    
@@ -32,30 +21,29 @@
     </script>
 </head>
 <body>
-	<form id="nbwirteform" name="nbwirteform" enctype="multipart/form-data" method="post">
+	<form id="qbwirteform" name="qbwirteform">
 		<table border="1">
-			<colgroup>
-				<col width="100px"></col>
-				<col width="800px"></col>
-			</colgroup>
 			<tr>
 				<td colspan="2">공지사항게시판 글입력하기</td>
 			</tr>
 			<tr>
 				<td>작성자</td><!--  ttno는 세션에서 히든으로 넣기 -->
-				<td><input type="text" id="ttNo" name="ttNo" value="">ttno는 세션에서 히든으로 넣기(T8200003)</td>
+				<td><input type="text" id=ssNo" name="ssNo" value="">ssno는 세션에서 히든으로 넣기(S7200005)</td>
 			</tr>
 			<tr>
 				<td>글제목</td>
-				<td><input type="text" id="nbTitle" name="nbTitle"></td>
+				<td><input type="text" id="qbTitle" name="qbTitle"></td>
 			</tr>
 			<tr>
 				<td>글내용</td>
-				<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" >에디터에 기본으로 삽입할 글(수정 모드)이 없다면 이 value 값을 지정하지 않으시면 됩니다.</textarea></td>
+				<td><textarea name="qbContents" id="qbContents" rows="10" cols="50" ></textarea></td>
 			</tr>
 			<tr>
-				<td>첨부파일1</td>
-				<td><input type="file" id="nbFile" name="nbFile"></td>
+				<td>비밀글 설정</td>
+				<td>
+					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="N">공개글
+					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="Y" checked>비밀글
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2">

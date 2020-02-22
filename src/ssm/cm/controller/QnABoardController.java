@@ -59,20 +59,19 @@ public class QnABoardController {
 	
 	/*글쓰기 구현*/
 	@RequestMapping(value="qbwirte")
-	public String qbinsert(@ModelAttribute QnABoardVO qvo, HttpServletRequest req){
+	public String qbinsert(@ModelAttribute QnABoardVO qvo){
 		System.out.println("컨트롤러 qbwirte왔당");
+		System.out.println("qvo.getQbSecretyn()>>>:"+qvo.getQbSecretyn());
 		String url="";
 		int result=0;
 			
 		QnABoardVO qvo_ =qnaboardservice.qbChaebun(qvo); 
-		System.out.println(qvo_.getQbNo());
 		String no =qvo_.getQbNo();
 		qvo.setQbNo(QnABoardChaebun.qbchaebun(no));
-		System.out.println(qvo.getQbNo());
 		result=qnaboardservice.qbInsert(qvo);
 		boolean bResult = result > 0;
 			
-		if(bResult) url="/qb/qblist.ssm";
+		if(bResult) url="/qnaboard/qblist.ssm";
 		System.out.println("url >>>: " + url);		
 		return "redirect:"+url;
 	}
@@ -120,38 +119,14 @@ public class QnABoardController {
 	
 	/*글쓰기 구현*/
 	@RequestMapping(value="qbupdate")
-	public String nbupdate(@ModelAttribute QnABoardVO qvo, HttpServletRequest req){
+	public String nbupdate(@ModelAttribute QnABoardVO qvo){
 		System.out.println("컨트롤러 qbupdate왔당");
 		
 		String url="";
-		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
-		String daFileName="";
-		int result=0;
-		boolean bval= false;
-		int size=10*1024*1024;
-		try{
-			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
-			
-			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//입력한 파일명받아오는거
-			String fileName=multi.getFilesystemName(file);//멀티파트참조변수로 바꾸는거
-			daFileName="../"+"upload"+"/"+fileName;//경로추가해 합치는거
-			
-			String qbTitle=multi.getParameter("qbTitle");
-			String qbContents=multi.getParameter("qbContents");
-			String nbNo=multi.getParameter("qbNo");
-			
-			qvo.setQbTitle(qbTitle);
-			qvo.setQbContents(qbContents);
-			qvo.setQbNo(nbNo);
-			
-			result=qnaboardservice.qbUpdate(qvo);
-		}catch(Exception e){
-			System.out.println("에러는 >>>: " + e);
-		}
+		int result=qnaboardservice.qbUpdate(qvo);
 		boolean bResult = result > 0;
 			
-		if(bResult) url="/qb/qblist.ssm";
+		if(bResult) url="/qnaboard/qblist.ssm";
 		return "redirect:"+url;
 	}
 	
@@ -165,7 +140,7 @@ public class QnABoardController {
 		
 		boolean bResult = result > 0;
 		
-		if(bResult) url="/qb/qblist.ssm";
+		if(bResult) url="/qnaboard/qblist.ssm";
 		return "redirect:"+url;
 		
 		

@@ -41,8 +41,8 @@
 			<if test="search=='qbContents'">
 				<![CDATA[QB_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-			<if test="search=='ssNo'">
-				<![CDATA[SS_NO LIKE '%'|| #{keyword} ||'%']]>
+			<if test="search=='ssName'">
+				<![CDATA[SS_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
 	</sql>
@@ -73,8 +73,22 @@
 	
 	<insert id="qbInsert" parameterType="ssm.cm.vo.QnABoardVO">
 	
-		INSERT INTO QNA_BOARD(QB_NO,SS_NO,QB_TITLE,QB_CONTENTS,QB_INSERTDATE,QB_DELETEYN)
-		VALUES(#{qbNo},#{ssNo},#{qbTitle},#{qbContents},SYSDATE,'Y')
+		INSERT INTO QNA_BOARD(QB_NO,
+							  SS_NO,
+							  QB_TITLE,
+							  QB_CONTENTS,
+							  QB_DELETEYN,
+							  QB_INSERTDATE,
+							  QB_SECRETYN
+							  )
+		VALUES(#{qbNo},
+			   #{ssNo},
+			   #{qbTitle},
+			   #{qbContents},
+			   'Y',
+			   SYSDATE,
+			   #{qbSecretyn}
+			   )
 	
 	</insert>
 	
@@ -95,7 +109,7 @@
 	
 	<update id="qbDelete" parameterType="ssm.cm.vo.QnABoardVO">
 	
-		UPDATE SCHEDULE_NOTICE SET 
+		UPDATE QNA_BOARD SET 
 								 QB_UPDATEDATE = SYSDATE
 								,QB_DELETEYN = 'N' 
 		WHERE 					 QB_NO = #{qbNo}						
@@ -110,9 +124,10 @@
 				A.QB_CONTENTS, 
 				A.QB_INSERTDATE, 
 				A.QB_UPDATEDATE,
-				A.QB_DELETEYN
+				A.QB_DELETEYN,
+				A.QB_SECRETYN
 		FROM QNA_BOARD A, S_MEMBER B
-		WHERE SS_NO =#{ssNo}
+		WHERE QB_NO =#{qbNo}
 		AND QB_DELETEYN='Y'
 		AND A.SS_NO = B.SS_NO
 	</select>

@@ -16,10 +16,11 @@
  <a href="/familyletter/fllist.ssm">[가정통신문 게시판]</a>페이징,업로드다운로드,css<br>
  가정통신문:파일업로드다운로드기능있음/네이버에디터
  <br><br>
- <a href="/qnaboard/qblist.ssm">[Q&A 게시판]</a>ISUD,페이징,비밀글,답변ISUD,답변상태YN처리,css<br>
+ <a href="/qnaboard/qblist.ssm">[Q&A 게시판]</a>페이징,비밀글,답변ISUD,답변상태YN처리,css<br>
  Q&A게시판:비밀글,답글기능
  <br><br>
- css제외하고 2월 26일까지 모두 끝낼것 <br> 
- 학교일정게시판 버튼 무반응 오류 해결
+ css제외하고 2월 26일까지 모두 끝낼것 <br>
+ <br><br>
+ 해야할거 정리: 페이징,업로드 다운로드,다음api<br> 
 </body>
 </html>
