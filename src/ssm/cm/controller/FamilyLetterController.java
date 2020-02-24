@@ -42,7 +42,6 @@ public class FamilyLetterController {
 		
 		List fllist=familyletterservice.fllist(fvo); 
 		
-		
 		model.addAttribute("fllist",fllist);
 		model.addAttribute("data",fvo);
 		return "fl/fllist";

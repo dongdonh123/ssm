@@ -54,11 +54,7 @@ public class QnABoardDaoImpl implements QnABoardDao {
 		return session.update("qbDelete");
 	}
 
-	@Override
-	public List<QnABoardVO> qbcount(QnABoardVO qvo) {
-		// TODO Auto-generated method stub
-		return session.selectList("qbcount");
-	}
+	
 
 
 }

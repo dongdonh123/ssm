@@ -2,7 +2,7 @@ package ssm.cm.chaebun;
 
 public class QnAAnswerChaebun {
 
-	private static final String QA_STR = "QB";
+	private static final String QA_STR = "QA";
 	
 	public static String qachaebun(String no){
 		System.out.println("채번클래스왔음");

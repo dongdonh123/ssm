@@ -40,12 +40,16 @@ public class QnABoardController {
 		System.out.println("qvo.getSearch()>>>: "+ qvo.getSearch());
 		System.out.println("qvo.getKeyword()>>>: "+ qvo.getKeyword());
 		
-		//글번호 데이터
-		List count=qnaboardservice.qbcount(qvo);
-		System.out.println("count)>>>: "+ count);
 		//글 데이터
 		List qblist=qnaboardservice.qblist(qvo); 
+		System.out.println("list 쿼리갔다옴");
 		
+		QnABoardVO qvo2 = new QnABoardVO();
+		for (int i=0; i<qblist.size(); i++){
+			qvo2 = (QnABoardVO) qblist.get(i);
+			System.out.println("qvo2.getQaCount()>>>:"+qvo2.getQaCount());
+			System.out.println("qvo2.getQaCount()>>>:"+qvo2.getQbSecretyn());
+		}
 		
 		model.addAttribute("qblist",qblist);
 		model.addAttribute("data",qvo);
@@ -82,7 +86,6 @@ public class QnABoardController {
 	public String nbDetail(@ModelAttribute QnABoardVO qvo, Model model){
 		System.out.println("컨트롤러 qbDetail왔당");
 		System.out.println("no 가져왔니 >>>: "+qvo.getQbNo());
-		
 		QnABoardVO qbdetail = null;
 		qbdetail = qnaboardservice.qbDetail(qvo);
 		

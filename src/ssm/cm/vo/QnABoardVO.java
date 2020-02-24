@@ -13,6 +13,7 @@ public class QnABoardVO extends CommonVO{
 	private String qbUpdatedate;
 	private String qbDeleteyn;
 	private String qbSecretyn;
+	private String qaCount;
 	private SmemberVO sMembervo;
 	
 	public SmemberVO getsMembervo() {
@@ -69,6 +70,12 @@ public class QnABoardVO extends CommonVO{
 	}
 	public void setQbSecretyn(String qbSecretyn) {
 		this.qbSecretyn = qbSecretyn;
+	}
+	public String getQaCount() {
+		return qaCount;
+	}
+	public void setQaCount(String qaCount) {
+		this.qaCount = qaCount;
 	}
 	
 	

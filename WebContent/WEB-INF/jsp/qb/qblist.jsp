@@ -51,6 +51,13 @@
 		/*제목 클릭시 상세 페이지 이동을 위한 처리 이벤트*/
 		$(".qbDetail").click(function(){
 			var qbNo = $(this).parents("tr").attr("data-num");
+			
+			if($(this).attr("id") == 'Y'){
+				alert("Y");
+			}else{
+				alert("N");
+			}
+			
 			$("#qbNo").val(qbNo);
 			$("#qbdetailForm").attr('action',"/qnaboard/qbDetail.ssm")
 			.submit();
@@ -95,9 +102,10 @@
 			<table summary="게시판 리스트">
 				<colgroup>
 					<col width="10%" />
-					<col width="50%" />
+					<col width="40%" />
 					<col width="20%" />
 					<col width="20%" />
+					<col width="10%" />
 				</colgroup>
 				<thead>
 					<tr>
@@ -105,6 +113,7 @@
 						<th>글제목</th>
 						<th>작성일</th>
 						<th>작성자</th>
+						<th>답변상태</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -122,13 +131,28 @@
 						int count = qblist.size();
 						for (int i=(count-1); i>=0; i--){
 							QnABoardVO qvo = qblist.get(i);
-							int no = i+1;
+							String no = qvo.getQbNo().substring(4);
+							String Secretyn = qvo.getQbSecretyn();
 					%>	
+					
 						<tr data-num=<%=qvo.getQbNo() %>>
-							<td><%=qvo.getQbNo() %></td>
-							<td><span class="qbDetail"><%=qvo.getQbTitle() %></span></td>
+							<td><%=no %></td>
+							
+							<% 
+							if(Secretyn.equals("Y") ){//(ssno가 있을때 || ttno가 있때 
+							%>
+							<td><span class="qbDetail" id="Y"><%=qvo.getQbTitle() %></span></td>
+							<% 
+							}else{
+							%>
+							<td><span class="qbDetail" id="N">비밀글입니다.</span></td>
+							
+							<%
+							}
+							%>	
 							<td><%=qvo.getQbInsertdate() %></td>
 							<td><%=qvo.getsMembervo().getSsName() %></td>
+							<td><%=qvo.getQaCount()%></td>
 						</tr>
 					<% 		
 						}

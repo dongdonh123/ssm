@@ -67,11 +67,6 @@ public class QnABoardServiceImpl implements QnABoardService {
 		return result;
 	}
 
-	@Override
-	public List<QnABoardVO> qbcount(QnABoardVO qvo) {
-		List<QnABoardVO> qbcount = null;
-		qbcount =qnaboarddao.qbcount(qvo);
-		return qbcount;
-	}
+	
 
 }

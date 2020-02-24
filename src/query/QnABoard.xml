@@ -21,6 +21,7 @@
 	    <result property="qbUpdatedate" 	column="QB_UPDATEDATE"/>
 	    <result property="qbDeleteyn" 		column="QB_DELETEYN"/>
 	    <result property="qbSecretyn" 		column="QB_SECRETYN"/>
+	    <result property="qaCount" 		column="QA_COUNT"/>
 	    <collection property="sMembervo" 	resultMap="SmemberVO"/>
 	</resultMap>
 	
@@ -29,7 +30,9 @@
 				A.QB_NO, 
 				B.SS_NAME, 
 				A.QB_TITLE, 
-				A.QB_INSERTDATE
+				A.QB_INSERTDATE,
+				A.QB_SECRETYN,
+				(SELECT COUNT(C.QA_NO) NCNT FROM  QNA_ANSWER C WHERE  C.QB_NO = A.QB_NO) QA_COUNT
 		FROM QNA_BOARD A, S_MEMBER B 
 		WHERE QB_DELETEYN ='Y'
 		AND A.SS_NO = B.SS_NO
@@ -52,7 +55,9 @@
 					QB_NO, 
 					SS_NAME, 
 					QB_TITLE, 
-					QB_INSERTDATE
+					QB_INSERTDATE,
+					QB_SECRETYN,
+					QA_COUNT
 					
 			FROM 
 			  (	SELECT 
@@ -133,12 +138,5 @@
 		AND A.SS_NO = B.SS_NO
 	</select>
 	
-	<select id ="qbcount" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
-		SELECT
-		TO_CHAR(SUBSTR(QB_NO,-2))QB_NO
-		FROM QNA_BOARD
-        WHERE QB_DELETEYN ='Y'
-        ORDER BY QB_NO
-	</select>
 	
 </mapper>
