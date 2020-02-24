@@ -119,12 +119,13 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 					</tr>
 					<%
 					}else{
-						for (int i=0; i<fllist.size(); i++){
+						int count = fllist.size();
+						for (int i=(count-1); i>=0; i--){
 							FamilyLetterVO nvo = fllist.get(i);
-							int cc = i+1;
+							int no = i+1;
 					%>	
 						<tr data-num=<%=nvo.getFlNo() %>>
-							<td><%=cc%> </td>
+							<td><%=no%> </td>
 							<td><span class="flDetail"><%=nvo.getFlTitle() %></span></td>
 							<td><%=nvo.getFlInsertdate() %></td>
 							<td><%=nvo.gettMembervo().getTtName() %></td>

@@ -13,4 +13,5 @@ public interface QnABoardDao {
 	public int pwdConfirm(QnABoardVO qvo);
 	public int qbUpdate(QnABoardVO qvo);
 	public int qbDelete(QnABoardVO qvo);
+	public List<QnABoardVO> qbcount(QnABoardVO qvo);
 }

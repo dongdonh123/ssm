@@ -33,7 +33,7 @@
 		FROM FAMILY_LETTER A, T_MEMBER B 
 		WHERE FL_DELETEYN ='Y'
 		AND A.TT_NO = B.TT_NO
-		
+	
 		<trim prefix="AND" >
 			<if test="search=='flTitle' ">
 				<![CDATA[FL_TITLE LIKE '%'|| #{keyword} ||'%']]>

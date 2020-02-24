@@ -16,7 +16,7 @@
   		
   		$(function(){
   				//기본 댓글 목록 불러오기
-  				var qbNo = <%=qbNo%>;
+  				var qbNo = "<%=qvo.getQbNo()%>";
   				listAll(qbNo); // 댓글 리스트 요청함수
   				
   				// 댓글 내용 저장 이벤트

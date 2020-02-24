@@ -40,8 +40,10 @@ public class QnABoardController {
 		System.out.println("qvo.getSearch()>>>: "+ qvo.getSearch());
 		System.out.println("qvo.getKeyword()>>>: "+ qvo.getKeyword());
 		
-		//전체 레코드수
-		
+		//글번호 데이터
+		List count=qnaboardservice.qbcount(qvo);
+		System.out.println("count)>>>: "+ count);
+		//글 데이터
 		List qblist=qnaboardservice.qblist(qvo); 
 		
 		

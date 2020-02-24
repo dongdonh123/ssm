@@ -33,7 +33,6 @@
 		FROM QNA_BOARD A, S_MEMBER B 
 		WHERE QB_DELETEYN ='Y'
 		AND A.SS_NO = B.SS_NO
-		
 		<trim prefix="AND" >
 			<if test="search=='qbTitle' ">
 				<![CDATA[QB_TITLE LIKE '%'|| #{keyword} ||'%']]>
@@ -45,6 +44,7 @@
 				<![CDATA[SS_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
+		ORDER BY A.QB_NO
 	</sql>
 	
 	<select id ="qblist" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
@@ -103,6 +103,7 @@
 								 QB_TITLE = #{qbTitle}
 								,QB_CONTENTS = #{qbContents}
 								,QB_UPDATEDATE = SYSDATE
+								,QB_SECRETYN = #{qbSecretyn}
 		WHERE 					 QB_NO = #{qbNo}						
 		AND  					 QB_DELETEYN = 'Y'
 	</update>
@@ -130,6 +131,14 @@
 		WHERE QB_NO =#{qbNo}
 		AND QB_DELETEYN='Y'
 		AND A.SS_NO = B.SS_NO
+	</select>
+	
+	<select id ="qbcount" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
+		SELECT
+		TO_CHAR(SUBSTR(QB_NO,-2))QB_NO
+		FROM QNA_BOARD
+        WHERE QB_DELETEYN ='Y'
+        ORDER BY QB_NO
 	</select>
 	
 </mapper>

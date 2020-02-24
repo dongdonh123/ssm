@@ -142,13 +142,13 @@
 					<%
 					
 					}else{
-						int ss = snlist.size();
-						for (int i=(ss-1); i>=0; i--){
+						int count = snlist.size();
+						for (int i=(count-1); i>=0; i--){
 							SchedulNoticeVO svo = (SchedulNoticeVO)snlist.get(i);
-							int cc = i+1;
+							int no = i+1;
 					%>	
 						<tr data-num=<%=svo.getSnNo() %>>
-							<td><%=cc%> </td>
+							<td><%=no%> </td>
 							<td><span class="snDetail"><%=svo.getSnTitle() %></span></td>
 							<td><%=svo.getSnInsertdate() %></td>
 							<td><%=svo.gettMembervo().getTtName() %></td>

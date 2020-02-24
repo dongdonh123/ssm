@@ -30,7 +30,7 @@ public class QnAAnswerController {
 	@ResponseBody
 	@RequestMapping(value="/all/{qbNo}.ssm")
 	public ResponseEntity<List<QnAAnswerVO>> list(@PathVariable("qbNo") String qbNo){
-		System.out.println("qa컨트롤러 리스트진입");
+		System.out.println("★★★★★★qa컨트롤러 리스트진입");
 		
 		ResponseEntity<List<QnAAnswerVO>> entity=null;
 		try{

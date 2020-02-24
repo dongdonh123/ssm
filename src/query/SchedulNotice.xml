@@ -26,7 +26,7 @@
 	
 	<sql id="snCommon" >
 		SELECT 
-				A.SN_NO, 
+				A.SN_NO,
 				B.TT_NAME, 
 				A.SN_TITLE, 
 				A.SN_INSERTDATE
@@ -49,7 +49,7 @@
 	
 	<select id ="snlist" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 			SELECT 
-					SN_NO, 
+					SN_NO,
 					TT_NAME, 
 					SN_TITLE, 
 					SN_INSERTDATE

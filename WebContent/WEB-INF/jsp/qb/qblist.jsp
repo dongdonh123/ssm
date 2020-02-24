@@ -119,12 +119,13 @@
 					</tr>
 					<%
 					}else{
-						for (int i=0; i<qblist.size(); i++){
+						int count = qblist.size();
+						for (int i=(count-1); i>=0; i--){
 							QnABoardVO qvo = qblist.get(i);
-							int cc = i+1;
+							int no = i+1;
 					%>	
 						<tr data-num=<%=qvo.getQbNo() %>>
-							<td><%=cc%> </td>
+							<td><%=qvo.getQbNo() %></td>
 							<td><span class="qbDetail"><%=qvo.getQbTitle() %></span></td>
 							<td><%=qvo.getQbInsertdate() %></td>
 							<td><%=qvo.getsMembervo().getSsName() %></td>

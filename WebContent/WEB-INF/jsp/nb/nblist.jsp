@@ -119,12 +119,13 @@
 					</tr>
 					<%
 					}else{
-						for (int i=0; i<nblist.size(); i++){
+						int count = nblist.size();
+						for (int i=(count-1); i>=0; i--){
 							NoticeBoardVO nvo = nblist.get(i);
-							int cc = i+1;
+							int no = i+1;
 					%>	
 						<tr data-num=<%=nvo.getNbNo() %>>
-							<td><%=cc%> </td>
+							<td><%=no%> </td>
 							<td><span class="nbDetail"><%=nvo.getNbTitle() %></span></td>
 							<td><%=nvo.getNbInsertdate() %></td>
 							<td><%=nvo.gettMembervo().getTtName() %></td>

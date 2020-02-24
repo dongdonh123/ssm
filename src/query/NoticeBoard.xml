@@ -26,7 +26,7 @@
 	
 	<sql id="nbCommon" >
 		SELECT 
-				A.NB_NO, 
+				A.NB_NO,  
 				B.TT_NAME, 
 				A.NB_TITLE, 
 				A.NB_INSERTDATE
