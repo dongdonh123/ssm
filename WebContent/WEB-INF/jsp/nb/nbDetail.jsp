@@ -80,6 +80,8 @@
 <body>
 	<%
 	NoticeBoardVO nvo =(NoticeBoardVO)request.getAttribute("nbdetail");
+	String NbFile=nvo.getNbFile();
+	NbFile = NbFile.substring(10);
 	%>
 	<h3>글상세</h3>
 	<form name="f_data" id="f_data" method="POST">
@@ -109,15 +111,24 @@
 					<td>제목</td>
 					<td colspan="3"><%=nvo.getNbTitle() %></td>
 				</tr>
+				<tr>
+					<td>첨부파일</td>
+					<td colspan="3">
+					<%
+					if(NbFile == null){
+					%>
+					첨부파일 없습니다.</td>
+					<%
+					}else{
+					%>
+					<p><%=NbFile%>&nbsp;&nbsp;&nbsp;<a href="/noticeboard/nbDownload.ssm?filename=<%=NbFile%>">다운로드</a></p></td>
+					<%	
+					}
+					%>
+				</tr>
 				<tr height="300px">
 					<td>내용</td>
 					<td colspan="3" ><%=nvo.getNbContents() %></td>
-				</tr>
-				<tr>
-					<td>첨부파일 파일</td>
-					<td colspan="3">
-						<img src=<%=nvo.getNbFile() %> border=0 width="320" height="400">
-					</td>
 				</tr>
 			</tbody>
 		</table>

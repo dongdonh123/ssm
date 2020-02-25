@@ -21,22 +21,31 @@
 	    <result property="qbUpdatedate" 	column="QB_UPDATEDATE"/>
 	    <result property="qbDeleteyn" 		column="QB_DELETEYN"/>
 	    <result property="qbSecretyn" 		column="QB_SECRETYN"/>
-	    <result property="qaCount" 		column="QA_COUNT"/>
+	    <result property="qbPw" 			column="QB_PW"/>
+	    <result property="qaCount" 			column="QA_COUNT"/>
+	    <result property="pageNo"		    column="PAGENO"/>
+		<result property="listSize"		    column=""/>
+		<result property="totalCount"		column="TOTALCOUNT"/>
 	    <collection property="sMembervo" 	resultMap="SmemberVO"/>
 	</resultMap>
 	
-	<sql id="qbCommon" >
+	<select id ="qblist" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
 		SELECT 
-				A.QB_NO, 
-				B.SS_NAME, 
-				A.QB_TITLE, 
-				A.QB_INSERTDATE,
-				A.QB_SECRETYN,
-				(SELECT COUNT(C.QA_NO) NCNT FROM  QNA_ANSWER C WHERE  C.QB_NO = A.QB_NO) QA_COUNT
-		FROM QNA_BOARD A, S_MEMBER B 
-		WHERE QB_DELETEYN ='Y'
-		AND A.SS_NO = B.SS_NO
-		<trim prefix="AND" >
+		*
+		FROM
+			(SELECT 
+					A.QB_NO, 
+					B.SS_NAME, 
+					A.QB_TITLE, 
+					A.QB_INSERTDATE,
+					A.QB_SECRETYN,
+					(SELECT COUNT(C.QA_NO) NCNT FROM  QNA_ANSWER C WHERE  C.QB_NO = A.QB_NO) QA_COUNT,
+					CEIL(ROW_NUMBER() OVER(ORDER BY A.QB_NO)/#{listSize}) PAGENO,
+	     			COUNT(A.QB_NO) OVER() AS TOTALCOUNT 
+			FROM QNA_BOARD A, S_MEMBER B 
+			WHERE QB_DELETEYN ='Y'
+			AND A.SS_NO = B.SS_NO
+			<trim prefix="AND" >
 			<if test="search=='qbTitle' ">
 				<![CDATA[QB_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
@@ -46,26 +55,10 @@
 			<if test="search=='ssName'">
 				<![CDATA[SS_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-		</trim>
-		ORDER BY A.QB_NO
-	</sql>
-	
-	<select id ="qblist" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
-			SELECT 
-					QB_NO, 
-					SS_NAME, 
-					QB_TITLE, 
-					QB_INSERTDATE,
-					QB_SECRETYN,
-					QA_COUNT
-					
-			FROM 
-			  (	SELECT 
-						list.*,
-						ROWNUM AS RNUM
-				FROM(<include refid="qbCommon"></include>
-					)list
-			)
+			</trim>
+			) ABC
+				WHERE ABC.PAGENO = #{pageNo}
+				ORDER BY QB_NO
 	</select>
 	
 	<select id="qbChaebun" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
@@ -98,7 +91,7 @@
 	</insert>
 	
 	<select id="pwdConfirm" parameterType="ssm.cm.vo.QnABoardVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM QNA_BOARD WHERE QB_NO = #{qbNo}),0)as result
+		SELECT NVL((SELECT 1 FROM QNA_BOARD WHERE QB_NO = #{qbNo} AND QB_PW= #{qbPw}),0) as result
 		FROM dual
 	</select>
 	

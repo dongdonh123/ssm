@@ -3,6 +3,8 @@ package ssm.cm.controller;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.GenericServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import ssm.cm.chaebun.NoticeBoardChaebun;
 import ssm.cm.service.NoticeBoardService;
 import ssm.cm.vo.NoticeBoardVO;
 
+import java.io.*;
 @Controller
 @RequestMapping(value="/noticeboard")
 public class NoticeBoardController {
@@ -90,7 +93,7 @@ public class NoticeBoardController {
 		}
 		boolean bResult = result > 0;
 			
-		if(bResult) url="/nb/nblist.ssm";
+		if(bResult) url="/noticeboard/nblist.ssm";
 		System.out.println("url >>>: " + url);		
 		return "redirect:"+url;
 	}
@@ -104,6 +107,9 @@ public class NoticeBoardController {
 		nbdetail = noticeboardservice.nbDetail(nvo);
 		
 		nbdetail.setNbContents(nbdetail.getNbContents().toString().replaceAll("\n","<br>"));
+		NoticeBoardVO nvo_ =(NoticeBoardVO)nbdetail;
+		
+		System.out.println("nvo_.getNbFile() >>>: "+nvo_.getNbFile());
 		
 		model.addAttribute("nbdetail",nbdetail);
 		return "nb/nbDetail";
@@ -191,6 +197,17 @@ public class NoticeBoardController {
 		if(bResult) url="/noticeboard/nblist.ssm";
 		return "redirect:"+url;
 		
+		
+	}
+	
+	@RequestMapping(value="/nbDownload")
+	public String nbDownload(@ModelAttribute NoticeBoardVO nvo,HttpServletRequest request,Model model){
+		System.out.println("컨트롤러 nbDownload왔다");
+		String filename =(String) request.getParameter("filename");
+		System.out.println("filename>>>:"+ filename);
+		
+		model.addAttribute("filename",filename);
+		return "common/download";
 		
 	}
 }

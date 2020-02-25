@@ -125,7 +125,8 @@
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
 						<label for="sspw" id="l_pwd">비밀번호 : </label>
-						<input type="password" name="qbNo" id="qbNo" />
+						<input type="password" name="qbPw" id="qbPw" />
+						<input type="hidden" name="qbNo" id="qbNo" value="<%=qvo.getQbNo() %>"/>
 						<input type="button" name="pwdBut" id="pwdBut" value="확인" />
 						<input type="button" name="cancelBut" id="cancelBut" value="취소" />
 						

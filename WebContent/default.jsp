@@ -7,20 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
- <a href="/schedulnotice/snlist.ssm">[학교일정 게시판]</a>페이징,캘린더형으로ISUD,css<br>
- 학교일정게시판:캘린더api,팝업창으로 IUD
+ <a href="/schedulnotice/snlist.ssm">[학교일정 게시판]</a>,캘린더형으로ISUD,css<br>
  <br><br>
- <a href="/noticeboard/nblist.ssm">[공지사항 게시판]</a>페이징, 업로드다운로드,css<br>
- 공지사항게시판:파일업로드다운로드기능,네이버에디터
+ <a href="/noticeboard/nblist.ssm">[공지사항 게시판]</a>,css<br>
  <br><br>
- <a href="/familyletter/fllist.ssm">[가정통신문 게시판]</a>페이징,업로드다운로드,css<br>
- 가정통신문:파일업로드다운로드기능있음/네이버에디터
+ <a href="/familyletter/fllist.ssm">[가정통신문 게시판]</a>,css<br>
  <br><br>
- <a href="/qnaboard/qblist.ssm">[Q&A 게시판]</a>페이징,비밀글,답변ISUD,답변상태YN처리,css<br>
- Q&A게시판:비밀글,답글기능
+ <a href="/qnaboard/qblist.ssm">[Q&A 게시판]</a>,css<br>
  <br><br>
  css제외하고 2월 26일까지 모두 끝낼것 <br>
  <br><br>
- 해야할거 정리: 페이징,업로드 다운로드,다음api<br> 
+ 해야할거 정리: ,캘린더api<br> 
+ 페이징시 검색이 안되는 오류 해결, 파일업로드다운로드 구현, 페이징처리 모든 게시판에 구현
 </body>
 </html>

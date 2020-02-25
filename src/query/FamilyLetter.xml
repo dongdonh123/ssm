@@ -24,8 +24,8 @@
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
-	<sql id="flCommon" >
-		SELECT 
+	<select id ="fllist" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
+			SELECT 
 				A.FL_NO, 
 				B.TT_NAME, 
 				A.FL_TITLE, 
@@ -33,7 +33,6 @@
 		FROM FAMILY_LETTER A, T_MEMBER B 
 		WHERE FL_DELETEYN ='Y'
 		AND A.TT_NO = B.TT_NO
-	
 		<trim prefix="AND" >
 			<if test="search=='flTitle' ">
 				<![CDATA[FL_TITLE LIKE '%'|| #{keyword} ||'%']]>
@@ -45,22 +44,6 @@
 				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
-	</sql>
-	
-	<select id ="fllist" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
-			SELECT 
-					FL_NO, 
-					TT_NAME, 
-					FL_TITLE, 
-					FL_INSERTDATE
-					
-			FROM 
-			  (	SELECT 
-						list.*,
-						ROWNUM AS RNUM
-				FROM(<include refid="flCommon"></include>
-			   )list
-			)
 	</select>
 	
 	<select id="flChaebun" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">

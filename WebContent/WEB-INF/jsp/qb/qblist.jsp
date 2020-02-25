@@ -4,8 +4,20 @@
 <%@ page import="java.util.List" %>    
    
 <%
+	int pageCount =0;
 	List<QnABoardVO> qblist =(List<QnABoardVO>)request.getAttribute("qblist");
-	QnABoardVO data =(QnABoardVO)request.getAttribute("data");
+	int listSize=qblist.size();
+	if(listSize >0){
+	QnABoardVO qvo_ = qblist.get(0);
+	double totalCount = (double)Integer.parseInt(qvo_.getTotalCount()); 
+	int pagelistSize = (int)request.getAttribute("listSize");
+	double dval = (double)pagelistSize;
+	pageCount = (int)Math.ceil(totalCount/dval); //pageCount 변수 사용
+	System.out.println("pageCount>>>:"+ pageCount); //1
+	System.out.println("totalCount>>>:"+ totalCount); //10
+	System.out.println("pagelistSize>>>:"+ pagelistSize);
+	}
+	
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -54,14 +66,25 @@
 			
 			if($(this).attr("id") == 'Y'){
 				alert("Y");
+				$("#qbNo").val(qbNo);
+				$("#qbdetailForm").attr('action',"/qnaboard/qbPwcheck.ssm")
+				.submit();
 			}else{
 				alert("N");
+				$("#qbNo").val(qbNo);
+				$("#qbdetailForm").attr('action',"/qnaboard/qbDetail.ssm")
+				.submit();
 			}
-			
-			$("#qbNo").val(qbNo);
-			$("#qbdetailForm").attr('action',"/qnaboard/qbDetail.ssm")
+		});
+		
+		$(".pageNobut").click(function(){
+			var pageNo = $(this).val();
+			$("#pageNo").val(pageNo);
+			alert(pageNo);
+			$("#pageNoForm").attr('action',"/qnaboard/qblist.ssm")
 			.submit();
 		});
+		
 	});
 	</script>
 </head>
@@ -139,13 +162,13 @@
 							<td><%=no %></td>
 							
 							<% 
-							if(Secretyn.equals("Y") ){//(ssno가 있을때 || ttno가 있때 
+							if(Secretyn.equals("N") ){//(ssno가 있을때 || ttno가 있때 
 							%>
-							<td><span class="qbDetail" id="Y"><%=qvo.getQbTitle() %></span></td>
+							<td><span class="qbDetail" id="N"><%=qvo.getQbTitle() %></span></td>
 							<% 
 							}else{
 							%>
-							<td><span class="qbDetail" id="N">비밀글입니다.</span></td>
+							<td><span class="qbDetail" id="Y">비밀글입니다.</span></td>
 							
 							<%
 							}
@@ -156,6 +179,19 @@
 						</tr>
 					<% 		
 						}
+					
+					
+					%>
+					<form id="pageNoForm">
+					<%
+					for(int i=1 ; i<=pageCount;i++){
+					%>
+					<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
+					<input type="hidden" id="pageNo" name="pageNo" value="1">
+					<input type="hidden" id="listSize" name="listSize" value="10">
+					</form>
+					<%
+					}
 					}
 					%>
 				</tbody>

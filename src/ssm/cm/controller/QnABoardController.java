@@ -34,25 +34,30 @@ public class QnABoardController {
 	/*전체 조회*/
 	@RequestMapping(value="qblist")
 	public String sblist(@ModelAttribute QnABoardVO qvo, Model model){
-		System.out.println("컨트롤러 왔당");
+		System.out.println("컨트롤러 왔당★★★★★★★★★★★★★★");
+		
+		int ListSize = 10; //리스트 사이즈 설정
 		
 		//검색에 대한 데이터 확인
 		System.out.println("qvo.getSearch()>>>: "+ qvo.getSearch());
 		System.out.println("qvo.getKeyword()>>>: "+ qvo.getKeyword());
+		System.out.println("qvo.getListSize()>>>: "+ qvo.getListSize());
+		System.out.println("qvo.getPageNo()>>>: "+ qvo.getPageNo());
 		
-		//글 데이터
+		//페이징 기능 구현내용
+		if(qvo.getListSize()==null){
+			System.out.println("페이징 초기셋팅");
+			qvo.setListSize(ListSize+"");
+			qvo.setPageNo("1");
+		}
+
+		//쿼리보냄
 		List qblist=qnaboardservice.qblist(qvo); 
 		System.out.println("list 쿼리갔다옴");
 		
-		QnABoardVO qvo2 = new QnABoardVO();
-		for (int i=0; i<qblist.size(); i++){
-			qvo2 = (QnABoardVO) qblist.get(i);
-			System.out.println("qvo2.getQaCount()>>>:"+qvo2.getQaCount());
-			System.out.println("qvo2.getQaCount()>>>:"+qvo2.getQbSecretyn());
-		}
-		
 		model.addAttribute("qblist",qblist);
-		model.addAttribute("data",qvo);
+		model.addAttribute("listSize",ListSize);
+		
 		return "qb/qblist";
 	}
 	
@@ -83,10 +88,17 @@ public class QnABoardController {
 	}
 	
 	@RequestMapping(value="/qbDetail")
-	public String nbDetail(@ModelAttribute QnABoardVO qvo, Model model){
+	public String nbDetail(@ModelAttribute QnABoardVO qvo, Model model, HttpServletRequest request){
 		System.out.println("컨트롤러 qbDetail왔당");
 		System.out.println("no 가져왔니 >>>: "+qvo.getQbNo());
+		System.out.println("request >>>: "+request.getParameter("qbNo"));
 		QnABoardVO qbdetail = null;
+		
+		if(request ==null){
+			String qbNo= request.getParameter("qbNo");
+			qvo.setQbNo(qbNo);
+		}
+		
 		qbdetail = qnaboardservice.qbDetail(qvo);
 		
 		qbdetail.setQbContents(qbdetail.getQbContents().toString().replaceAll("\n","<br>"));
@@ -99,7 +111,8 @@ public class QnABoardController {
 	@RequestMapping(value="/pwdConfirm")
 	public String pwdConfirm(@ModelAttribute QnABoardVO qvo){
 		System.out.println("컨트롤러 pwd왔다");
-		
+		System.out.println("no 가져왔니 >>>: "+qvo.getQbNo());
+		System.out.println("pw 가져왔니 >>>: "+qvo.getQbPw());
 		//아래 변수에는 입력 성공에 대한 상태값 저장(1or0)
 		int result = 0;
 		result= qnaboardservice.pwdConfirm(qvo);
@@ -150,4 +163,32 @@ public class QnABoardController {
 		
 		
 	}
+	@RequestMapping(value="/qbPwcheck")
+	public String qbPwcheck(@ModelAttribute QnABoardVO qvo,Model model){
+		System.out.println("컨트롤러 qbPwcheck왔다");
+		
+		//아래 변수에는 입력 성공에 대한 상태값 저장(1or0)
+		String QbNo=qvo.getQbNo();
+		model.addAttribute("QbNo",QbNo);
+		return "qb/qbpwcheck";
+		
+	}
+	
+	@RequestMapping(value="/qbPwcheck2")
+	public String qbPwcheck2(@ModelAttribute QnABoardVO qvo,Model model){
+		System.out.println("컨트롤러 qbPwcheck2왔다");
+		String qbNo=qvo.getQbNo();
+		String url="";
+		int result = 0;
+		
+		result= qnaboardservice.pwdConfirm(qvo);
+		
+		boolean bResult = result > 0;
+		if(bResult) url="/qnaboard/qbDetail.ssm";
+		
+		model.addAttribute("qbNo",qbNo);
+		return "redirect:"+url;
+		
+	}
+	
 }

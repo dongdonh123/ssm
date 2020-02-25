@@ -2,8 +2,10 @@ package ssm.cm.vo;
 
 public class CommonVO {
 	
-	//글번호 카운트
-	private String count;
+	//페이징
+	private String pageNo;
+	private String listSize;
+	private String totalCount;
 	
 	//조건검색시 사용할 속성
 	private String search; 
@@ -21,12 +23,24 @@ public class CommonVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	public String getCount() {
-		return count;
+	public String getPageNo() {
+		return pageNo;
 	}
-	public void setCount(String count) {
-		this.count = count;
-	} 
+	public void setPageNo(String pageNo) {
+		this.pageNo = pageNo;
+	}
+	public String getListSize() {
+		return listSize;
+	}
+	public void setListSize(String listSize) {
+		this.listSize = listSize;
+	}
+	public String getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(String totalCount) {
+		this.totalCount = totalCount;
+	}
 	
 	
 }

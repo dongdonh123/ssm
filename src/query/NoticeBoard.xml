@@ -24,8 +24,8 @@
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
-	<sql id="nbCommon" >
-		SELECT 
+	<select id ="nblist" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
+			SELECT 
 				A.NB_NO,  
 				B.TT_NAME, 
 				A.NB_TITLE, 
@@ -45,22 +45,6 @@
 				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 		</trim>
-	</sql>
-	
-	<select id ="nblist" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
-			SELECT 
-					NB_NO, 
-					TT_NAME, 
-					NB_TITLE, 
-					NB_INSERTDATE
-					
-			FROM 
-			  (	SELECT 
-						list.*,
-						ROWNUM AS RNUM
-				FROM(<include refid="nbCommon"></include>
-					)list
-			)
 	</select>
 	
 	<select id="nbChaebun" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
@@ -108,6 +92,7 @@
 				A.NB_NO, 
 				B.TT_NAME, 
 				A.NB_TITLE, 
+				A.NB_FILE, 
 				A.NB_CONTENTS, 
 				A.NB_INSERTDATE, 
 				A.NB_UPDATEDATE,
