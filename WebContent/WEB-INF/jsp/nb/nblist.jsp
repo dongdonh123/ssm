@@ -1,31 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
 <%@ page import="java.util.List" %>    
    
 <%
+	request.setCharacterEncoding("UTF-8");
+	int pageCount = 0;
 	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
+	int listSize= nblist.size();
+	if(listSize >0){
+		NoticeBoardVO nvo_ = nblist.get(0);
+		double totalCount = (double)Integer.parseInt(nvo_.getTotalCount()); 
+		int pagelistSize = (int)request.getAttribute("listSize");
+		double dval = (double)pagelistSize;
+		pageCount = (int)Math.ceil(totalCount/dval); //pageCount ë³€ìˆ˜ ì‚¬ìš©
+		System.out.println("pageCount>>>:"+ pageCount); //1
+		System.out.println("totalCount>>>:"+ totalCount); //10
+		System.out.println("pagelistSize>>>:"+ pagelistSize);
+	}
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
-		/*°Ë»ö ´ë»óÀÌ º¯°æµÉ ¶§¸¶´Ù Ã³¸® ÀÌº¥Æ®*/
+		/*ê²€ìƒ‰ ëŒ€ìƒì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$("#search").change(function(){
 			if($("#search").val()=="all"){
-				$("#keyword").val("ÀüÃ¼ µ¥ÀÌÅÍ Á¶È¸ÇÕ´Ï´Ù.");
+				$("#keyword").val("ì „ì²´ ë°ì´í„° ì¡°íšŒí•©ë‹ˆë‹¤.");
 			}else if($("#search").val()!="all"){
 				$("#keyword").val("");
 				$("#keyword").focus();
 			}
 		});
 		
-		/*°Ë»ö ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
+		/*ê²€ìƒ‰ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$("#searchBut").click(function(){
 			
 			goPage(1);
@@ -47,51 +60,61 @@
 			$("#f_search").submit();
 		}
 		
-		/*Á¦¸ñ Å¬¸¯½Ã »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ Ã³¸® ÀÌº¥Æ®*/
+		/*ì œëª© í´ë¦­ì‹œ ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$(".nbDetail").click(function(){
 			var nbNo = $(this).parents("tr").attr("data-num");
 			$("#nbNo").val(nbNo);
 			$("#nbdetailForm").attr('action',"/noticeboard/nbDetail.ssm")
 			.submit();
 		});
+		
+		$(".pageNobut").click(function(){
+			var pageNo = $(this).val();
+			$("#pageNo").val(pageNo);
+			alert(pageNo);
+			$("#pageNoForm").attr('action',"/noticeboard/nblist.ssm")
+			.submit();
+		});
+		
+		
 	});
 	</script>
 </head>
 <body>
 	<div id="boardContainer">
-		<h1>°øÁö»çÇ× °Ô½ÃÆÇ</h1>
+		<h1>ê³µì§€ì‚¬í•­ ê²Œì‹œíŒ</h1>
 		
-		<%-- ======================°Ë»ö±â´É ½ÃÀÛ============================ --%>
+		<%-- ======================ê²€ìƒ‰ê¸°ëŠ¥ ì‹œì‘============================ --%>
 		
 		<div id="boardSearch">
 			<form id="f_search" name="f_search">
-				<table summary="°Ë»ö">
+				<table summary="ê²€ìƒ‰">
 					<colgroup>
 						<col width="70%"></col>
 						<col width="30%"></col>
 					</colgroup>
 					<tr>
 						<td>
-						<label>°Ë»öÁ¶°Ç</label>
+						<label>ê²€ìƒ‰ì¡°ê±´</label>
 						<select id="search" name="search">
-							<option value="all">ÀüÃ¼</option>
-							<option value="nbTitle">Á¦¸ñ</option>
-							<option value="nbContents">³»¿ë</option>
-							<option value="ttName">ÀÛ¼ºÀÚ</option>
+							<option value="all">ì „ì²´</option>
+							<option value="nbTitle">ì œëª©</option>
+							<option value="nbContents">ë‚´ìš©</option>
+							<option value="ttName">ì‘ì„±ì</option>
 						</select>
 						
-						<input type="text" name="keyword" id="keyword" value="°Ë»ö¾î¸¦ÀÔ·ÂÇÏ¼¼¿ä" />
-						<input type="button" value="°Ë»ö" id="searchBut" />
+						<input type="text" name="keyword" id="keyword" value="ê²€ìƒ‰ì–´ë¥¼ì…ë ¥í•˜ì„¸ìš”" />
+						<input type="button" value="ê²€ìƒ‰" id="searchBut" />
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
 		
-		<%-- =======================°Ë»ö±â´É ³¡============================ --%>
+		<%-- =======================ê²€ìƒ‰ê¸°ëŠ¥ ë============================ --%>
 		
 		<div id="boardlist" style="text-align:center">
-			<table summary="°Ô½ÃÆÇ ¸®½ºÆ®">
+			<table summary="ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸">
 				<colgroup>
 					<col width="10%" />
 					<col width="50%" />
@@ -100,10 +123,10 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th>±Û¹øÈ£</th>
-						<th>±ÛÁ¦¸ñ</th>
-						<th>ÀÛ¼ºÀÏ</th>
-						<th>ÀÛ¼ºÀÚ</th>
+						<th>ê¸€ë²ˆí˜¸</th>
+						<th>ê¸€ì œëª©</th>
+						<th>ì‘ì„±ì¼</th>
+						<th>ì‘ì„±ì</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -112,16 +135,16 @@
 					%>
 					<tr>
 						<td>0</td>
-						<td>ÀÛ¼ºµÈ ±ÛÀÌ ¾ø½À´Ï´Ù.</td>
+						<td>ì‘ì„±ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
 						<td></td>
 						<td></td>
 					</tr>
 					<%
 					}else{
 						int count = nblist.size();
-						for (int i=(count-1); i>=0; i--){
+						for (int i=0; i<count; i++){
 							NoticeBoardVO nvo = nblist.get(i);
-							int no = i+1;
+							String no = nvo.getNbNo().substring(4);
 					%>	
 						<tr data-num=<%=nvo.getNbNo() %>>
 							<td><%=no%> </td>
@@ -131,14 +154,25 @@
 						</tr>
 					<% 		
 						}
+						%>
+						<form id="pageNoForm">
+						<%
+						for(int i=1 ; i<=pageCount;i++){
+						%>
+						<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
+						<input type="hidden" id="pageNo" name="pageNo" value="1">
+						<input type="hidden" id="listSize" name="listSize" value="10">
+						</form>
+						<%
+						}
 					}
 					%>
 				</tbody>
 			</table>
 			<form id="nblistform" name="nblistform">
-				<input type="button" id="nbinsertbutton" name="nbinsertbutton" value="±Û¾²±â">
+				<input type="button" id="nbinsertbutton" name="nbinsertbutton" value="ê¸€ì“°ê¸°">
 			</form>
-			<!-- »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ form -->
+			<!-- ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ form -->
 			<form name="nbdetailForm" id="nbdetailForm">
 			<input type="hidden" name="nbNo" id="nbNo">
 			</form>

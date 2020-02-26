@@ -23,6 +23,8 @@ import ssm.cm.service.NoticeBoardService;
 import ssm.cm.service.SchedulNoticeService;
 import ssm.cm.vo.NoticeBoardVO;
 import ssm.cm.vo.SchedulNoticeVO;
+import ssm.mi.vo.SmemberVO;
+import ssm.mi.vo.TmemberVO;
 
 @Controller
 @RequestMapping(value="/schedulnotice")
@@ -31,42 +33,39 @@ public class SchedulNoticeController {
 	@Autowired
 	private SchedulNoticeService schedulnoticeservice;
 	
-	/*전체 조회*/
 	@RequestMapping(value="snlist")
 	public String sblist(@ModelAttribute SchedulNoticeVO svo, Model model){
-		System.out.println("컨트롤러 왔당");
 		
-		//검색에 대한 데이터 확인
-		System.out.println("svo.getSearch()>>>: "+ svo.getSearch());
-		System.out.println("svo.getKeyword()>>>: "+ svo.getKeyword());
+		int ListSize = 10; 
 		
-		//전체 레코드수
+		
+		if(svo.getListSize()==null){
+			svo.setListSize(ListSize+"");
+			svo.setPageNo("1");
+		}
 		
 		List snlist=schedulnoticeservice.snlist(svo); 
 		
 		
 		model.addAttribute("snlist",snlist);
-		model.addAttribute("data",svo);
+		model.addAttribute("listSize",ListSize);
 		return "sn/snlist";
 	}
 	
-	/*글쓰기 폼 출력*/
 	@RequestMapping(value="snwirteform")
 	public String snwirteform(){
-		System.out.println(" snwirteform 컨트롤러 왔당");
+		
 		return "sn/snwirteform";
 	}
 	
-	/*글쓰기 구현*/
 	@RequestMapping(value="snwirte")
 	public String sninsert(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("컨트롤러 snwirte왔당");
 		String url="";
 		int result=0;
 		boolean bval= false;
 		
-		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); //여기에서 채번쿼리들어가요
-		System.out.println("svo_.getSnNo()>>>: "+svo_.getSnNo());//이 로그안찍히고
+		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
+		System.out.println("svo_.getSnNo()>>>: "+svo_.getSnNo());
 		String no =svo_.getSnNo();
 		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
 		System.out.println("svo.getSnNo()"+svo.getSnNo());
@@ -81,8 +80,6 @@ public class SchedulNoticeController {
 	
 	@RequestMapping(value="/snDetail")
 	public String snDetail(@ModelAttribute SchedulNoticeVO svo, Model model){
-		System.out.println("컨트롤러 snDetail왔당");
-		System.out.println("no 가져왔니 >>>: "+svo.getSnNo());
 		
 		SchedulNoticeVO sndetail = null;
 		sndetail = schedulnoticeservice.snDetail(svo);
@@ -95,23 +92,19 @@ public class SchedulNoticeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
-	public String pwdConfirm(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("컨트롤러 pwd왔다");
-		System.out.println("가져온 데이터>>>:" +svo.getSnNo() );
+	public String pwdConfirm(@ModelAttribute SchedulNoticeVO svo,HttpServletRequest request){
 		
-		//아래 변수에는 입력 성공에 대한 상태값 저장(1or0)
+		String ttPw =request.getParameter("ttPw");
+	
 		int result = 0;
-		result= schedulnoticeservice.pwdConfirm(svo);
+		result= schedulnoticeservice.pwdConfirm(svo,ttPw);
 		
-		System.out.println("result 몇이야>>>" + result);
 		return result+"";
 		
 	}
 	
 	@RequestMapping(value="/snupdateForm")
 	public String sndateForm(@ModelAttribute SchedulNoticeVO svo, Model model){
-		System.out.println("컨트롤러 snupdateForm왔다");
-		System.out.println("no 가져왔니 >>>: "+svo.getSnNo());
 		
 		SchedulNoticeVO updateData =null;
 		updateData= schedulnoticeservice.snDetail(svo);
@@ -121,10 +114,9 @@ public class SchedulNoticeController {
 		
 	}
 	
-	/*글쓰기 구현*/
+	/*占쌜억옙占쏙옙 占쏙옙占쏙옙*/
 	@RequestMapping(value="snupdate")
 	public String snupdate(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("컨트롤러 snupdate왔당");
 		
 		String url="";
 		int result=0;
@@ -138,7 +130,7 @@ public class SchedulNoticeController {
 	
 	@RequestMapping(value="/snDelete")
 	public String snDelete(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("컨트롤러 snDelete왔다");
+		
 		String url="";
 		int result = 0;
 		

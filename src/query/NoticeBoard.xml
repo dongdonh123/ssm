@@ -21,20 +21,27 @@
 	    <result property="nbInsertdate" 	column="NB_INSERTDATE"/>
 	    <result property="nbUpdatedate" 	column="NB_UPDATEDATE"/>
 	    <result property="nbDeleteyn" 		column="NB_DELETEYN"/>
+	    <result property="pageNo"		    column="PAGENO"/>
+		<result property="listSize"		    column=""/>
+		<result property="totalCount"		column="TOTALCOUNT"/>
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
 	<select id ="nblist" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
-			SELECT 
-				A.NB_NO,  
-				B.TT_NAME, 
-				A.NB_TITLE, 
-				A.NB_INSERTDATE
-		FROM NOTICE_BOARD A, T_MEMBER B 
-		WHERE NB_DELETEYN ='Y'
-		AND A.TT_NO = B.TT_NO
-		
-		<trim prefix="AND" >
+		SELECT 
+		*
+		FROM
+			(SELECT 
+					A.NB_NO, 
+					B.TT_NAME, 
+					A.NB_TITLE, 
+					A.NB_INSERTDATE,
+					CEIL(ROW_NUMBER() OVER(ORDER BY A.NB_NO DESC)/ #{listSize}) PAGENO,
+	     			COUNT(A.NB_NO) OVER() AS TOTALCOUNT 
+			FROM NOTICE_BOARD A, T_MEMBER B 
+			WHERE NB_DELETEYN ='Y'
+			AND A.TT_NO = B.TT_NO
+			<trim prefix="AND" >
 			<if test="search=='nbTitle' ">
 				<![CDATA[NB_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
@@ -44,7 +51,10 @@
 			<if test="search=='ttName'">
 				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-		</trim>
+			</trim>
+				) ABC
+				WHERE ABC.PAGENO = #{pageNo}
+				ORDER BY NB_NO DESC
 	</select>
 	
 	<select id="nbChaebun" parameterType="ssm.cm.vo.NoticeBoardVO" resultMap="nbVO">
@@ -62,8 +72,12 @@
 	
 	</insert>
 	
-	<select id="pwdConfirm" parameterType="ssm.cm.vo.NoticeBoardVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM NOTICE_BOARD WHERE NB_NO = #{nbNo}),0)as result
+	<select id="pwdConfirm" parameterType="map" resultType="int">
+		SELECT NVL((SELECT 1 
+            FROM NOTICE_BOARD A, T_MEMBER B 
+            WHERE A.TT_NO = B.TT_NO
+            AND A.NB_NO = #{param1.nbNo}
+            AND B.TT_PW = #{param2}),0)as result
 		FROM dual
 	</select>
 	

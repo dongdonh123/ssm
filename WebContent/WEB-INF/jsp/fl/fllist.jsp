@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="ssm.cm.vo.FamilyLetterVO" %>    
 <%@ page import="java.util.List" %>    
    
@@ -10,23 +10,23 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
-		/*°Ë»ö ´ë»óÀÌ º¯°æµÉ ¶§¸¶´Ù Ã³¸® ÀÌº¥Æ®*/
+		/*ê²€ìƒ‰ ëŒ€ìƒì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$("#search").change(function(){
 			if($("#search").val()=="all"){
-				$("#keyword").val("ÀüÃ¼ µ¥ÀÌÅÍ Á¶È¸ÇÕ´Ï´Ù.");
+				$("#keyword").val("ì „ì²´ ë°ì´í„° ì¡°íšŒí•©ë‹ˆë‹¤.");
 			}else if($("#search").val()!="all"){
 				$("#keyword").val("");
 				$("#keyword").focus();
 			}
 		});
 		
-		/*°Ë»ö ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
+		/*ê²€ìƒ‰ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$("#searchBut").click(function(){
 			
 			goPage(1);
@@ -48,7 +48,7 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 			$("#f_search").submit();
 		}
 		
-		/*Á¦¸ñ Å¬¸¯½Ã »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ Ã³¸® ÀÌº¥Æ®*/
+		/*ì œëª© í´ë¦­ì‹œ ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$(".flDetail").click(function(){
 			var flNo = $(this).parents("tr").attr("data-num");
 			$("#flNo").val(flNo);
@@ -60,39 +60,39 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 </head>
 <body>
 	<div id="boardContainer">
-		<h1>°¡Á¤Åë½Å¹® °Ô½ÃÆÇ</h1>
+		<h1>ê°€ì •í†µì‹ ë¬¸ ê²Œì‹œíŒ</h1>
 		
-		<%-- ======================°Ë»ö±â´É ½ÃÀÛ============================ --%>
+		<%-- ======================ê²€ìƒ‰ê¸°ëŠ¥ ì‹œì‘============================ --%>
 		
 		<div id="boardSearch">
 			<form id="f_search" name="f_search">
-				<table summary="°Ë»ö">
+				<table summary="ê²€ìƒ‰">
 					<colgroup>
 						<col width="70%"></col>
 						<col width="30%"></col>
 					</colgroup>
 					<tr>
 						<td>
-						<label>°Ë»öÁ¶°Ç</label>
+						<label>ê²€ìƒ‰ì¡°ê±´</label>
 						<select id="search" name="search">
-							<option value="all">ÀüÃ¼</option>
-							<option value="flTitle">Á¦¸ñ</option>
-							<option value="flContents">³»¿ë</option>
-							<option value="ttName">ÀÛ¼ºÀÚ</option>
+							<option value="all">ì „ì²´</option>
+							<option value="flTitle">ì œëª©</option>
+							<option value="flContents">ë‚´ìš©</option>
+							<option value="ttName">ì‘ì„±ì</option>
 						</select>
 						
-						<input type="text" name="keyword" id="keyword" value="°Ë»ö¾î¸¦ÀÔ·ÂÇÏ¼¼¿ä" />
-						<input type="button" value="°Ë»ö" id="searchBut" />
+						<input type="text" name="keyword" id="keyword" value="ê²€ìƒ‰ì–´ë¥¼ì…ë ¥í•˜ì„¸ìš”" />
+						<input type="button" value="ê²€ìƒ‰" id="searchBut" />
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
 		
-		<%-- =======================°Ë»ö±â´É ³¡============================ --%>
+		<%-- =======================ê²€ìƒ‰ê¸°ëŠ¥ ë============================ --%>
 		
 		<div id="boardlist" style="text-align:center">
-			<table summary="°Ô½ÃÆÇ ¸®½ºÆ®">
+			<table summary="ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸">
 				<colgroup>
 					<col width="10%" />
 					<col width="50%" />
@@ -101,10 +101,10 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 				</colgroup>
 				<thead>
 					<tr>
-						<th>±Û¹øÈ£</th>
-						<th>±ÛÁ¦¸ñ</th>
-						<th>ÀÛ¼ºÀÏ</th>
-						<th>ÀÛ¼ºÀÚ</th>
+						<th>ê¸€ë²ˆí˜¸</th>
+						<th>ê¸€ì œëª©</th>
+						<th>ì‘ì„±ì¼</th>
+						<th>ì‘ì„±ì</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -113,7 +113,7 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 					%>
 					<tr>
 						<td>0</td>
-						<td>ÀÛ¼ºµÈ ±ÛÀÌ ¾ø½À´Ï´Ù.</td>
+						<td>ì‘ì„±ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
 						<td></td>
 						<td></td>
 					</tr>
@@ -137,9 +137,9 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 				</tbody>
 			</table>
 			<form id="fllistform" name="fllistform">
-				<input type="button" id="insertbutton" name="insertbutton" value="±Û¾²±â">
+				<input type="button" id="insertbutton" name="insertbutton" value="ê¸€ì“°ê¸°">
 			</form>
-			<!-- »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ form -->
+			<!-- ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ form -->
 			<form name="fldetailForm" id="fldetailForm">
 			<input type="hidden" name="flNo" id="flNo">
 			</form>

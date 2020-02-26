@@ -45,9 +45,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(NoticeBoardVO nvo, String ttPw) {
 		int result = 0;
-		result=noticeboarddao.pwdConfirm(nvo);
+		result=noticeboarddao.pwdConfirm(nvo, ttPw);
 		return result;
 	}
 

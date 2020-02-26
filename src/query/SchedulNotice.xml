@@ -10,6 +10,7 @@
 	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
 	    <result property="ttNo" 			column="TT_NO"/>
 	    <result property="ttName" 			column="TT_NAME"/>
+	    <result property="ttPw" 			column="TT_PW"/>
 	</resultMap>
 	
 	<resultMap type="ssm.cm.vo.SchedulNoticeVO" id="snVO">
@@ -21,21 +22,28 @@
 	    <result property="snInsertdate" 	column="SN_INSERTDATE"/>
 	    <result property="snUpdatedate" 	column="SN_UPDATEDATE"/>
 	    <result property="snDeleteyn" 		column="SN_DELETEYN"/>
+	    <result property="pageNo"		    column="PAGENO"/>
+		<result property="listSize"		    column=""/>
+		<result property="totalCount"		column="TOTALCOUNT"/>
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
-	<sql id="snCommon" >
+	<select id ="snlist" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 		SELECT 
-				A.SN_NO,
-				B.TT_NAME, 
-				A.SN_TITLE, 
-				A.SN_INSERTDATE
-				
-		FROM SCHEDULE_NOTICE A, T_MEMBER B 
-		WHERE SN_DELETEYN ='Y'
-		AND A.TT_NO = B.TT_NO
-		
-		<trim prefix="AND" >
+		*
+		FROM
+			(SELECT 
+					A.SN_NO, 
+					B.TT_NAME, 
+					A.SN_TITLE, 
+					A.SN_INSERTDATE,
+					A.SN_DATE,
+					CEIL(ROW_NUMBER() OVER(ORDER BY A.SN_NO DESC)/#{listSize}) PAGENO,
+	     			COUNT(A.SN_NO) OVER() AS TOTALCOUNT 
+			FROM SCHEDULE_NOTICE A, T_MEMBER B 
+			WHERE SN_DELETEYN ='Y'
+			AND A.TT_NO = B.TT_NO
+			<trim prefix="AND" >
 			<if test="search=='snTitle' ">
 				<![CDATA[SN_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
@@ -45,23 +53,10 @@
 			<if test="search=='ttName'">
 				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-		</trim>
-	</sql>
-	
-	<select id ="snlist" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
-			SELECT 
-					SN_NO,
-					TT_NAME, 
-					SN_TITLE, 
-					SN_INSERTDATE
-					
-			FROM 
-			  (	SELECT 
-						list.*,
-						ROWNUM AS RNUM
-				FROM(<include refid="snCommon"></include>
-					)list
-			)
+			</trim>
+			) ABC
+				WHERE ABC.PAGENO = #{pageNo}
+				ORDER BY SN_NO DESC
 	</select>
 	
 	<select id="snChaebun" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
@@ -79,8 +74,12 @@
 	
 	</insert>
 	
-	<select id="pwdConfirm" parameterType="ssm.cm.vo.SchedulNoticeVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM SCHEDULE_NOTICE WHERE SN_NO = #{snNo}),0)as result
+	<select id="pwdConfirm" parameterType="map" resultType="int">
+		SELECT NVL((SELECT 1 
+            FROM SCHEDULE_NOTICE A, T_MEMBER B 
+            WHERE A.TT_NO = B.TT_NO
+            AND A.SN_NO = #{param1.snNo}
+            AND B.TT_PW = #{param2}),0)as result
 		FROM dual
 	</select>
 	

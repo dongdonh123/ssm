@@ -29,16 +29,11 @@ public class FamilyLetterController {
 	@Autowired
 	private FamilyLetterService familyletterservice;
 	
-	/*ÀüÃ¼ Á¶È¸*/
 	@RequestMapping(value="/fllist")
 	public String nblist(@ModelAttribute FamilyLetterVO fvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ ¿Ô´ç");
 		
-		//°Ë»ö¿¡ ´ëÇÑ µ¥ÀÌÅÍ È®ÀÎ
 		System.out.println("fvo.getSearch()>>>: "+ fvo.getSearch());
 		System.out.println("fvo.getKeyword()>>>: "+ fvo.getKeyword());
-		
-		//ÀüÃ¼ ·¹ÄÚµå¼ö
 		
 		List fllist=familyletterservice.fllist(fvo); 
 		
@@ -47,17 +42,14 @@ public class FamilyLetterController {
 		return "fl/fllist";
 	}
 	
-	/*±Û¾²±â Æû Ãâ·Â*/
 	@RequestMapping(value="flwirteform")
 	public String flwirteform(){
-		System.out.println(" flwirteform ÄÁÆ®·Ñ·¯ ¿Ô´ç");
+		System.out.println(" flwirteform ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ ï¿½Ô´ï¿½");
 		return "fl/flwirteform";
 	}
 	
-	/*±Û¾²±â ±¸Çö*/
 	@RequestMapping(value="/flwirte")
 	public String flinsert(@ModelAttribute FamilyLetterVO fvo, HttpServletRequest req){
-		System.out.println("ÄÁÆ®·Ñ·¯ flwirte¿Ô´ç");
 		String url="";
 		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
 		String daFileName="";
@@ -68,9 +60,9 @@ public class FamilyLetterController {
 			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
 			
 			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//ÀÔ·ÂÇÑ ÆÄÀÏ¸í¹Þ¾Æ¿À´Â°Å
-			String fileName=multi.getFilesystemName(file);//¸ÖÆ¼ÆÄÆ®ÂüÁ¶º¯¼ö·Î ¹Ù²Ù´Â°Å
-			daFileName="../"+"upload"+"/"+fileName;//°æ·ÎÃß°¡ÇØ ÇÕÄ¡´Â°Å
+			String file=(String)files.nextElement();
+			String fileName=multi.getFilesystemName(file);
+			daFileName="../"+"upload"+"/"+fileName;
 			
 			String ttNo=multi.getParameter("ttNo");
 			String flTitle=multi.getParameter("flTitle");
@@ -88,7 +80,7 @@ public class FamilyLetterController {
 			System.out.println(fvo.getFlNo());
 			result=familyletterservice.flInsert(fvo);
 		}catch(Exception e){
-			System.out.println("¿¡·¯´Â >>>: " + e);
+			System.out.println("ì—ëŸ¬ê°€ >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			
@@ -99,8 +91,7 @@ public class FamilyLetterController {
 	
 	@RequestMapping(value="/flDetail")
 	public String nbDetail(@ModelAttribute FamilyLetterVO fvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ flDetail¿Ô´ç");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+fvo.getFlNo());
+		System.out.println("no ê°€ì ¸ì˜¨ >>>: "+fvo.getFlNo());
 		
 		FamilyLetterVO fldetail = null;
 		fldetail = familyletterservice.flDetail(fvo);
@@ -114,21 +105,18 @@ public class FamilyLetterController {
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
 	public String pwdConfirm(@ModelAttribute FamilyLetterVO fvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ pwd¿Ô´Ù");
 		
-		//¾Æ·¡ º¯¼ö¿¡´Â ÀÔ·Â ¼º°ø¿¡ ´ëÇÑ »óÅÂ°ª ÀúÀå(1or0)
 		int result = 0;
 		result= familyletterservice.pwdConfirm(fvo);
 		
-		System.out.println("result ¸îÀÌ¾ß>>>" + result);
+		System.out.println("result >>>" + result);
 		return result+"";
 		
 	}
 	
 	@RequestMapping(value="/flupdateForm")
 	public String updateForm(@ModelAttribute FamilyLetterVO fvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ flupdateForm¿Ô´Ù");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+fvo.getFlNo());
+		System.out.println("ê°€ì ¸ì˜¨ no >>>: "+fvo.getFlNo());
 		
 		FamilyLetterVO updateData =null;
 		updateData= familyletterservice.flDetail(fvo);
@@ -141,7 +129,6 @@ public class FamilyLetterController {
 	
 	@RequestMapping(value="flupdate")
 	public String nbupdate(@ModelAttribute FamilyLetterVO fvo, HttpServletRequest req){
-		System.out.println("ÄÁÆ®·Ñ·¯ flupdate¿Ô´ç");
 		
 		String url="";
 		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
@@ -153,9 +140,9 @@ public class FamilyLetterController {
 			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
 			
 			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//ÀÔ·ÂÇÑ ÆÄÀÏ¸í¹Þ¾Æ¿À´Â°Å
-			String fileName=multi.getFilesystemName(file);//¸ÖÆ¼ÆÄÆ®ÂüÁ¶º¯¼ö·Î ¹Ù²Ù´Â°Å
-			daFileName="../"+"upload"+"/"+fileName;//°æ·ÎÃß°¡ÇØ ÇÕÄ¡´Â°Å
+			String file=(String)files.nextElement();
+			String fileName=multi.getFilesystemName(file);
+			daFileName="../"+"upload"+"/"+fileName;
 			
 			String flTitle=multi.getParameter("flTitle");
 			String flContents=multi.getParameter("flContents");
@@ -168,7 +155,7 @@ public class FamilyLetterController {
 			
 			result=familyletterservice.flUpdate(fvo);
 		}catch(Exception e){
-			System.out.println("¿¡·¯´Â >>>: " + e);
+			System.out.println("ì—ëŸ¬ê°€ >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			
@@ -178,7 +165,6 @@ public class FamilyLetterController {
 	
 	@RequestMapping(value="/flDelete")
 	public String flDelete(@ModelAttribute FamilyLetterVO fvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ flDelete¿Ô´Ù");
 		String url="";
 		int result = 0;
 		

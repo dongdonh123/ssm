@@ -1,33 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="ssm.cm.vo.SchedulNoticeVO" %>    
 <%@ page import="java.util.List" %>    
    
-<%
+<%	
+	int pageCount = 0;
 	List<SchedulNoticeVO> snlist =(List<SchedulNoticeVO>)request.getAttribute("snlist");
-	SchedulNoticeVO data =(SchedulNoticeVO)request.getAttribute("data");
+	int listSize=snlist.size();
+	if(listSize >0){
+	SchedulNoticeVO svo_ = snlist.get(0);
+	double totalCount = (double)Integer.parseInt(svo_.getTotalCount()); 
+	int pagelistSize = (int)request.getAttribute("listSize");
+	double dval = (double)pagelistSize;
+	pageCount = (int)Math.ceil(totalCount/dval); //pageCount ë³€ìˆ˜ ì‚¬ìš©
+	System.out.println("pageCount>>>:"+ pageCount); //1
+	System.out.println("totalCount>>>:"+ totalCount); //10
+	System.out.println("pagelistSize>>>:"+ pagelistSize);
+	}
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$("#calendarMode").hide(); 
 		
-		/*°Ë»ö ´ë»óÀÌ º¯°æµÉ ¶§¸¶´Ù Ã³¸® ÀÌº¥Æ®*/
+		/*ê²€ìƒ‰ ëŒ€ìƒì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$("#search").change(function(){
 			if($("#search").val()=="all"){
-				$("#keyword").val("ÀüÃ¼ µ¥ÀÌÅÍ Á¶È¸ÇÕ´Ï´Ù.");
+				$("#keyword").val("ì „ì²´ ë°ì´í„° ì¡°íšŒí•©ë‹ˆë‹¤.");
 			}else if($("#search").val()!="all"){
 				$("#keyword").val("");
 				$("#keyword").focus();
 			}
 		});
 		
-		/*°Ë»ö ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
+		/*ê²€ìƒ‰ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$("#searchBut").click(function(){
 			
 			goPage(1);
@@ -50,11 +61,19 @@
 			$("#f_search").submit();
 		}
 		
-		/*Á¦¸ñ Å¬¸¯½Ã »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ Ã³¸® ÀÌº¥Æ®*/
+		/*ì œëª© í´ë¦­ì‹œ ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 		$(".snDetail").click(function(){
 			var snNo = $(this).parents("tr").attr("data-num");
 			$("#snNo").val(snNo);
 			$("#sndetailForm").attr('action',"/schedulnotice/snDetail.ssm")
+			.submit();
+		});
+		
+		$(".pageNobut").click(function(){
+			var pageNo = $(this).val();
+			$("#pageNo").val(pageNo);
+			alert(pageNo);
+			$("#pageNoForm").attr('action',"/schedulnotice/snlist.ssm")
 			.submit();
 		});
 		
@@ -77,56 +96,58 @@
 </head>
 <body>
 	<div id="boardMode">
-		<h1>ÇĞ±³ÀÏÁ¤ °Ô½ÃÆÇ</h1>
+		<h1>í•™êµì¼ì • ê²Œì‹œíŒ</h1>
 		
-		<%-- ======================°Ë»ö±â´É ½ÃÀÛ============================ --%>
+		<%-- ======================ê²€ìƒ‰ê¸°ëŠ¥ ì‹œì‘============================ --%>
 		
 		<div id="boardSearch">
 			<form id="ajaxform" name="ajaxform">
-				<input type="button" onclick="showbutton('L')" value="¸ñ·ÏÇü" disabled>
-				<input type="button" onclick="showbutton('C')" value="Ä¶¸°´õÇü">
+				<input type="button" onclick="showbutton('L')" value="ëª©ë¡í˜•" disabled>
+				<input type="button" onclick="showbutton('C')" value="ìº˜ë¦°ë”í˜•">
 			</form>
 			<form id="f_search" name="f_search">
-				<table summary="°Ë»ö">
+				<table summary="ê²€ìƒ‰">
 					<colgroup>
 						<col width="70%"></col>
 						<col width="30%"></col>
 					</colgroup>
 					<tr>
 						<td>
-						<label>°Ë»öÁ¶°Ç</label>
+						<label>ê²€ìƒ‰ì¡°ê±´</label>
 						<select id="search" name="search">
-							<option value="all">ÀüÃ¼</option>
-							<option value="snTitle">Á¦¸ñ</option>
-							<option value="snContents">³»¿ë</option>
-							<option value="ttName">ÀÛ¼ºÀÚ</option>
+							<option value="all">ì „ì²´</option>
+							<option value="snTitle">ì œëª©</option>
+							<option value="snContents">ë‚´ìš©</option>
+							<option value="ttName">ì‘ì„±ì</option>
 						</select>
 						
-						<input type="text" name="keyword" id="keyword" value="°Ë»ö¾î¸¦ÀÔ·ÂÇÏ¼¼¿ä" />
-						<input type="button" value="°Ë»ö" id="searchBut" />
-						<input type="button" id="insertbutton" name="insertbutton" value="±Û¾²±â">
+						<input type="text" name="keyword" id="keyword" value="ê²€ìƒ‰ì–´ë¥¼ì…ë ¥í•˜ì„¸ìš”" />
+						<input type="button" value="ê²€ìƒ‰" id="searchBut" />
+						<input type="button" id="insertbutton" name="insertbutton" value="ê¸€ì“°ê¸°">
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
 		
-		<%-- =======================°Ë»ö±â´É ³¡============================ --%>
+		<%-- =======================ê²€ìƒ‰ê¸°ëŠ¥ ë============================ --%>
 		
 		<div id="boardlist" style="text-align:center">
-			<table summary="°Ô½ÃÆÇ ¸®½ºÆ®">
+			<table summary="ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸">
 				<colgroup>
+					<col width="10%" /> 
 					<col width="10%" />
-					<col width="50%" />
+					<col width="30%" />
 					<col width="20%" />
 					<col width="20%" />
 				</colgroup>
 				<thead>
 					<tr>
-						<th>±Û¹øÈ£</th>
-						<th>±ÛÁ¦¸ñ</th>
-						<th>ÀÛ¼ºÀÏ</th>
-						<th>ÀÛ¼ºÀÚ</th>
+						<th>ê¸€ë²ˆí˜¸</th>
+						<th>ë‚ ì§œ</th>
+						<th>ì¼ì •</th>
+						<th>ì‘ì„±ì¼</th>
+						<th>ì‘ì„±ì</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -135,7 +156,7 @@
 					%>
 					<tr>
 						<td>0</td>
-						<td>ÀÛ¼ºµÈ ±ÛÀÌ ¾ø½À´Ï´Ù.</td>
+						<td>ì‘ì„±ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
 						<td></td>
 						<td></td>
 					</tr>
@@ -143,23 +164,35 @@
 					
 					}else{
 						int count = snlist.size();
-						for (int i=(count-1); i>=0; i--){
-							SchedulNoticeVO svo = (SchedulNoticeVO)snlist.get(i);
-							int no = i+1;
+						for (int i=0; i< count; i++){
+							SchedulNoticeVO svo = snlist.get(i);
+							String no = svo.getSnNo().substring(4);
 					%>	
 						<tr data-num=<%=svo.getSnNo() %>>
 							<td><%=no%> </td>
+							<td><%=svo.getSnDate()%> </td>
 							<td><span class="snDetail"><%=svo.getSnTitle() %></span></td>
 							<td><%=svo.getSnInsertdate() %></td>
 							<td><%=svo.gettMembervo().getTtName() %></td>
 						</tr>
 					<% 		
 						}
+						%>
+						<form id="pageNoForm">
+						<%
+						for(int i=1 ; i<=pageCount;i++){
+						%>
+						<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
+						<input type="hidden" id="pageNo" name="pageNo" value="1">
+						<input type="hidden" id="listSize" name="listSize" value="10">
+						</form>
+						<%
+						}
 					}
 					%>
 				</tbody>
 			</table>
-			<!-- »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ form -->
+			<!-- ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ form -->
 			<form name="sndetailForm" id="sndetailForm">
 			<input type="hidden" name="snNo" id="snNo">
 			</form>
@@ -168,12 +201,12 @@
 	
 	
 	<div id="calendarMode">
-		<h1>ÇĞ±³ÀÏÁ¤ °Ô½ÃÆÇ</h1>
+		<h1>í•™êµì¼ì • ê²Œì‹œíŒ</h1>
 		<form id="ajaxform" name="ajaxform" align="left">
-			<input type="button" onclick="showbutton('L')" value="¸ñ·ÏÇü" >
-			<input type="button" onclick="showbutton('C')" value="Ä¶¸°´õÇü" disabled>
+			<input type="button" onclick="showbutton('L')" value="ëª©ë¡í˜•" >
+			<input type="button" onclick="showbutton('C')" value="ìº˜ë¦°ë”í˜•" disabled>
 		</form>
-	Ä¶¸°´õ ¸ğµå ¿©±â¿¡ Ä¶¸°´õ api³ÖÀ»°Å¾ß
+	ìº˜ë¦°ë” ëª¨ë“œ ì—¬ê¸°ì— ìº˜ë¦°ë” apië„£ì„ê±°ì•¼
 	</div>
 </body>
 </html>

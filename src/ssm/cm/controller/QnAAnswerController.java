@@ -30,7 +30,6 @@ public class QnAAnswerController {
 	@ResponseBody
 	@RequestMapping(value="/all/{qbNo}.ssm")
 	public ResponseEntity<List<QnAAnswerVO>> list(@PathVariable("qbNo") String qbNo){
-		System.out.println("★★★★★★qa컨트롤러 리스트진입");
 		
 		ResponseEntity<List<QnAAnswerVO>> entity=null;
 		try{
@@ -51,17 +50,16 @@ public class QnAAnswerController {
 	@ResponseBody
 	@RequestMapping(value="/qaInsert")
 	public ResponseEntity<String> qaInsert(@RequestBody QnAAnswerVO qvo){
-		System.out.println("qa컨트롤러 인서트에왔다");
 		
 		ResponseEntity<String> entity =null;
 		int result = 0;
 		String chaebunNum= "";
 		
-		QnAAnswerVO _qvo = qnaanswerservice.qaChaebun(); // <- 여기서는 채번 쿼리 실행시켜서 vo에 바인딩한다(최대값 숫자만)
+		QnAAnswerVO _qvo = qnaanswerservice.qaChaebun(); 
 		chaebunNum = _qvo.getQaNo();
-		System.out.println("chaebunNum >>> : " + chaebunNum);//10 맥스값 나옴
+		System.out.println("chaebunNum >>> : " + chaebunNum);
 		
-		qvo.setQaNo(QnAAnswerChaebun.qachaebun(chaebunNum));// 맥스값 가지고 채번 클라스가서 K000몇 되게 가공 K0009
+		qvo.setQaNo(QnAAnswerChaebun.qachaebun(chaebunNum));
 		try{
 			result = qnaanswerservice.qaInsert(qvo);
 			if(result==1){
@@ -75,16 +73,8 @@ public class QnAAnswerController {
 		return entity;
 	}
 	
-	/*=============================================================================
-	 * 댓글 수정 구현하기
-	 * @return
-	 * 참고:REST 방식에서 UPDATE작업은 PUT, PATCH 방식을 이용해서 처리.
-	 * 		전체 데이터를 수정하는 경우에는 PUT을 이용하고,
-	 * 		일부의 데이터를 수정하는 경우에는 PATCH를 이용
-	 * =============================================================================*/
 	@RequestMapping(value="/{qaNo}.ssm",method={RequestMethod.PUT,RequestMethod.PATCH})
 	public ResponseEntity<String> qaUpdate(@PathVariable("qaNo") String qaNo, @RequestBody QnAAnswerVO qvo){
-		System.out.println("qa컨트롤러 업데이트");
 		
 		ResponseEntity<String> entity =null;
 		int result =0;
@@ -103,13 +93,8 @@ public class QnAAnswerController {
 		return entity;
 	}
 	
-	/*=============================================================================
-	 * 댓글 삭제 구현하기
-	 * 
-	 * =============================================================================*/
 	@RequestMapping(value="/delete/{qaNo}.ssm",method={RequestMethod.DELETE,RequestMethod.PATCH})
 	public ResponseEntity<String> qaDelete(@PathVariable("qaNo") String qaNo){
-		System.out.println("컨트롤러 함수 삭제 진입");
 		ResponseEntity<String> entity =null;
 		int result = 0;
 		try{

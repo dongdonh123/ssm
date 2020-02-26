@@ -37,7 +37,7 @@ public class QnABoardDaoImpl implements QnABoardDao {
 	}
 
 	@Override
-	public int pwdConfirm(QnABoardVO qvo) {
+	public int pwdConfirm(QnABoardVO qvo, String ssPw) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}

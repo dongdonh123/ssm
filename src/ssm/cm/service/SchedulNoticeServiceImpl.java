@@ -47,9 +47,9 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 	}
 
 	@Override
-	public int pwdConfirm(SchedulNoticeVO svo) {
+	public int pwdConfirm(SchedulNoticeVO svo, String ttPw) {
 		int result = 0;
-		result=schedulnoticedao.pwdConfirm(svo);
+		result=schedulnoticedao.pwdConfirm(svo,ttPw);
 		return result;
 	}
 

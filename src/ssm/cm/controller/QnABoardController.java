@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,33 +28,22 @@ import ssm.cm.vo.SchedulNoticeVO;
 @Controller
 @RequestMapping(value="/qnaboard")
 public class QnABoardController {
+	
 
 	@Autowired
 	private QnABoardService qnaboardservice;
 	
-	/*ÀüÃ¼ Á¶È¸*/
+	/*ï¿½ï¿½Ã¼ ï¿½ï¿½È¸*/
 	@RequestMapping(value="qblist")
-	public String sblist(@ModelAttribute QnABoardVO qvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ ¿Ô´ç¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú¡Ú");
+	public String sblist(@ModelAttribute QnABoardVO qvo, Model model ){
+		int ListSize = 10; 
 		
-		int ListSize = 10; //¸®½ºÆ® »çÀÌÁî ¼³Á¤
-		
-		//°Ë»ö¿¡ ´ëÇÑ µ¥ÀÌÅÍ È®ÀÎ
-		System.out.println("qvo.getSearch()>>>: "+ qvo.getSearch());
-		System.out.println("qvo.getKeyword()>>>: "+ qvo.getKeyword());
-		System.out.println("qvo.getListSize()>>>: "+ qvo.getListSize());
-		System.out.println("qvo.getPageNo()>>>: "+ qvo.getPageNo());
-		
-		//ÆäÀÌÂ¡ ±â´É ±¸Çö³»¿ë
 		if(qvo.getListSize()==null){
-			System.out.println("ÆäÀÌÂ¡ ÃÊ±â¼ÂÆÃ");
 			qvo.setListSize(ListSize+"");
 			qvo.setPageNo("1");
 		}
 
-		//Äõ¸®º¸³¿
 		List qblist=qnaboardservice.qblist(qvo); 
-		System.out.println("list Äõ¸®°¬´Ù¿È");
 		
 		model.addAttribute("qblist",qblist);
 		model.addAttribute("listSize",ListSize);
@@ -61,18 +51,17 @@ public class QnABoardController {
 		return "qb/qblist";
 	}
 	
-	/*±Û¾²±â Æû Ãâ·Â*/
+	/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½*/
 	@RequestMapping(value="qbwirteform")
 	public String qbwirteform(){
-		System.out.println(" qbwirteform ÄÁÆ®·Ñ·¯ ¿Ô´ç");
+		
 		return "qb/qbwirteform";
 	}
 	
-	/*±Û¾²±â ±¸Çö*/
+	/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	@RequestMapping(value="qbwirte")
 	public String qbinsert(@ModelAttribute QnABoardVO qvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbwirte¿Ô´ç");
-		System.out.println("qvo.getQbSecretyn()>>>:"+qvo.getQbSecretyn());
+		
 		String url="";
 		int result=0;
 			
@@ -83,15 +72,13 @@ public class QnABoardController {
 		boolean bResult = result > 0;
 			
 		if(bResult) url="/qnaboard/qblist.ssm";
-		System.out.println("url >>>: " + url);		
+		
 		return "redirect:"+url;
 	}
 	
 	@RequestMapping(value="/qbDetail")
 	public String nbDetail(@ModelAttribute QnABoardVO qvo, Model model, HttpServletRequest request){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbDetail¿Ô´ç");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+qvo.getQbNo());
-		System.out.println("request >>>: "+request.getParameter("qbNo"));
+		
 		QnABoardVO qbdetail = null;
 		
 		if(request ==null){
@@ -109,23 +96,20 @@ public class QnABoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
-	public String pwdConfirm(@ModelAttribute QnABoardVO qvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ pwd¿Ô´Ù");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+qvo.getQbNo());
-		System.out.println("pw °¡Á®¿Ô´Ï >>>: "+qvo.getQbPw());
-		//¾Æ·¡ º¯¼ö¿¡´Â ÀÔ·Â ¼º°ø¿¡ ´ëÇÑ »óÅÂ°ª ÀúÀå(1or0)
-		int result = 0;
-		result= qnaboardservice.pwdConfirm(qvo);
+	public String pwdConfirm(@ModelAttribute QnABoardVO qvo, HttpServletRequest request){
 		
-		System.out.println("result ¸îÀÌ¾ß>>>" + result);
+		String ssPw =request.getParameter("ssPw");
+		
+		int result = 0;
+		result= qnaboardservice.pwdConfirm(qvo, ssPw);
+		
+		System.out.println("resultëŠ”>>>" + result);
 		return result+"";
 		
 	}
 	
 	@RequestMapping(value="/qbupdateForm")
 	public String updateForm(@ModelAttribute QnABoardVO qvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbupdateForm¿Ô´Ù");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+qvo.getQbNo());
 		
 		QnABoardVO updateData =null;
 		updateData= qnaboardservice.qbDetail(qvo);
@@ -135,10 +119,8 @@ public class QnABoardController {
 		
 	}
 	
-	/*±Û¾²±â ±¸Çö*/
 	@RequestMapping(value="qbupdate")
 	public String nbupdate(@ModelAttribute QnABoardVO qvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbupdate¿Ô´ç");
 		
 		String url="";
 		int result=qnaboardservice.qbUpdate(qvo);
@@ -150,7 +132,6 @@ public class QnABoardController {
 	
 	@RequestMapping(value="/qbDelete")
 	public String nbDelete(@ModelAttribute QnABoardVO qvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbDelete¿Ô´Ù");
 		String url="";
 		int result = 0;
 		
@@ -163,32 +144,14 @@ public class QnABoardController {
 		
 		
 	}
-	@RequestMapping(value="/qbPwcheck")
-	public String qbPwcheck(@ModelAttribute QnABoardVO qvo,Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbPwcheck¿Ô´Ù");
+	@RequestMapping(value="/qbPwcheckform")
+	public String qbPwcheckform(@ModelAttribute QnABoardVO qvo,Model model){
 		
-		//¾Æ·¡ º¯¼ö¿¡´Â ÀÔ·Â ¼º°ø¿¡ ´ëÇÑ »óÅÂ°ª ÀúÀå(1or0)
 		String QbNo=qvo.getQbNo();
 		model.addAttribute("QbNo",QbNo);
-		return "qb/qbpwcheck";
+		return "qb/qbpwcheckform";
 		
 	}
 	
-	@RequestMapping(value="/qbPwcheck2")
-	public String qbPwcheck2(@ModelAttribute QnABoardVO qvo,Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ qbPwcheck2¿Ô´Ù");
-		String qbNo=qvo.getQbNo();
-		String url="";
-		int result = 0;
-		
-		result= qnaboardservice.pwdConfirm(qvo);
-		
-		boolean bResult = result > 0;
-		if(bResult) url="/qnaboard/qbDetail.ssm";
-		
-		model.addAttribute("qbNo",qbNo);
-		return "redirect:"+url;
-		
-	}
 	
 }

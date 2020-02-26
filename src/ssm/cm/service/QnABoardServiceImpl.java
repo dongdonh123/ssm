@@ -47,9 +47,9 @@ public class QnABoardServiceImpl implements QnABoardService {
 	}
 
 	@Override
-	public int pwdConfirm(QnABoardVO qvo) {
+	public int pwdConfirm(QnABoardVO qvo, String ssPw) {
 		int result = 0;
-		result=qnaboarddao.pwdConfirm(qvo);
+		result=qnaboarddao.pwdConfirm(qvo, ssPw);
 		return result;
 	}
 

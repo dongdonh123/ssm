@@ -7,11 +7,12 @@
 
 <mapper namespace="ssm.cm.dao.QnABoardDao">
 	
+	 
 	<resultMap type="ssm.mi.vo.SmemberVO" id="SmemberVO">
 	    <result property="ssNo" 			column="SS_NO"/>
 	    <result property="ssName" 			column="SS_NAME"/>
 	</resultMap>
-	
+	 
 	<resultMap type="ssm.cm.vo.QnABoardVO" id="qbVO">
 	    <result property="qbNo" 			column="QB_NO"/>
 	    <result property="qbTitle" 			column="QB_TITLE"/>
@@ -40,7 +41,7 @@
 					A.QB_INSERTDATE,
 					A.QB_SECRETYN,
 					(SELECT COUNT(C.QA_NO) NCNT FROM  QNA_ANSWER C WHERE  C.QB_NO = A.QB_NO) QA_COUNT,
-					CEIL(ROW_NUMBER() OVER(ORDER BY A.QB_NO)/#{listSize}) PAGENO,
+					CEIL(ROW_NUMBER() OVER(ORDER BY A.QB_NO DESC)/#{listSize}) PAGENO,
 	     			COUNT(A.QB_NO) OVER() AS TOTALCOUNT 
 			FROM QNA_BOARD A, S_MEMBER B 
 			WHERE QB_DELETEYN ='Y'
@@ -58,7 +59,7 @@
 			</trim>
 			) ABC
 				WHERE ABC.PAGENO = #{pageNo}
-				ORDER BY QB_NO
+				ORDER BY QB_NO DESC
 	</select>
 	
 	<select id="qbChaebun" parameterType="ssm.cm.vo.QnABoardVO" resultMap="qbVO">
@@ -90,8 +91,12 @@
 	
 	</insert>
 	
-	<select id="pwdConfirm" parameterType="ssm.cm.vo.QnABoardVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM QNA_BOARD WHERE QB_NO = #{qbNo} AND QB_PW= #{qbPw}),0) as result
+	<select id="pwdConfirm" parameterType="map" resultType="int">
+	SELECT NVL((SELECT 1 
+            FROM QNA_BOARD A, S_MEMBER B 
+            WHERE A.SS_NO = B.SS_NO
+            AND A.QB_NO = #{param1.qbNo}
+            AND B.SS_PW = #{param2}),0)as result
 		FROM dual
 	</select>
 	

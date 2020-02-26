@@ -39,7 +39,7 @@ public class SchedulNoticeDaoImpl implements SchedulNoticeDao {
 	}
 
 	@Override
-	public int pwdConfirm(SchedulNoticeVO svo) {
+	public int pwdConfirm(SchedulNoticeVO svo,String pw) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}

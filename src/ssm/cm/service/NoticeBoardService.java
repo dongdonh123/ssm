@@ -9,7 +9,7 @@ public interface NoticeBoardService {
 	public NoticeBoardVO nbChaebun(NoticeBoardVO nvo);
 	public int nbInsert(NoticeBoardVO nvo);
 	public NoticeBoardVO nbDetail(NoticeBoardVO nvo);
-	public int pwdConfirm(NoticeBoardVO nvo);
+	public int pwdConfirm(NoticeBoardVO nvo, String ttPw);
 	public int nbUpdate(NoticeBoardVO nvo);
 	public int nbDelete(NoticeBoardVO nvo);
 }

@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
+	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    
@@ -25,9 +25,34 @@
 	    		
 	    		$("#nbwirteform").attr('action','/noticeboard/nbwirte.ssm').submit();
 	    	});
+	    	
+	    	$('.A').keydown(function(){
+	            cut_28(this);
+	        });
+	    	
 	    });
 	    
+	    function cut_28(obj){
+	        var text = $(obj).val();
+	        var leng = text.length;
+	        while(getTextLength(text) > 28){
+	            leng--;
+	            text = text.substring(0, leng);
+	        }
+	        $(obj).val(text);
+	        $('.C').text(getTextLength(text));
+	    }
 	    
+	    function getTextLength(str) {
+	        var len = 0;
+	        for (var i = 0; i < str.length; i++) {
+	            if (escape(str.charAt(i)).length == 6) {
+	                len++;
+	            }
+	            len++;
+	        }
+	        return len;
+	    }
 	    
     </script>
 </head>
@@ -39,27 +64,31 @@
 				<col width="800px"></col>
 			</colgroup>
 			<tr>
-				<td colspan="2">°øÁö»çÇ×°Ô½ÃÆÇ ±ÛÀÔ·ÂÇÏ±â</td>
+				<td colspan="2">ê³µì§€ì‚¬í•­ê²Œì‹œíŒ ê¸€ìž…ë ¥í•˜ê¸°</td>
 			</tr>
 			<tr>
-				<td>ÀÛ¼ºÀÚ</td><!--  ttno´Â ¼¼¼Ç¿¡¼­ È÷µçÀ¸·Î ³Ö±â -->
-				<td><input type="text" id="ttNo" name="ttNo" value="">ttno´Â ¼¼¼Ç¿¡¼­ È÷µçÀ¸·Î ³Ö±â(T8200003)</td>
+				<td>ìž‘ì„±ìž</td><!--  ttnoëŠ” ì„¸ì…˜ì—ì„œ ížˆë“ ìœ¼ë¡œ ë„£ê¸° -->
+				<td><input type="text" id="ttNo" name="ttNo" value="">ttnoëŠ” ì„¸ì…˜ì—ì„œ ížˆë“ ìœ¼ë¡œ ë„£ê¸°(T8200003)</td>
 			</tr>
 			<tr>
-				<td>±ÛÁ¦¸ñ</td>
-				<td><input type="text" id="nbTitle" name="nbTitle"></td>
+				<td>ê¸€ì œëª©</td>
+				<td><input type="text" id="nbTitle" name="nbTitle" class="A">
+					<div class="bytes-wrapper">
+        				<span class="C">0</span>bytes
+    				</div>
+				</td>
 			</tr>
 			<tr>
-				<td>±Û³»¿ë</td>
-				<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" >¿¡µðÅÍ¿¡ ±âº»À¸·Î »ðÀÔÇÒ ±Û(¼öÁ¤ ¸ðµå)ÀÌ ¾ø´Ù¸é ÀÌ value °ªÀ» ÁöÁ¤ÇÏÁö ¾ÊÀ¸½Ã¸é µË´Ï´Ù.</textarea></td>
+				<td>ê¸€ë‚´ìš©</td>
+				<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" >ì—ë””í„°ì— ê¸°ë³¸ìœ¼ë¡œ ì‚½ìž…í•  ê¸€(ìˆ˜ì • ëª¨ë“œ)ì´ ì—†ë‹¤ë©´ ì´ value ê°’ì„ ì§€ì •í•˜ì§€ ì•Šìœ¼ì‹œë©´ ë©ë‹ˆë‹¤.</textarea></td>
 			</tr>
 			<tr>
-				<td>Ã·ºÎÆÄÀÏ1</td>
+				<td>ì²¨ë¶€íŒŒì¼1</td>
 				<td><input type="file" id="nbFile" name="nbFile"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="button" id ="submitbutton" name="submitbutton" value="ÀÔ·Â">
+					<input type="button" id ="submitbutton" name="submitbutton" value="ìž…ë ¥">
 				</td>
 			</tr>
 		</table>

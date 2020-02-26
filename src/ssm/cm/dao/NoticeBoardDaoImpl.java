@@ -38,7 +38,7 @@ public class NoticeBoardDaoImpl implements NoticeBoardDao {
 	}
 
 	@Override
-	public int pwdConfirm(NoticeBoardVO nvo) {
+	public int pwdConfirm(NoticeBoardVO nvo, String ttPw) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}

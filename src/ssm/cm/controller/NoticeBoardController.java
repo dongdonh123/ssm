@@ -29,36 +29,35 @@ public class NoticeBoardController {
 	@Autowired
 	private NoticeBoardService noticeboardservice;
 	
-	/*ÀüÃ¼ Á¶È¸*/
+	/*ï¿½ï¿½Ã¼ ï¿½ï¿½È¸*/
 	@RequestMapping(value="nblist")
 	public String nblist(@ModelAttribute NoticeBoardVO nvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ ¿Ô´ç");
 		
-		//°Ë»ö¿¡ ´ëÇÑ µ¥ÀÌÅÍ È®ÀÎ
-		System.out.println("nvo.getSearch()>>>: "+ nvo.getSearch());
-		System.out.println("nvo.getKeyword()>>>: "+ nvo.getKeyword());
+		int ListSize = 10; 
 		
-		//ÀüÃ¼ ·¹ÄÚµå¼ö
-		
+		if(nvo.getListSize()==null){
+			nvo.setListSize(ListSize+"");
+			nvo.setPageNo("1");
+		}
+
 		List nblist=noticeboardservice.nblist(nvo); 
 		
-		
 		model.addAttribute("nblist",nblist);
-		model.addAttribute("data",nvo);
+		model.addAttribute("listSize",ListSize);
+		
 		return "nb/nblist";
 	}
 	
-	/*±Û¾²±â Æû Ãâ·Â*/
 	@RequestMapping(value="nbwirteform")
 	public String nbwirteform(){
-		System.out.println(" nbwirteform ÄÁÆ®·Ñ·¯ ¿Ô´ç");
+		
 		return "nb/nbwirteform";
 	}
 	
-	/*±Û¾²±â ±¸Çö*/
+	/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	@RequestMapping(value="nbwirte")
 	public String nbinsert(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
-		System.out.println("ÄÁÆ®·Ñ·¯ nbwirte¿Ô´ç");
+		
 		String url="";
 		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
 		String daFileName="";
@@ -69,9 +68,9 @@ public class NoticeBoardController {
 			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
 			
 			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//ÀÔ·ÂÇÑ ÆÄÀÏ¸í¹Þ¾Æ¿À´Â°Å
-			String fileName=multi.getFilesystemName(file);//¸ÖÆ¼ÆÄÆ®ÂüÁ¶º¯¼ö·Î ¹Ù²Ù´Â°Å
-			daFileName="../"+"upload"+"/"+fileName;//°æ·ÎÃß°¡ÇØ ÇÕÄ¡´Â°Å
+			String file=(String)files.nextElement();
+			String fileName=multi.getFilesystemName(file);
+			daFileName="../"+"upload"+"/"+fileName;
 			
 			String ttNo=multi.getParameter("ttNo");
 			String nbTitle=multi.getParameter("nbTitle");
@@ -89,7 +88,7 @@ public class NoticeBoardController {
 			System.out.println(nvo.getNbNo());
 			result=noticeboardservice.nbInsert(nvo);
 		}catch(Exception e){
-			System.out.println("¿¡·¯´Â >>>: " + e);
+			System.out.println("ì—ëŸ¬ê°€ >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			
@@ -100,8 +99,8 @@ public class NoticeBoardController {
 	
 	@RequestMapping(value="/nbDetail")
 	public String nbDetail(@ModelAttribute NoticeBoardVO nvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ nbDetail¿Ô´ç");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+nvo.getNbNo());
+		
+		System.out.println("ê°€ì ¸ì˜¨ no >>>: "+nvo.getNbNo());
 		
 		NoticeBoardVO nbdetail = null;
 		nbdetail = noticeboardservice.nbDetail(nvo);
@@ -117,22 +116,19 @@ public class NoticeBoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
-	public String pwdConfirm(@ModelAttribute NoticeBoardVO nvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ pwd¿Ô´Ù");
-		
-		//¾Æ·¡ º¯¼ö¿¡´Â ÀÔ·Â ¼º°ø¿¡ ´ëÇÑ »óÅÂ°ª ÀúÀå(1or0)
+	public String pwdConfirm(@ModelAttribute NoticeBoardVO nvo,HttpServletRequest request){
+		String ttPw =request.getParameter("ttPw");
+	
 		int result = 0;
-		result= noticeboardservice.pwdConfirm(nvo);
+		result= noticeboardservice.pwdConfirm(nvo,ttPw);
 		
-		System.out.println("result ¸îÀÌ¾ß>>>" + result);
+		System.out.println("resultëŠ” >>>" + result);
 		return result+"";
 		
 	}
 	
 	@RequestMapping(value="/nbupdateForm")
 	public String updateForm(@ModelAttribute NoticeBoardVO nvo, Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ nbupdateForm¿Ô´Ù");
-		System.out.println("no °¡Á®¿Ô´Ï >>>: "+nvo.getNbNo());
 		
 		NoticeBoardVO updateData =null;
 		updateData= noticeboardservice.nbDetail(nvo);
@@ -142,10 +138,9 @@ public class NoticeBoardController {
 		
 	}
 	
-	/*±Û¾²±â ±¸Çö*/
+	/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
 	@RequestMapping(value="nbupdate")
 	public String nbupdate(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
-		System.out.println("ÄÁÆ®·Ñ·¯ nbupdate¿Ô´ç");
 		
 		String url="";
 		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
@@ -157,9 +152,9 @@ public class NoticeBoardController {
 			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
 			
 			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//ÀÔ·ÂÇÑ ÆÄÀÏ¸í¹Þ¾Æ¿À´Â°Å
-			String fileName=multi.getFilesystemName(file);//¸ÖÆ¼ÆÄÆ®ÂüÁ¶º¯¼ö·Î ¹Ù²Ù´Â°Å
-			daFileName="../"+"upload"+"/"+fileName;//°æ·ÎÃß°¡ÇØ ÇÕÄ¡´Â°Å
+			String file=(String)files.nextElement();//ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½Þ¾Æ¿ï¿½ï¿½Â°ï¿½
+			String fileName=multi.getFilesystemName(file);//ï¿½ï¿½Æ¼ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù´Â°ï¿½
+			daFileName="../"+"upload"+"/"+fileName;//ï¿½ï¿½ï¿½ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Â°ï¿½
 			
 			String nbTitle=multi.getParameter("nbTitle");
 			String nbContents=multi.getParameter("nbContents");
@@ -170,13 +165,9 @@ public class NoticeBoardController {
 			nvo.setNbFile(daFileName);
 			nvo.setNbNo(nbNo);
 			
-			System.out.println("no´ã°åÁö?" + nvo.getNbNo());
-			System.out.println("no´ã°åÁö?" + nvo.getNbTitle());
-			System.out.println("no´ã°åÁö?" + nvo.getNbContents());
-			System.out.println("no´ã°åÁö?" + nvo.getNbFile());
 			result=noticeboardservice.nbUpdate(nvo);
 		}catch(Exception e){
-			System.out.println("¿¡·¯´Â >>>: " + e);
+			System.out.println("ì—ëŸ¬ê°€ >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			
@@ -186,7 +177,6 @@ public class NoticeBoardController {
 	
 	@RequestMapping(value="/nbDelete")
 	public String nbDelete(@ModelAttribute NoticeBoardVO nvo){
-		System.out.println("ÄÁÆ®·Ñ·¯ nbDelete¿Ô´Ù");
 		String url="";
 		int result = 0;
 		
@@ -202,7 +192,6 @@ public class NoticeBoardController {
 	
 	@RequestMapping(value="/nbDownload")
 	public String nbDownload(@ModelAttribute NoticeBoardVO nvo,HttpServletRequest request,Model model){
-		System.out.println("ÄÁÆ®·Ñ·¯ nbDownload¿Ô´Ù");
 		String filename =(String) request.getParameter("filename");
 		System.out.println("filename>>>:"+ filename);
 		

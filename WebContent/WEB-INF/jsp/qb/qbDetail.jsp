@@ -1,23 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="ssm.cm.vo.QnABoardVO" %>    
     
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="EUC-KR">
-	<title>±Û »ó¼¼ º¸±â</title>
+	<meta charset="UTF-8">
+	<title>ê¸€ ìƒì„¸ ë³´ê¸°</title>
  	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
-		var butChk =0; //¼öÁ¤¹öÆ°°ú »èÁ¦¹öÆ°À» ±¸º°ÇÏ±â À§ÇÑ º¯¼ö
+		var butChk =0; //ìˆ˜ì •ë²„íŠ¼ê³¼ ì‚­ì œë²„íŠ¼ì„ êµ¬ë³„í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 		$(function(){
 			$("#pwdChk").hide();
 			
 			
-			/*¼öÁ¤ ¹öÆ° Å¬¸¯½Ã Ã³¸® ÀÌº¥Æ®*/
+			/*ìˆ˜ì • ë²„íŠ¼ í´ë¦­ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 			$("#updateForm").click(function(){
 				$("#pwdChk").show();
-				$("#msg").text("ÀÛ¼º½Ã ÀÔ·ÂÇÑ ºñºô¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä").css("color","#000099");
+				$("#msg").text("ìž‘ì„±ì‹œ ìž…ë ¥í•œ ë¹„ë¹Œë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš”").css("color","#000099");
 				butChk=1;
 			});
 			
@@ -25,27 +25,27 @@
 				$("#pwdChk").hide();
 			});
 			
-			/*»èÁ¦ ¹öÆ° Å¬¸¯½Ã Ã³¸® ÀÌº¥Æ®*/
+			/*ì‚­ì œ ë²„íŠ¼ í´ë¦­ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 			$("#boardDelete").click(function(){
 				$("#pwdChk").show();
-				$("#msg").text("ÀÛ¼º½Ã ÀÔ·ÂÇÑ ºñºô¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä").css("color","#000099");
+				$("#msg").text("ìž‘ì„±ì‹œ ìž…ë ¥í•œ ë¹„ë¹Œë²ˆí˜¸ë¥¼ ìž…ë ¥í•´ ì£¼ì„¸ìš”").css("color","#000099");
 				butChk=2;
 			});
 			
 
-			/* ºñ¹Ð¹øÈ£ È®ÀÎ ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
+			/* ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
 			$("#pwdBut").click(function(){
 				pwdConfirm();
 			});
 			
-			/* ¸ñ·Ï ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ® */
+			/* ëª©ë¡ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸ */
 			$("#boardList").click(function(){
 				location.href="/qnaboard/qblist.ssm";
 			});
 			
-		});//end of Æã¼Ç
+		});//end of íŽ‘ì…˜
 		
-		/* ºñ¹Ð¹øÈ£ È®ÀÎ ¹öÆ° Å¬¸¯½Ã ½ÇÁúÀûÀÎ Ã³¸® ÇÔ¼ö*/
+		/* ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ í´ë¦­ì‹œ ì‹¤ì§ˆì ì¸ ì²˜ë¦¬ í•¨ìˆ˜*/
 		
 		function pwdConfirm(){
 			
@@ -54,13 +54,13 @@
 					type:"POST",
 					data:$("#pwcheckform").serialize(),
 					error:function(){
-						alert('½Ã½ºÅÛ ¿À·ùÀÔ´Ï´Ù °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä');
+						alert('ì‹œìŠ¤í…œ ì˜¤ë¥˜ìž…ë‹ˆë‹¤ ê´€ë¦¬ìžì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”');
 					},
 					success:function(resultData){
 						var goUrl="";
 						if(resultData ==0){
-							$("#msg").text("ÀÛ¼º½Ã ÀÔ·ÂÇÑ ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.").css("color","red");
-						}else if(resultData ==1){ //ÀÏÄ¡ÇÒ °æ¿ì
+							$("#msg").text("ìž‘ì„±ì‹œ ìž…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.").css("color","red");
+						}else if(resultData ==1){ //ì¼ì¹˜í•  ê²½ìš°
 							$("#msg").text("");
 							if(butChk==1){
 								goUrl="/qnaboard/qbupdateForm.ssm";
@@ -81,14 +81,14 @@
 	<%
 	QnABoardVO qvo =(QnABoardVO)request.getAttribute("qbdetail");
 	%>
-	<h3>±Û»ó¼¼</h3>
+	<h3>ê¸€ìƒì„¸</h3>
 	<form name="f_data" id="f_data" method="POST">
 		<input type="hidden" id="qbNo" name="qbNo" value="<%=qvo.getQbNo() %>" />
 	</form>
 	
-	<%-- ========================ºñ¹Ð¹øÈ£ È®ÀÎ ¹öÆ° ¹× ¹öÆ° Ãß°¡ Á¾·á ================================ --%>
+	<%-- ========================ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ ë° ë²„íŠ¼ ì¶”ê°€ ì¢…ë£Œ ================================ --%>
 	
-	<%-- ======================»ó¼¼ Á¤º¸ º¸¿©ÁÖ±â ½ÃÀÛ ========================================== --%>
+	<%-- ======================ìƒì„¸ ì •ë³´ ë³´ì—¬ì£¼ê¸° ì‹œìž‘ ========================================== --%>
 	<div id="boardDetail">
 		<table border="1">
 			<colgroup>
@@ -99,45 +99,45 @@
 				</colgroup>
 			<tbody>
 				<tr>
-					<td>ÀÛ¼ºÀÚ</td>
+					<td>ìž‘ì„±ìž</td>
 					<td><%=qvo.getsMembervo().getSsName() %></td>
-					<td>ÀÛ¼ºÀÏ:<%=qvo.getQbInsertdate() %></td>
-					<td>¼öÁ¤ÀÏ:<%=qvo.getQbUpdatedate() %></td>
+					<td>ìž‘ì„±ì¼:<%=qvo.getQbInsertdate() %></td>
+					<td>ìˆ˜ì •ì¼:<%=qvo.getQbUpdatedate() %></td>
 				</tr>
 				<tr>
-					<td>Á¦¸ñ</td>
+					<td>ì œëª©</td>
 					<td><%=qvo.getQbTitle() %></td>
-					<td colspan="2">ºñ¹Ð±Û¼³Á¤ <%=qvo.getQbSecretyn() %></td>
+					<td colspan="2">ë¹„ë°€ê¸€ì„¤ì • <%=qvo.getQbSecretyn() %></td>
 				</tr>
 				<tr height="300px">
-					<td>³»¿ë</td>
+					<td>ë‚´ìš©</td>
 					<td colspan="3" ><%=qvo.getQbContents() %></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<%-- ======================»ó¼¼ Á¤º¸ º¸¿©ÁÖ±â Á¾·á ========================================== --%>
+	<%-- ======================ìƒì„¸ ì •ë³´ ë³´ì—¬ì£¼ê¸° ì¢…ë£Œ ========================================== --%>
 	
-	<%--===============================ºñ¹Ð¹øÈ£ È®ÀÎ ¹öÆ° ¹× ¹öÆ° Ãß°¡ ½ÃÀÛ======================== --%>
+	<%--===============================ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ ë° ë²„íŠ¼ ì¶”ê°€ ì‹œìž‘======================== --%>
 	<table id="boardPwdBut">
 		<tr>
 			<td>
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
-						<label for="sspw" id="l_pwd">ºñ¹Ð¹øÈ£ : </label>
-						<input type="password" name="qbPw" id="qbPw" />
+						<label for="sspw" id="l_pwd">ë¹„ë°€ë²ˆí˜¸ : </label>
+						<input type="password" name="ssPw" id="ssPw" />
 						<input type="hidden" name="qbNo" id="qbNo" value="<%=qvo.getQbNo() %>"/>
-						<input type="button" name="pwdBut" id="pwdBut" value="È®ÀÎ" />
-						<input type="button" name="cancelBut" id="cancelBut" value="Ãë¼Ò" />
+						<input type="button" name="pwdBut" id="pwdBut" value="í™•ì¸" />
+						<input type="button" name="cancelBut" id="cancelBut" value="ì·¨ì†Œ" />
 						
 						<span id="msg"></span>
 					</form>
 				</div>
 			</td>
 			<td>
-				<input type="button" value="¼öÁ¤" id="updateForm">
-				<input type="button" value="»èÁ¦" id="boardDelete">
-				<input type="button" value="¸ñ·Ï" id="boardList">
+				<input type="button" value="ìˆ˜ì •" id="updateForm">
+				<input type="button" value="ì‚­ì œ" id="boardDelete">
+				<input type="button" value="ëª©ë¡" id="boardList">
 			</td>
 		</tr>
 	</table>

@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/kk/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
+	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    $(document).ready(function(){
@@ -15,7 +15,7 @@
 	    	nhn.husky.EZCreator.createInIFrame({
 	    	 oAppRef: oEditors,
 	    	 elPlaceHolder: "nbContents",
-	    	 sSkinURI: "/kk/SmartEditor2Skin_ko_KR.html",
+	    	 sSkinURI: "/navereditor/SmartEditor2Skin_ko_KR.html",
 	    	 fCreator: "createSEditor2"
 	    	});
 	    	
@@ -24,7 +24,35 @@
 	    		oEditors.getById["nbContents"].exec("UPDATE_CONTENTS_FIELD", []);
 	    		$("#nbupdateform").attr('action','/noticeboard/nbupdate.ssm').submit();
 	    	});
+	    	
+	    	$('.A').keydown(function(){
+	            cut_28(this);
+	        });
+	    	
 	    });
+	    
+	    function cut_28(obj){
+	        var text = $(obj).val();
+	        var leng = text.length;
+	        while(getTextLength(text) > 28){
+	            leng--;
+	            text = text.substring(0, leng);
+	        }
+	        $(obj).val(text);
+	        $('.C').text(getTextLength(text));
+	    }
+	    
+	    function getTextLength(str) {
+	        var len = 0;
+	        for (var i = 0; i < str.length; i++) {
+	            if (escape(str.charAt(i)).length == 6) {
+	                len++;
+	            }
+	            len++;
+	        }
+	        return len;
+	    }
+	    
     </script>
 </head>
 <body>
@@ -38,23 +66,27 @@
 				<col width="800px"></col>
 			</colgroup>
 			<tr>
-				<td colspan="2">°øÁö»çÇ×°Ô½ÃÆÇ ±Û¼öÁ¤ÇÏ±â<td>
+				<td colspan="2">ê³µì§€ì‚¬í•­ê²Œì‹œíŒ ê¸€ìˆ˜ì •í•˜ê¸°<td>
 			</tr>
 			<tr>
-				<td>±ÛÁ¦¸ñ</td>
-				<td><input type="text" id="nbTitle" name="nbTitle" size="110"value="<%=nvo.getNbTitle()%>"></td>
+				<td>ê¸€ì œëª©</td>
+				<td><input type="text" id="nbTitle" name="nbTitle" size="110"value="<%=nvo.getNbTitle()%>" class="A">
+					<div class="bytes-wrapper">
+        				<span class="C">0</span>bytes
+    				</div>
+				</td>
 			</tr>
 			<tr>
-				<td>±Û³»¿ë</td>
+				<td>ê¸€ë‚´ìš©</td>
 			<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" ><%=nvo.getNbContents()%></textarea></td>
 			</tr>
 			<tr>
-				<td>Ã·ºÎÆÄÀÏ1</td>
+				<td>ì²¨ë¶€íŒŒì¼1</td>
 				<td><input type="file" id="nbFile" name="nbFile"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="button" id ="submitbutton" name="submitbutton" value="¼öÁ¤">
+					<input type="button" id ="submitbutton" name="submitbutton" value="ìˆ˜ì •">
 					<input type="hidden" id ="nbNo" name="nbNo" value="<%=nvo.getNbNo()%>">
 				</td>
 			</tr>

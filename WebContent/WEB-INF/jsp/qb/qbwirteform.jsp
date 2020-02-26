@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
@@ -14,8 +14,34 @@
 	    		
 	    		$("#qbwirteform").attr('action','/qnaboard/qbwirte.ssm').submit();
 	    	});
+	    	
+	    	$('.A').keydown(function(){
+	            cut_28(this);
+	        });
+	    	
 	    });
 	    
+	    function cut_28(obj){
+	        var text = $(obj).val();
+	        var leng = text.length;
+	        while(getTextLength(text) > 28){
+	            leng--;
+	            text = text.substring(0, leng);
+	        }
+	        $(obj).val(text);
+	        $('.C').text(getTextLength(text));
+	    }
+	    
+	    function getTextLength(str) {
+	        var len = 0;
+	        for (var i = 0; i < str.length; i++) {
+	            if (escape(str.charAt(i)).length == 6) {
+	                len++;
+	            }
+	            len++;
+	        }
+	        return len;
+	    }
 	    
 	    
     </script>
@@ -24,30 +50,34 @@
 	<form id="qbwirteform" name="qbwirteform">
 		<table border="1">
 			<tr>
-				<td colspan="2">°øÁö»çÇ×°Ô½ÃÆÇ ±ÛÀÔ·ÂÇÏ±â</td>
+				<td colspan="2">ê³µì§€ì‚¬í•­ê²Œì‹œíŒ ê¸€ì…ë ¥í•˜ê¸°</td>
 			</tr>
 			<tr>
-				<td>ÀÛ¼ºÀÚ</td><!--  ttno´Â ¼¼¼Ç¿¡¼­ È÷µçÀ¸·Î ³Ö±â -->
-				<td><input type="text" id=ssNo" name="ssNo" value="">ssno´Â ¼¼¼Ç¿¡¼­ È÷µçÀ¸·Î ³Ö±â(S7200005)</td>
+				<td>ì‘ì„±ì</td><!--  ttnoëŠ” ì„¸ì…˜ì—ì„œ íˆë“ ìœ¼ë¡œ ë„£ê¸° -->
+				<td><input type="text" id=ssNo" name="ssNo" value="">ssnoëŠ” ì„¸ì…˜ì—ì„œ íˆë“ ìœ¼ë¡œ ë„£ê¸°(S7200005)</td>
 			</tr>
 			<tr>
-				<td>±ÛÁ¦¸ñ</td>
-				<td><input type="text" id="qbTitle" name="qbTitle"></td>
+				<td>ê¸€ì œëª©</td>
+				<td><input type="text" id="qbTitle" name="qbTitle" class="A">
+					<div class="bytes-wrapper">
+        				<span class="C">0</span>bytes
+    				</div>
+    			</td>
 			</tr>
 			<tr>
-				<td>±Û³»¿ë</td>
+				<td>ê¸€ë‚´ìš©</td>
 				<td><textarea name="qbContents" id="qbContents" rows="10" cols="50" ></textarea></td>
 			</tr>
 			<tr>
-				<td>ºñ¹Ğ±Û ¼³Á¤</td>
+				<td>ë¹„ë°€ê¸€ ì„¤ì •</td>
 				<td>
-					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="N">°ø°³±Û
-					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="Y" checked>ºñ¹Ğ±Û
+					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="N">ê³µê°œê¸€
+					<input type="radio" id="qbSecretyn" name="qbSecretyn" value="Y" checked>ë¹„ë°€ê¸€
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="button" id ="submitbutton" name="submitbutton" value="ÀÔ·Â">
+					<input type="button" id ="submitbutton" name="submitbutton" value="ì…ë ¥">
 				</td>
 			</tr>
 		</table>
