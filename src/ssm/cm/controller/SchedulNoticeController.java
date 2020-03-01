@@ -35,6 +35,10 @@ public class SchedulNoticeController {
 	
 	@RequestMapping(value="snlist")
 	public String sblist(@ModelAttribute SchedulNoticeVO svo, Model model){
+		System.out.println("★★★★★★★★컨트롤러 list왔다");
+		
+		System.out.println("가져온 키워드>>>:" +svo.getKeyword());
+		System.out.println("가져온  서치>>>:" +svo.getSearch());
 		
 		int ListSize = 10; 
 		
@@ -49,6 +53,7 @@ public class SchedulNoticeController {
 		
 		model.addAttribute("snlist",snlist);
 		model.addAttribute("listSize",ListSize);
+		model.addAttribute("Searchdata",svo);
 		return "sn/snlist";
 	}
 	

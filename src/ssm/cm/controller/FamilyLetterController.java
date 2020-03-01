@@ -35,16 +35,25 @@ public class FamilyLetterController {
 		System.out.println("fvo.getSearch()>>>: "+ fvo.getSearch());
 		System.out.println("fvo.getKeyword()>>>: "+ fvo.getKeyword());
 		
+		int listSize = 10; 
+		
+		if(fvo.getListSize()==null){
+			fvo.setListSize(listSize+"");
+			fvo.setPageNo("1");
+		}
+		
 		List fllist=familyletterservice.fllist(fvo); 
 		
 		model.addAttribute("fllist",fllist);
-		model.addAttribute("data",fvo);
+		model.addAttribute("listSize",listSize);
+		model.addAttribute("Searchdata",fvo);
+		
 		return "fl/fllist";
 	}
 	
 	@RequestMapping(value="flwirteform")
 	public String flwirteform(){
-		System.out.println(" flwirteform ��Ʈ�ѷ� �Դ�");
+		
 		return "fl/flwirteform";
 	}
 	
@@ -104,10 +113,14 @@ public class FamilyLetterController {
 	
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
-	public String pwdConfirm(@ModelAttribute FamilyLetterVO fvo){
+	public String pwdConfirm(@ModelAttribute FamilyLetterVO fvo,HttpServletRequest request){
+		System.out.println("컨트롤러 비번 체크에왔다");
+		System.out.println("가져온 no >>>" + fvo.getFlNo());
+		System.out.println("가져온 pw >>>" + request.getParameter("ttPw"));
+		String ttPw =request.getParameter("ttPw");
 		
 		int result = 0;
-		result= familyletterservice.pwdConfirm(fvo);
+		result= familyletterservice.pwdConfirm(fvo,ttPw);
 		
 		System.out.println("result >>>" + result);
 		return result+"";
@@ -175,6 +188,16 @@ public class FamilyLetterController {
 		if(bResult) url="/familyletter/fllist.ssm";
 		return "redirect:"+url;
 		
+		
+	}
+	
+	@RequestMapping(value="/flDownload")
+	public String flDownload(@ModelAttribute FamilyLetterVO fvo,HttpServletRequest request,Model model){
+		String filename =(String) request.getParameter("filename");
+		System.out.println("filename>>>:"+ filename);
+		
+		model.addAttribute("filename",filename);
+		return "common/download";
 		
 	}
 }

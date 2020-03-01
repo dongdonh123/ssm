@@ -47,9 +47,9 @@ public class FamilyLetterServiceImpl implements FamilyLetterService {
 	}
 
 	@Override
-	public int pwdConfirm(FamilyLetterVO fvo) {
+	public int pwdConfirm(FamilyLetterVO fvo, String ttPw) {
 		int result = 0;
-		result=familyletterdao.pwdConfirm(fvo);
+		result=familyletterdao.pwdConfirm(fvo, ttPw);
 		return result;
 	}
 

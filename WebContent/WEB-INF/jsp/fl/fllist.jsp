@@ -4,8 +4,20 @@
 <%@ page import="java.util.List" %>    
    
 <%
+	FamilyLetterVO searchdata =(FamilyLetterVO)request.getAttribute("Searchdata");
+	int pageCount = 0;
 	List<FamilyLetterVO> fllist =(List<FamilyLetterVO>)request.getAttribute("fllist");
-FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
+	int listSize= fllist.size();
+	if(listSize >0){
+		FamilyLetterVO fvo_ = fllist.get(0);
+		double totalCount = (double)Integer.parseInt(fvo_.getTotalCount()); 
+		int pagelistSize = (int)request.getAttribute("listSize");
+		double dval = (double)pagelistSize;
+		pageCount = (int)Math.ceil(totalCount/dval); //pageCount 변수 사용
+		System.out.println("pageCount>>>:"+ pageCount); //1
+		System.out.println("totalCount>>>:"+ totalCount); //10
+		System.out.println("pagelistSize>>>:"+ pagelistSize);
+	}
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -55,6 +67,22 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 			$("#fldetailForm").attr('action',"/familyletter/flDetail.ssm")
 			.submit();
 		});
+		
+		$(".pageNobut").click(function(){
+			var pageNo = $(this).val();
+			$("#pageNo").val(pageNo);
+			alert(pageNo);
+			$("#pageNoForm").attr('action',"/familyletter/fllist.ssm")
+			.submit();
+		});
+		
+		if("<%=searchdata.getKeyword()%>" != ""){
+			alert("이프에 들어온다");
+			$("#keyword").val("<%=searchdata.getKeyword()%>");
+			$("#search").val("<%=searchdata.getSearch()%>");
+			
+		}
+		
 	});
 	</script>
 </head>
@@ -120,17 +148,30 @@ FamilyLetterVO data =(FamilyLetterVO)request.getAttribute("data");
 					<%
 					}else{
 						int count = fllist.size();
-						for (int i=(count-1); i>=0; i--){
-							FamilyLetterVO nvo = fllist.get(i);
-							int no = i+1;
+						for (int i=0; i<count; i++){
+							FamilyLetterVO fvo = fllist.get(i);
+							String no = fvo.getFlNo().substring(4);
 					%>	
-						<tr data-num=<%=nvo.getFlNo() %>>
+						<tr data-num=<%=fvo.getFlNo() %>>
 							<td><%=no%> </td>
-							<td><span class="flDetail"><%=nvo.getFlTitle() %></span></td>
-							<td><%=nvo.getFlInsertdate() %></td>
-							<td><%=nvo.gettMembervo().getTtName() %></td>
+							<td><span class="flDetail"><%=fvo.getFlTitle() %></span></td>
+							<td><%=fvo.getFlInsertdate() %></td>
+							<td><%=fvo.gettMembervo().getTtName() %></td>
 						</tr>
 					<% 		
+						}
+						%>
+						<form id="pageNoForm">
+						<%
+						for(int i=1 ; i<=pageCount;i++){
+						%>
+						<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
+						<input type="hidden" id="pageNo" name="pageNo" value="1">
+						<input type="hidden" id="listSize" name="listSize" value="10">
+						<input type="hidden" id="search" name="search" value="<%=searchdata.getSearch()%>">
+						<input type="hidden" id="keyword" name="keyword" value="<%=searchdata.getKeyword()%>">
+						</form>
+						<%
 						}
 					}
 					%>

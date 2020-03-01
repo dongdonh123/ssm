@@ -80,6 +80,9 @@
 <body>
 	<%
 	FamilyLetterVO fvo =(FamilyLetterVO)request.getAttribute("fldetail");
+	String flFile=fvo.getFlFile();
+	System.out.println(flFile);
+	flFile = flFile.substring(10);
 	%>
 	<h3>글상세</h3>
 	<form name="f_data" id="f_data" method="POST">
@@ -109,15 +112,24 @@
 					<td>제목</td>
 					<td colspan="3"><%=fvo.getFlTitle() %></td>
 				</tr>
+				<tr>
+					<td>첨부파일</td>
+					<td colspan="3">
+					<%
+					if(flFile.equals("null")){
+					%>
+					첨부파일 없습니다.</td>
+					<%
+					}else{
+					%>
+					<p><%=flFile%>&nbsp;&nbsp;&nbsp;<a href="/familyletter/flDownload.ssm?filename=<%=flFile%>">다운로드</a></p></td>
+					<%	
+					}
+					%>
+				</tr>
 				<tr height="300px">
 					<td>내용</td>
 					<td colspan="3" ><%=fvo.getFlContents() %></td>
-				</tr>
-				<tr>
-					<td>첨부파일 파일</td>
-					<td colspan="3">
-						<img src=<%=fvo.getFlFile() %> border=0 width="320" height="400">
-					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -130,7 +142,8 @@
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
 						<label for="ttpw" id="l_pwd">비밀번호 : </label>
-						<input type="password" name="flNo" id="flNo" />
+						<input type="password" name="ttPw" id="ttPw" />
+						<input type="hidden" name="flNo" id="flNo" value="<%=fvo.getFlNo()%>"/>
 						<input type="button" name="pwdBut" id="pwdBut" value="확인" />
 						<input type="button" name="cancelBut" id="cancelBut" value="취소" />
 						

@@ -32,6 +32,10 @@ public class NoticeBoardController {
 	/*��ü ��ȸ*/
 	@RequestMapping(value="nblist")
 	public String nblist(@ModelAttribute NoticeBoardVO nvo, Model model){
+		System.out.println("★★★★★★★★컨트롤러 list왔다");
+		
+		System.out.println("가져온 키워드>>>:" +nvo.getKeyword());
+		System.out.println("가져온  서치>>>:" +nvo.getSearch());
 		
 		int ListSize = 10; 
 		
@@ -44,6 +48,7 @@ public class NoticeBoardController {
 		
 		model.addAttribute("nblist",nblist);
 		model.addAttribute("listSize",ListSize);
+		model.addAttribute("Searchdata",nvo);
 		
 		return "nb/nblist";
 	}

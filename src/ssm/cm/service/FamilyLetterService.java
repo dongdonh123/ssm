@@ -10,7 +10,7 @@ public interface FamilyLetterService {
 	public FamilyLetterVO flChaebun(FamilyLetterVO fvo);
 	public int flInsert(FamilyLetterVO fvo);
 	public FamilyLetterVO flDetail(FamilyLetterVO fvo);
-	public int pwdConfirm(FamilyLetterVO fvo);
+	public int pwdConfirm(FamilyLetterVO fvo, String ttPw);
 	public int flUpdate(FamilyLetterVO fvo);
 	public int flDelete(FamilyLetterVO fvo);
 }

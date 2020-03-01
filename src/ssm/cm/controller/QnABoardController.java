@@ -36,6 +36,11 @@ public class QnABoardController {
 	/*��ü ��ȸ*/
 	@RequestMapping(value="qblist")
 	public String sblist(@ModelAttribute QnABoardVO qvo, Model model ){
+		System.out.println("★★★★★★★★컨트롤러 list왔다");
+		
+		System.out.println("가져온 키워드>>>:" +qvo.getKeyword());
+		System.out.println("가져온  서치>>>:" +qvo.getSearch());
+		
 		int ListSize = 10; 
 		
 		if(qvo.getListSize()==null){
@@ -47,7 +52,7 @@ public class QnABoardController {
 		
 		model.addAttribute("qblist",qblist);
 		model.addAttribute("listSize",ListSize);
-		
+		model.addAttribute("Searchdata",qvo);
 		return "qb/qblist";
 	}
 	

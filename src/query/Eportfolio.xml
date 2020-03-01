@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ssm.ef.dao.EportfolioDao">
+
+	<!-- 조인 할때 사용 
+	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
+	    <result property="ttNo" 			column="TT_NO"/>
+	    <result property="ttName" 			column="TT_NAME"/>
+	</resultMap>
+	 -->
+	
+	
+	<resultMap type="ssm.mi.vo.SmemberVO" id="smVO">
+	    <result property="ssNo" 			column="SS_NO"/>
+	    <result property="ssName" 			column="SS_NAME"/>
+	    <result property="ssGrade" 			column="SS_GRADE"/>
+	    <result property="ssBirth" 			column="SS_BIRTH"/>
+	    <result property="ssGender" 		column="SS_GENDER"/>
+	    <result property="ssAuthority" 		column="SS_AUTHORITY"/>
+	    <result property="ssId" 			column="SS_ID"/>
+	    <result property="ssPw" 			column="SS_PW"/>
+	    <result property="ssPn"		   		column="SS_PN"/>
+		<result property="ssEmail"		    column="SS_EMAIL"/>
+		<result property="ssPostno"			column="SS_POSTNO"/>
+		<result property="ssAddress"		column="SSADDRESS"/>
+		<result property="ssImage"			column="SSIMAGE"/>
+		<result property="ssDeleteyn"		column="SSDELETEYN"/>
+		<result property="ssInsertdate"		column="SSINSERTDATE"/>
+		<result property="ssUpdatedate"		column="SSUPDATEDATE"/>
+		<result property="ssAdmindate"		column="SSADMINDATE"/>
+	</resultMap>
+	
+	<resultMap type="ssm.mi.vo.TmemberVO" id="tmVO">
+	    <result property="ttNo" 			column="TT_NO"/>
+	    <result property="ttName" 			column="TT_NAME"/>
+	    <result property="ttBirth" 			column="TT_BIRTH"/>
+	    <result property="ttGender" 		column="TT_GENDER"/>
+	    <result property="ttAuthority" 		column="TT_AUTHORITY"/>
+	    <result property="sjtCode" 			column="SJTCODE"/>
+	    <result property="ttId" 			column="TT_ID"/>
+	    <result property="ttPw" 			column="TT_PW"/>
+	    <result property="ttTransferyear"	column="TT_TRANSFERYEAR"/>
+		<result property="ttPn"		    	column="TT_PN"/>
+		<result property="ttEmail"			column="TT_EMAIL"/>
+		<result property="ttImage"			column="TT_IMAGE"/>
+		<result property="ttGrade"			column="TT_GRADE"/>
+		<result property="ttClass"			column="TT_CLASS"/>
+		<result property="ttDeleteyn"		column="TT_DELETEYN"/>
+		<result property="ttInsertdate"		column="TT_INSERTDATE"/>
+		<result property="ttUpdatedate"		column="TT_UPDATEDATE"/>
+		<result property="ttAdmindate"		column="TT_ADMINDATE"/>
+	</resultMap>
+	
+	<select id ="teacherlist" parameterType="ssm.mi.vo.SmemberVO" resultMap="smVO">
+	
+			SELECT 
+					SS_NO, 
+					SS_NAME, 
+					SS_GRADE
+					
+			FROM S_MEMBER 
+			ORDER BY SS_NO DESC
+	</select>
+	
+	
+	<select id ="teacherlogin" parameterType="ssm.mi.vo.TmemberVO" resultMap="tmVO">
+	
+			SELECT NVL((SELECT 1 
+            FROM T_MEMBER  
+            WHERE TT_ID = #{ttId}
+            AND TT_PW = #{ttPw}),0)as result
+		FROM dual
+	</select>
+	
+</mapper>

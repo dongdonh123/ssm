@@ -21,19 +21,27 @@
 	    <result property="flInsertdate" 	column="FL_INSERTDATE"/>
 	    <result property="flUpdatedate" 	column="FL_UPDATEDATE"/>
 	    <result property="flDeleteyn" 		column="FL_DELETEYN"/>
+	    <result property="pageNo"		    column="PAGENO"/>
+		<result property="listSize"		    column=""/>
+		<result property="totalCount"		column="TOTALCOUNT"/>
 	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
 	<select id ="fllist" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
-			SELECT 
-				A.FL_NO, 
-				B.TT_NAME, 
-				A.FL_TITLE, 
-				A.FL_INSERTDATE
-		FROM FAMILY_LETTER A, T_MEMBER B 
-		WHERE FL_DELETEYN ='Y'
-		AND A.TT_NO = B.TT_NO
-		<trim prefix="AND" >
+		SELECT 
+		*
+		FROM
+			(SELECT 
+					A.FL_NO, 
+					B.TT_NAME, 
+					A.FL_TITLE, 
+					A.FL_INSERTDATE,
+					CEIL(ROW_NUMBER() OVER(ORDER BY A.FL_NO DESC)/ #{listSize}) PAGENO,
+	     			COUNT(A.FL_NO) OVER() AS TOTALCOUNT 
+			FROM FAMILY_LETTER A, T_MEMBER B 
+			WHERE FL_DELETEYN ='Y'
+			AND A.TT_NO = B.TT_NO
+			<trim prefix="AND" >
 			<if test="search=='flTitle' ">
 				<![CDATA[FL_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
@@ -43,7 +51,10 @@
 			<if test="search=='ttName'">
 				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-		</trim>
+			</trim>
+				) ABC
+				WHERE ABC.PAGENO = #{pageNo}
+				ORDER BY FL_NO DESC
 	</select>
 	
 	<select id="flChaebun" parameterType="ssm.cm.vo.FamilyLetterVO" resultMap="flVO">
@@ -62,7 +73,11 @@
 	</insert>
 	
 	<select id="pwdConfirm" parameterType="ssm.cm.vo.FamilyLetterVO" resultType="int">
-		SELECT NVL((SELECT 1 FROM FAMILY_LETTER WHERE FL_NO = #{flNo}),0)as result
+		SELECT NVL((SELECT 1 
+            FROM FAMILY_LETTER A, T_MEMBER B 
+            WHERE A.TT_NO = B.TT_NO
+            AND A.FL_NO = #{param1.flNo}
+            AND B.TT_PW = #{param2}),0)as result
 		FROM dual
 	</select>
 	
@@ -92,6 +107,7 @@
 				B.TT_NAME, 
 				A.FL_TITLE, 
 				A.FL_CONTENTS, 
+				A.FL_FILE, 
 				A.FL_INSERTDATE, 
 				A.FL_UPDATEDATE,
 				A.FL_DELETEYN

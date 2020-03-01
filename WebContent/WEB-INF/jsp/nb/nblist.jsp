@@ -5,6 +5,7 @@
    
 <%
 	request.setCharacterEncoding("UTF-8");
+	NoticeBoardVO searchdata =(NoticeBoardVO)request.getAttribute("Searchdata");
 	int pageCount = 0;
 	List<NoticeBoardVO> nblist =(List<NoticeBoardVO>)request.getAttribute("nblist");
 	int listSize= nblist.size();
@@ -76,6 +77,12 @@
 			.submit();
 		});
 		
+		if("<%=searchdata.getKeyword()%>" != ""){
+			alert("이프에 들어온다");
+			$("#keyword").val("<%=searchdata.getKeyword()%>");
+			$("#search").val("<%=searchdata.getSearch()%>");
+			
+		}
 		
 	});
 	</script>
@@ -162,6 +169,8 @@
 						<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
 						<input type="hidden" id="pageNo" name="pageNo" value="1">
 						<input type="hidden" id="listSize" name="listSize" value="10">
+						<input type="hidden" id="search" name="search" value="<%=searchdata.getSearch()%>">
+						<input type="hidden" id="keyword" name="keyword" value="<%=searchdata.getKeyword()%>">
 						</form>
 						<%
 						}

@@ -38,7 +38,7 @@ public class FamilyLetterDaoImpl implements FamilyLetterDao {
 	}
 
 	@Override
-	public int pwdConfirm(FamilyLetterVO fvo) {
+	public int pwdConfirm(FamilyLetterVO fvo, String ttPw) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pwdConfirm");
 	}

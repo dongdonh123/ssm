@@ -13,7 +13,7 @@
 	
 	<mvc:annotation-driven />
 	<!-- Controller -->
-	<context:component-scan base-package="ssm.cm.**" />
+	<context:component-scan base-package="ssm.**" />
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
