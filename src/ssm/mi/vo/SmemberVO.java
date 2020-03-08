@@ -1,24 +1,33 @@
 package ssm.mi.vo;
 
-public class SmemberVO {
+import ssm.cd.vo.BasicinpormationVO;
+import ssm.cd.vo.ValuesettingVO;
+import ssm.cm.vo.CommonVO;
 
-   private String ssNo;
-   private String ssName;
-   private String ssGrade;
-   private String ssBirth;
-   private String ssGender;
-   private String ssAuthority;
-   private String ssId;
-   private String ssPw;
-   private String ssPn;
-   private String ssEmail;
-   private String ssPostno;
-   private String ssAddress;
-   private String ssImage;
-   private String ssDeleteyn;
-   private String ssInsertdate;
-   private String ssUpdatedate;
-   private String ssAdmindate;
+public class SmemberVO extends CommonVO {
+
+    private String ssNo;
+    private String ssName;
+    private String ssGrade;
+    private String ssBirth;
+    private String ssGender;
+    private String ssAuthority;
+    private String ssId;
+    private String ssPw;
+    private String ssPn;
+    private String ssEmail;
+    private String ssPostno;
+    private String ssAddress;
+    private String ssImage;
+    private String ssDeleteyn;
+    private String ssInsertdate;
+    private String ssUpdatedate;
+    private String ssAdmindate;
+    private FmmemberVO fmMembervo;
+	private JrmemberVO jrMembervo;
+	private SrmemberVO srMembervo;
+	private BasicinpormationVO basicInpormationvo;
+	private ValuesettingVO valueSettingvo;
    
 	public String getSsNo() {
 		return ssNo;
@@ -122,7 +131,39 @@ public class SmemberVO {
 	public void setSsAdmindate(String ssAdmindate) {
 		this.ssAdmindate = ssAdmindate;
 	}
-   
+	public FmmemberVO getFmMembervo() {
+		return fmMembervo;
+	}
+	public void setFmMembervo(FmmemberVO fmMembervo) {
+		this.fmMembervo = fmMembervo;
+	}
+	public JrmemberVO getJrMembervo() {
+		return jrMembervo;
+	}
+	public void setJrMembervo(JrmemberVO jrMembervo) {
+		this.jrMembervo = jrMembervo;
+	}
+	public SrmemberVO getSrMembervo() {
+		return srMembervo;
+	}
+	public void setSrMembervo(SrmemberVO srMembervo) {
+		this.srMembervo = srMembervo;
+	}
+	public BasicinpormationVO getBasicInpormationvo() {
+		return basicInpormationvo;
+	}
+	public void setBasicInpormationvo(BasicinpormationVO basicInpormationvo) {
+		this.basicInpormationvo = basicInpormationvo;
+	}
+	public ValuesettingVO getValueSettingvo() {
+		return valueSettingvo;
+	}
+	public void setValueSettingvo(ValuesettingVO valueSettingvo) {
+		this.valueSettingvo = valueSettingvo;
+	}
+	
+    
+	
    
 	
 	

@@ -67,4 +67,12 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 		return result;
 	}
 
+	@Override
+	public List<SchedulNoticeVO> snlistajax() {
+		List<SchedulNoticeVO> snlist = null;
+		snlist =schedulnoticedao.snlistajax();
+		return snlist;
+	}
+
+
 }

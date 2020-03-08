@@ -29,7 +29,6 @@ public class NoticeBoardController {
 	@Autowired
 	private NoticeBoardService noticeboardservice;
 	
-	/*��ü ��ȸ*/
 	@RequestMapping(value="nblist")
 	public String nblist(@ModelAttribute NoticeBoardVO nvo, Model model){
 		System.out.println("★★★★★★★★컨트롤러 list왔다");

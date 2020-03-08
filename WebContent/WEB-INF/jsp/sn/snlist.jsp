@@ -27,7 +27,6 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		$("#calendarMode").hide(); 
 		
 		/*검색 대상이 변경될 때마다 처리 이벤트*/
 		$("#search").change(function(){
@@ -79,24 +78,17 @@
 		});
 		
 		if("<%=searchdata.getKeyword()%>" != ""){
-			alert("이프에 들어온다");
 			$("#keyword").val("<%=searchdata.getKeyword()%>");
 			$("#search").val("<%=searchdata.getSearch()%>");
 			
 		}
 		
+		$("#calendarbutton").click(function(){
+			$("#pageNoForm").attr('action',"/schedulnotice/sncalendar2.ssm")
+			.submit();
+		});
+		
 	});	
-	
-	function showbutton(actionName){
-		if('L' == actionName){
-			$("#calendarMode").hide(); 
-			$("#boardMode").show();
-		}
-		if('C' == actionName){
-			$("#boardMode").hide(); 
-			$("#calendarMode").show(); 
-		}
-	}
 
 
 	
@@ -105,14 +97,11 @@
 <body>
 	<div id="boardMode">
 		<h1>학교일정 게시판</h1>
-		
+		<input type="button" value="목록형" disabled>
+		<input type="button" id="calendarbutton" value="캘린더형">
 		<%-- ======================검색기능 시작============================ --%>
 		
 		<div id="boardSearch">
-			<form id="ajaxform" name="ajaxform">
-				<input type="button" onclick="showbutton('L')" value="목록형" disabled>
-				<input type="button" onclick="showbutton('C')" value="캘린더형">
-			</form>
 			<form id="f_search" name="f_search">
 				<table summary="검색">
 					<colgroup>
@@ -140,22 +129,18 @@
 		
 		<%-- =======================검색기능 끝============================ --%>
 		
-		<div id="boardlist" style="text-align:center">
+		<div id="boardlist">
 			<table summary="게시판 리스트">
 				<colgroup>
-					<col width="10%" /> 
-					<col width="10%" />
-					<col width="30%" />
-					<col width="20%" />
-					<col width="20%" />
+					<col width="33%" />
+					<col width="33%" />
+					<col width="33%" />
 				</colgroup>
 				<thead>
 					<tr>
-						<th>글번호</th>
-						<th>날짜</th>
+						<th>시작일</th>
+						<th>종료일</th>
 						<th>일정</th>
-						<th>작성일</th>
-						<th>작성자</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -166,7 +151,6 @@
 						<td>0</td>
 						<td>작성된 글이 없습니다.</td>
 						<td></td>
-						<td></td>
 					</tr>
 					<%
 					
@@ -174,49 +158,40 @@
 						int count = snlist.size();
 						for (int i=0; i< count; i++){
 							SchedulNoticeVO svo = snlist.get(i);
-							String no = svo.getSnNo().substring(4);
 					%>	
 						<tr data-num=<%=svo.getSnNo() %>>
-							<td><%=no%> </td>
-							<td><%=svo.getSnDate()%> </td>
+							<td><%=svo.getSnStartdate()%> </td>
+							<td><%=svo.getSnEnddate()%> </td>
 							<td><span class="snDetail"><%=svo.getSnTitle() %></span></td>
-							<td><%=svo.getSnInsertdate() %></td>
-							<td><%=svo.gettMembervo().getTtName() %></td>
 						</tr>
+						
 					<% 		
-						}
-						%>
-						<form id="pageNoForm">
-						<%
-						for(int i=1 ; i<=pageCount;i++){
-						%>
-						<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
-						<input type="hidden" id="pageNo" name="pageNo" value="1">
-						<input type="hidden" id="listSize" name="listSize" value="10">
-						<input type="hidden" id="search" name="search" value="<%=searchdata.getSearch()%>">
-						<input type="hidden" id="keyword" name="keyword" value="<%=searchdata.getKeyword()%>">
-						</form>
-						<%
-						}
+					}
 					}
 					%>
+					
 				</tbody>
 			</table>
+			<div>
+			<% 
+			for(int i=1 ; i<=pageCount;i++){%>
+				<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" />
+			<%}%>
+			</div>
 			<!-- 상세 페이지 이동을 위한 form -->
 			<form name="sndetailForm" id="sndetailForm">
 			<input type="hidden" name="snNo" id="snNo">
 			</form>
+			
+			<!--페이지징  form -->
+			<form id="pageNoForm">
+				<input type="hidden" id="pageNo" name="pageNo" value="1">
+				<input type="hidden" id="listSize" name="listSize" value="10">
+				<input type="hidden" id="search" name="search" value="<%=searchdata.getSearch()%>">
+				<input type="hidden" id="keyword" name="keyword" value="<%=searchdata.getKeyword()%>">
+			</form>
 		</div>
-	</div>
-	
-	
-	<div id="calendarMode">
-		<h1>학교일정 게시판</h1>
-		<form id="ajaxform" name="ajaxform" align="left">
-			<input type="button" onclick="showbutton('L')" value="목록형" >
-			<input type="button" onclick="showbutton('C')" value="캘린더형" disabled>
-		</form>
-	캘린더 모드 여기에 캘린더 api넣을거야
+		
 	</div>
 </body>
 </html>

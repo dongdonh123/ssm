@@ -8,19 +8,13 @@ public class SchedulNoticeVO extends CommonVO{
 	private String snNo;
 	private String ttNo;
 	private String snTitle;
-	private String snContents;
-	private String snDate;
+	private String snStartdate;
+	private String snEnddate;
+	private String snFile;
 	private String snInsertdate;
 	private String snUpdatedate;
 	private String snDeleteyn;
 	private TmemberVO tMembervo;
-	
-	public TmemberVO gettMembervo() {
-		return tMembervo;
-	}
-	public void settMembervo(TmemberVO tMembervo) {
-		this.tMembervo = tMembervo;
-	}
 	
 	public String getSnNo() {
 		return snNo;
@@ -40,17 +34,17 @@ public class SchedulNoticeVO extends CommonVO{
 	public void setSnTitle(String snTitle) {
 		this.snTitle = snTitle;
 	}
-	public String getSnContents() {
-		return snContents;
+	public String getSnStartdate() {
+		return snStartdate;
 	}
-	public void setSnContents(String snContents) {
-		this.snContents = snContents;
+	public void setSnStartdate(String snStartdate) {
+		this.snStartdate = snStartdate;
 	}
-	public String getSnDate() {
-		return snDate;
+	public String getSnEnddate() {
+		return snEnddate;
 	}
-	public void setSnDate(String snDate) {
-		this.snDate = snDate;
+	public void setSnEnddate(String snEnddate) {
+		this.snEnddate = snEnddate;
 	}
 	public String getSnInsertdate() {
 		return snInsertdate;
@@ -70,6 +64,20 @@ public class SchedulNoticeVO extends CommonVO{
 	public void setSnDeleteyn(String snDeleteyn) {
 		this.snDeleteyn = snDeleteyn;
 	}
+	public TmemberVO gettMembervo() {
+		return tMembervo;
+	}
+	public void settMembervo(TmemberVO tMembervo) {
+		this.tMembervo = tMembervo;
+	}
+	public String getSnFile() {
+		return snFile;
+	}
+	public void setSnFile(String snFile) {
+		this.snFile = snFile;
+	}
+	
+	
 	
 	
 	

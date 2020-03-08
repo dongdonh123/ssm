@@ -13,4 +13,5 @@ public interface SchedulNoticeService {
 	public int pwdConfirm(SchedulNoticeVO svo, String ttPw);
 	public int snUpdate(SchedulNoticeVO svo);
 	public int snDelete(SchedulNoticeVO svo);
+	public List<SchedulNoticeVO> snlistajax();
 }

@@ -16,12 +16,13 @@
 	<resultMap type="ssm.cm.vo.SchedulNoticeVO" id="snVO">
 	    <result property="snNo" 			column="SN_NO"/>
 	    <result property="snTitle" 			column="SN_TITLE"/>
-	    <result property="snContents" 		column="SN_CONTENTS"/>
 	    <result property="ttNo" 			column="TT_NO"/>
-	    <result property="snDate" 			column="SN_DATE"/>
+	    <result property="snStartdate" 		column="SN_STARTDATE"/>
+	    <result property="snEnddate" 		column="SN_ENDDATE"/>
 	    <result property="snInsertdate" 	column="SN_INSERTDATE"/>
 	    <result property="snUpdatedate" 	column="SN_UPDATEDATE"/>
 	    <result property="snDeleteyn" 		column="SN_DELETEYN"/>
+	    <result property="snFile" 			column="SN_FILE"/>
 	    <result property="pageNo"		    column="PAGENO"/>
 		<result property="listSize"		    column=""/>
 		<result property="totalCount"		column="TOTALCOUNT"/>
@@ -34,24 +35,20 @@
 		FROM
 			(SELECT 
 					A.SN_NO, 
-					B.TT_NAME, 
 					A.SN_TITLE, 
 					A.SN_INSERTDATE,
-					A.SN_DATE,
+					A.SN_STARTDATE,
+					A.SN_ENDDATE,
 					CEIL(ROW_NUMBER() OVER(ORDER BY A.SN_NO DESC)/#{listSize}) PAGENO,
 	     			COUNT(A.SN_NO) OVER() AS TOTALCOUNT 
-			FROM SCHEDULE_NOTICE A, T_MEMBER B 
+			FROM SCHEDULE_NOTICE A
 			WHERE SN_DELETEYN ='Y'
-			AND A.TT_NO = B.TT_NO
 			<trim prefix="AND" >
 			<if test="search=='snTitle' ">
 				<![CDATA[SN_TITLE LIKE '%'|| #{keyword} ||'%']]>
 			</if>
-			<if test="search=='snContents'">
+			<if test="search=='snsearchDate'">
 				<![CDATA[SN_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
-			</if>
-			<if test="search=='ttName'">
-				<![CDATA[TT_NAME LIKE '%'|| #{keyword} ||'%']]>
 			</if>
 			</trim>
 			) ABC
@@ -69,10 +66,12 @@
 	
 	<insert id="snInsert" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
-		INSERT INTO SCHEDULE_NOTICE(SN_NO,TT_NO,SN_TITLE,SN_CONTENTS,SN_DATE,SN_INSERTDATE,SN_DELETEYN)
-		VALUES(#{snNo},#{ttNo},#{snTitle},#{snContents},#{snDate},SYSDATE,'Y')
+		INSERT INTO SCHEDULE_NOTICE(SN_NO,TT_NO,SN_TITLE,SN_STARTDATE,SN_ENDDATE,SN_INSERTDATE,SN_DELETEYN,SN_FILE)
+		VALUES(#{snNo},#{ttNo},#{snTitle},#{snStartdate},#{snEnddate},SYSDATE,'Y',#{snFile})
 	
 	</insert>
+	
+	
 	
 	<select id="pwdConfirm" parameterType="map" resultType="int">
 		SELECT NVL((SELECT 1 
@@ -117,6 +116,17 @@
 		WHERE SN_NO =#{snNo}
 		AND SN_DELETEYN='Y'
 		AND A.TT_NO = B.TT_NO
+	</select>
+	
+	<select id="snlistajax" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
+		SELECT
+				A.SN_NO, 
+				A.SN_TITLE, 
+				A.SN_STARTDATE, 
+				A.SN_ENDDATE,
+				A.SN_FILE 
+		FROM SCHEDULE_NOTICE A
+		WHERE SN_DELETEYN='Y'
 	</select>
 	
 </mapper>

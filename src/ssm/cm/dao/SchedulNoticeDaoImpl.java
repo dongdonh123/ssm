@@ -56,5 +56,11 @@ public class SchedulNoticeDaoImpl implements SchedulNoticeDao {
 		return session.update("snDelete");
 	}
 
+	@Override
+	public List<SchedulNoticeVO> snlistajax() {
+		// TODO Auto-generated method stub
+		return session.selectList("snlistajax");
+	}
+
 
 }

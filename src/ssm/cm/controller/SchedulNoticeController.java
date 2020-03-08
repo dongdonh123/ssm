@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.annotations.Param;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -82,6 +84,66 @@ public class SchedulNoticeController {
 		System.out.println("url >>>: " + url);		
 		return url;
 	}
+	@ResponseBody
+	@RequestMapping(value="snwirteajax")
+	public String snwirteajax(@ModelAttribute SchedulNoticeVO svo, HttpServletRequest request){
+		System.out.println("에이작스 왔어 ㅠㅠ");
+		System.out.println("일정제목"+ request.getParameter("snTitle"));
+		System.out.println("일정 시작날짜"+ request.getParameter("snStartdate"));
+		System.out.println("일정 끝 날짜"+ request.getParameter("snEnddate"));
+		System.out.println("파일"+ request.getParameter("snFile"));
+		
+		svo.setSnTitle(request.getParameter("snTitle"));
+		svo.setSnStartdate(request.getParameter("snStartdate"));
+		svo.setSnEnddate(request.getParameter("snEnddate"));
+		svo.setSnFile(request.getParameter("snFile"));
+		svo.setTtNo("T8180001");
+		int result=0;
+		String result_ ="NO";
+		
+		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
+		System.out.println("svo_.getSnNo()>>>: "+svo_.getSnNo());
+		String no =svo_.getSnNo();
+		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
+		System.out.println("svo.getSnNo()"+svo.getSnNo());
+		result=schedulnoticeservice.snInsert(svo);
+		
+		boolean bResult = result > 0;
+			
+		if(bResult) result_="OK";
+		return result_;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="snlistajax")
+	public JSONArray snlistajax(@ModelAttribute SchedulNoticeVO svo){
+		System.out.println("에이작스 왔어 snlistajax ㅠㅠ");
+		List<SchedulNoticeVO> snlist = schedulnoticeservice.snlistajax();
+		
+		JSONArray jArr = new JSONArray();
+
+		for(int i = 0; i < snlist.size(); i++){
+			JSONObject jObj =  new JSONObject();
+			
+			jObj.put("title", snlist.get(i).getSnTitle());
+			jObj.put("start", snlist.get(i).getSnStartdate());
+			jObj.put("end", snlist.get(i).getSnEnddate());
+			System.out.println(">>>" + snlist.get(i).getSnFile());
+			if(snlist.get(i).getSnFile() !=null){
+			jObj.put("url", snlist.get(i).getSnFile());
+			}
+			jArr.add(jObj);
+		}
+		
+		//jsonArray 로그 확인
+		
+		for(int i = 0; i < jArr.size(); i++){
+			System.out.println("(log)JARR : "+jArr.get(i));
+		}
+
+		
+        return jArr;
+	}
 	
 	@RequestMapping(value="/snDetail")
 	public String snDetail(@ModelAttribute SchedulNoticeVO svo, Model model){
@@ -89,7 +151,6 @@ public class SchedulNoticeController {
 		SchedulNoticeVO sndetail = null;
 		sndetail = schedulnoticeservice.snDetail(svo);
 		
-		sndetail.setSnContents(sndetail.getSnContents().toString().replaceAll("\n","<br>"));
 		
 		model.addAttribute("sndetail",sndetail);
 		return "sn/snDetail";
@@ -149,6 +210,47 @@ public class SchedulNoticeController {
 		
 	}
 	
+	@RequestMapping(value="sncalendar")
+	public String sncalendar(@ModelAttribute NoticeBoardVO nvo, Model model){
+		System.out.println("★★★★★★★★컨트롤러 캘린더왔다");
+
+		return "sn/kdh";
+	}
 	
+	@RequestMapping(value="sncalendar2")
+	public String sncalendar2(@ModelAttribute NoticeBoardVO nvo, Model model){
+		System.out.println("★★★★★★★★컨트롤러 캘린더2왔다");
+
+		return "sn/kdh2";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sncalendarajaxlist")
+	public List sncalendarajaxlist(@ModelAttribute SchedulNoticeVO svo,HttpServletRequest request){
+		System.out.println("에이작스리스트왔엉");
+		
+		List snlist= null; 
+		return snlist;
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sncalendarajaxinsert")
+	public String sncalendarajaxinsert(@ModelAttribute SchedulNoticeVO svo,HttpServletRequest request){
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		System.out.println("에이작스인서트왔엉");
+		
+		int result = 0;
+		
+		return result+"";
+		
+	}
 	
 }
