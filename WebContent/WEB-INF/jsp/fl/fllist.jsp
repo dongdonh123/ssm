@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import="ssm.cm.vo.FamilyLetterVO" %>    
 <%@ page import="java.util.List" %>    
    
@@ -13,7 +13,7 @@
 		double totalCount = (double)Integer.parseInt(fvo_.getTotalCount()); 
 		int pagelistSize = (int)request.getAttribute("listSize");
 		double dval = (double)pagelistSize;
-		pageCount = (int)Math.ceil(totalCount/dval); //pageCount ë³€ìˆ˜ ì‚¬ìš©
+		pageCount = (int)Math.ceil(totalCount/dval); //pageCount º¯¼ö »ç¿ë
 		System.out.println("pageCount>>>:"+ pageCount); //1
 		System.out.println("totalCount>>>:"+ totalCount); //10
 		System.out.println("pagelistSize>>>:"+ pagelistSize);
@@ -22,23 +22,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
-		/*ê²€ìƒ‰ ëŒ€ìƒì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+		/*°Ë»ö ´ë»óÀÌ º¯°æµÉ ¶§¸¶´Ù Ã³¸® ÀÌº¥Æ®*/
 		$("#search").change(function(){
 			if($("#search").val()=="all"){
-				$("#keyword").val("ì „ì²´ ë°ì´í„° ì¡°íšŒí•©ë‹ˆë‹¤.");
+				$("#keyword").val("ÀüÃ¼ µ¥ÀÌÅÍ Á¶È¸ÇÕ´Ï´Ù.");
 			}else if($("#search").val()!="all"){
 				$("#keyword").val("");
 				$("#keyword").focus();
 			}
 		});
 		
-		/*ê²€ìƒ‰ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+		/*°Ë»ö ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
 		$("#searchBut").click(function(){
 			
 			goPage(1);
@@ -60,7 +60,7 @@
 			$("#f_search").submit();
 		}
 		
-		/*ì œëª© í´ë¦­ì‹œ ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+		/*Á¦¸ñ Å¬¸¯½Ã »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ Ã³¸® ÀÌº¥Æ®*/
 		$(".flDetail").click(function(){
 			var flNo = $(this).parents("tr").attr("data-num");
 			$("#flNo").val(flNo);
@@ -76,11 +76,17 @@
 			.submit();
 		});
 		
-		if("<%=searchdata.getKeyword()%>" != ""){
-			alert("ì´í”„ì— ë“¤ì–´ì˜¨ë‹¤");
-			$("#keyword").val("<%=searchdata.getKeyword()%>");
-			$("#search").val("<%=searchdata.getSearch()%>");
-			
+		var keyword2 = "<%=searchdata.getKeyword()%>";
+		var search2 = "<%=searchdata.getSearch()%>";
+		if(keyword2 != "null" && keyword2 != ""){ // Å°¿öµå µ¥ÀÌÅÍ°¡ ÀÖÀ»¶§ ½ÇÇà
+			$("#keyword").val(keyword2);
+			$("#search").val(search2);
+		}
+		
+		/* ÇĞ»ı¹øÈ£°¡ÀÖÀ¸¸é ±Û¾²±â¹öÆ°À» ¼û°Ü¶ó (¼¼¼Ç)
+		var ssno = "S7180001"; */
+		if(ssno != "null" && ssno != ""){
+			$("#flinsertbutton").hide();
 		}
 		
 	});
@@ -88,39 +94,39 @@
 </head>
 <body>
 	<div id="boardContainer">
-		<h1>ê°€ì •í†µì‹ ë¬¸ ê²Œì‹œíŒ</h1>
+		<h1>°¡Á¤Åë½Å¹® °Ô½ÃÆÇ</h1>
 		
-		<%-- ======================ê²€ìƒ‰ê¸°ëŠ¥ ì‹œì‘============================ --%>
+		<%-- ======================°Ë»ö±â´É ½ÃÀÛ============================ --%>
 		
 		<div id="boardSearch">
 			<form id="f_search" name="f_search">
-				<table summary="ê²€ìƒ‰">
+				<table summary="°Ë»ö">
 					<colgroup>
 						<col width="70%"></col>
 						<col width="30%"></col>
 					</colgroup>
 					<tr>
 						<td>
-						<label>ê²€ìƒ‰ì¡°ê±´</label>
+						<label>°Ë»öÁ¶°Ç</label>
 						<select id="search" name="search">
-							<option value="all">ì „ì²´</option>
-							<option value="flTitle">ì œëª©</option>
-							<option value="flContents">ë‚´ìš©</option>
-							<option value="ttName">ì‘ì„±ì</option>
+							<option value="all">ÀüÃ¼</option>
+							<option value="flTitle">Á¦¸ñ</option>
+							<option value="flContents">³»¿ë</option>
+							<option value="ttName">ÀÛ¼ºÀÚ</option>
 						</select>
 						
-						<input type="text" name="keyword" id="keyword" value="ê²€ìƒ‰ì–´ë¥¼ì…ë ¥í•˜ì„¸ìš”" />
-						<input type="button" value="ê²€ìƒ‰" id="searchBut" />
+						<input type="text" name="keyword" id="keyword" value="°Ë»ö¾î¸¦ÀÔ·ÂÇÏ¼¼¿ä" />
+						<input type="button" value="°Ë»ö" id="searchBut" />
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
 		
-		<%-- =======================ê²€ìƒ‰ê¸°ëŠ¥ ë============================ --%>
+		<%-- =======================°Ë»ö±â´É ³¡============================ --%>
 		
 		<div id="boardlist" style="text-align:center">
-			<table summary="ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸">
+			<table summary="°Ô½ÃÆÇ ¸®½ºÆ®">
 				<colgroup>
 					<col width="10%" />
 					<col width="50%" />
@@ -129,10 +135,10 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th>ê¸€ë²ˆí˜¸</th>
-						<th>ê¸€ì œëª©</th>
-						<th>ì‘ì„±ì¼</th>
-						<th>ì‘ì„±ì</th>
+						<th>±Û¹øÈ£</th>
+						<th>±ÛÁ¦¸ñ</th>
+						<th>ÀÛ¼ºÀÏ</th>
+						<th>ÀÛ¼ºÀÚ</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -141,7 +147,7 @@
 					%>
 					<tr>
 						<td>0</td>
-						<td>ì‘ì„±ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
+						<td>ÀÛ¼ºµÈ ±ÛÀÌ ¾ø½À´Ï´Ù.</td>
 						<td></td>
 						<td></td>
 					</tr>
@@ -168,8 +174,8 @@
 						<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
 						<input type="hidden" id="pageNo" name="pageNo" value="1">
 						<input type="hidden" id="listSize" name="listSize" value="10">
-						<input type="hidden" id="search" name="search" value="<%=searchdata.getSearch()%>">
-						<input type="hidden" id="keyword" name="keyword" value="<%=searchdata.getKeyword()%>">
+						<input type="hidden" name="search" value="<%=searchdata.getSearch()%>">
+						<input type="hidden" name="keyword" value="<%=searchdata.getKeyword()%>">
 						</form>
 						<%
 						}
@@ -178,9 +184,9 @@
 				</tbody>
 			</table>
 			<form id="fllistform" name="fllistform">
-				<input type="button" id="insertbutton" name="insertbutton" value="ê¸€ì“°ê¸°">
+				<input type="button" id="insertbutton" name="insertbutton" value="±Û¾²±â">
 			</form>
-			<!-- ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ form -->
+			<!-- »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ form -->
 			<form name="fldetailForm" id="fldetailForm">
 			<input type="hidden" name="flNo" id="flNo">
 			</form>

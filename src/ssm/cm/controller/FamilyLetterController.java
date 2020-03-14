@@ -89,7 +89,6 @@ public class FamilyLetterController {
 			System.out.println(fvo.getFlNo());
 			result=familyletterservice.flInsert(fvo);
 		}catch(Exception e){
-			System.out.println("에러가 >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			
@@ -100,7 +99,6 @@ public class FamilyLetterController {
 	
 	@RequestMapping(value="/flDetail")
 	public String nbDetail(@ModelAttribute FamilyLetterVO fvo, Model model){
-		System.out.println("no 가져온 >>>: "+fvo.getFlNo());
 		
 		FamilyLetterVO fldetail = null;
 		fldetail = familyletterservice.flDetail(fvo);
@@ -114,9 +112,6 @@ public class FamilyLetterController {
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
 	public String pwdConfirm(@ModelAttribute FamilyLetterVO fvo,HttpServletRequest request){
-		System.out.println("컨트롤러 비번 체크에왔다");
-		System.out.println("가져온 no >>>" + fvo.getFlNo());
-		System.out.println("가져온 pw >>>" + request.getParameter("ttPw"));
 		String ttPw =request.getParameter("ttPw");
 		
 		int result = 0;
@@ -129,7 +124,6 @@ public class FamilyLetterController {
 	
 	@RequestMapping(value="/flupdateForm")
 	public String updateForm(@ModelAttribute FamilyLetterVO fvo, Model model){
-		System.out.println("가져온 no >>>: "+fvo.getFlNo());
 		
 		FamilyLetterVO updateData =null;
 		updateData= familyletterservice.flDetail(fvo);
@@ -168,7 +162,6 @@ public class FamilyLetterController {
 			
 			result=familyletterservice.flUpdate(fvo);
 		}catch(Exception e){
-			System.out.println("에러가 >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			

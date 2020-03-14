@@ -11,7 +11,7 @@ public class QnAAnswerVO {
 	private String qaDeleteyn;
 	private String qaInsertdate;
 	private String qaUpdatedate;
-	private TmemberVO tMembervo;
+	private String ttName;
 	
 	public String getQaNo() {
 		return qaNo;
@@ -55,11 +55,11 @@ public class QnAAnswerVO {
 	public void setQaUpdatedate(String qaUpdatedate) {
 		this.qaUpdatedate = qaUpdatedate;
 	}
-	public TmemberVO gettMembervo() {
-		return tMembervo;
+	public String getTtName() {
+		return ttName;
 	}
-	public void settMembervo(TmemberVO tMembervo) {
-		this.tMembervo = tMembervo;
+	public void setTtName(String ttName) {
+		this.ttName = ttName;
 	}
 	
 	

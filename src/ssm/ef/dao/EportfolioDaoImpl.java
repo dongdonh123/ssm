@@ -37,19 +37,19 @@ public class EportfolioDaoImpl implements EportfolioDao {
 
 
 	@Override
-	public List<CareerdesignVO> cdlist(SmemberVO svo, String year) {
+	public List<CareerdesignVO> cdlist(SmemberVO svo) {
 		// TODO Auto-generated method stub
 		return session.selectList("cdlist");
 	}
 
 	@Override
-	public List<NonprogramVO> brlist(SmemberVO svo, String year) {
+	public List<NonprogramVO> brlist(SmemberVO svo) {
 		// TODO Auto-generated method stub
 		return session.selectList("brlist");
 	}
 
 	@Override
-	public List<OnlineapplicationVO> cglist(SmemberVO svo, String year) {
+	public List<OnlineapplicationVO> cglist(SmemberVO svo) {
 		// TODO Auto-generated method stub
 		return session.selectList("cglist");
 	}

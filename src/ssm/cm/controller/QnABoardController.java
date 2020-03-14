@@ -33,13 +33,9 @@ public class QnABoardController {
 	@Autowired
 	private QnABoardService qnaboardservice;
 	
-	/*��ü ��ȸ*/
 	@RequestMapping(value="qblist")
 	public String sblist(@ModelAttribute QnABoardVO qvo, Model model ){
-		System.out.println("★★★★★★★★컨트롤러 list왔다");
 		
-		System.out.println("가져온 키워드>>>:" +qvo.getKeyword());
-		System.out.println("가져온  서치>>>:" +qvo.getSearch());
 		
 		int ListSize = 10; 
 		
@@ -56,17 +52,16 @@ public class QnABoardController {
 		return "qb/qblist";
 	}
 	
-	/*�۾��� �� ���*/
 	@RequestMapping(value="qbwirteform")
 	public String qbwirteform(){
 		
 		return "qb/qbwirteform";
 	}
 	
-	/*�۾��� ����*/
 	@RequestMapping(value="qbwirte")
 	public String qbinsert(@ModelAttribute QnABoardVO qvo){
 		
+		System.out.println(qvo.getQbContents()+"<<< ������");
 		String url="";
 		int result=0;
 			
@@ -108,7 +103,6 @@ public class QnABoardController {
 		int result = 0;
 		result= qnaboardservice.pwdConfirm(qvo, ssPw);
 		
-		System.out.println("result는>>>" + result);
 		return result+"";
 		
 	}

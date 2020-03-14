@@ -31,10 +31,7 @@ public class NoticeBoardController {
 	
 	@RequestMapping(value="nblist")
 	public String nblist(@ModelAttribute NoticeBoardVO nvo, Model model){
-		System.out.println("★★★★★★★★컨트롤러 list왔다");
 		
-		System.out.println("가져온 키워드>>>:" +nvo.getKeyword());
-		System.out.println("가져온  서치>>>:" +nvo.getSearch());
 		
 		int ListSize = 10; 
 		
@@ -42,6 +39,7 @@ public class NoticeBoardController {
 			nvo.setListSize(ListSize+"");
 			nvo.setPageNo("1");
 		}
+		
 
 		List nblist=noticeboardservice.nblist(nvo); 
 		
@@ -58,7 +56,7 @@ public class NoticeBoardController {
 		return "nb/nbwirteform";
 	}
 	
-	/*�۾��� ����*/
+
 	@RequestMapping(value="nbwirte")
 	public String nbinsert(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
 		
@@ -80,6 +78,9 @@ public class NoticeBoardController {
 			String nbTitle=multi.getParameter("nbTitle");
 			String nbContents=multi.getParameter("nbContents");
 			
+			System.out.println("�޾ƿ� ����>>>:"+ nbTitle);
+			System.out.println("�޾ƿ� ����>>>:"+ nbContents);
+			
 			nvo.setTtNo(ttNo);
 			nvo.setNbTitle(nbTitle);
 			nvo.setNbContents(nbContents);
@@ -92,7 +93,6 @@ public class NoticeBoardController {
 			System.out.println(nvo.getNbNo());
 			result=noticeboardservice.nbInsert(nvo);
 		}catch(Exception e){
-			System.out.println("에러가 >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			
@@ -104,7 +104,6 @@ public class NoticeBoardController {
 	@RequestMapping(value="/nbDetail")
 	public String nbDetail(@ModelAttribute NoticeBoardVO nvo, Model model){
 		
-		System.out.println("가져온 no >>>: "+nvo.getNbNo());
 		
 		NoticeBoardVO nbdetail = null;
 		nbdetail = noticeboardservice.nbDetail(nvo);
@@ -126,7 +125,6 @@ public class NoticeBoardController {
 		int result = 0;
 		result= noticeboardservice.pwdConfirm(nvo,ttPw);
 		
-		System.out.println("result는 >>>" + result);
 		return result+"";
 		
 	}
@@ -142,7 +140,7 @@ public class NoticeBoardController {
 		
 	}
 	
-	/*�۾��� ����*/
+	
 	@RequestMapping(value="nbupdate")
 	public String nbupdate(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
 		
@@ -156,9 +154,9 @@ public class NoticeBoardController {
 			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
 			
 			Enumeration files=multi.getFileNames();
-			String file=(String)files.nextElement();//�Է��� ���ϸ�޾ƿ��°�
-			String fileName=multi.getFilesystemName(file);//��Ƽ��Ʈ���������� �ٲٴ°�
-			daFileName="../"+"upload"+"/"+fileName;//����߰��� ��ġ�°�
+			String file=(String)files.nextElement();
+			String fileName=multi.getFilesystemName(file);
+			daFileName="../"+"upload"+"/"+fileName;
 			
 			String nbTitle=multi.getParameter("nbTitle");
 			String nbContents=multi.getParameter("nbContents");
@@ -171,7 +169,6 @@ public class NoticeBoardController {
 			
 			result=noticeboardservice.nbUpdate(nvo);
 		}catch(Exception e){
-			System.out.println("에러가 >>>: " + e);
 		}
 		boolean bResult = result > 0;
 			

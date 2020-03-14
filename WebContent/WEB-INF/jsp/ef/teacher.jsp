@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import ="java.util.List"%> 
 <%@ page import ="ssm.mi.vo.SmemberVO"%> 
     
@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
@@ -32,7 +32,7 @@
 					String class_= svo.getFmMembervo().getFmClass();%>
 						
 					
-					<h1><%=grade%>í•™ë…„ <%=class_ %>ë°˜ </h1>
+					<h1><%=grade%>ÇÐ³â <%=class_ %>¹Ý </h1>
 					<%
 					}%>
 	<div class="list" style="text-align:center">
@@ -51,15 +51,15 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th>í•™ë²ˆ</th>
-						<th>ì‚¬ì§„</th>
-						<th>ì´ë¦„</th>
-						<th>í•™ë…„</th>
-						<th>ë°˜</th>
-						<th>ë²ˆí˜¸</th>
-						<th>í¬ë§ë¶„ì•¼</th>
-						<th>í¬ë§ì§ì¢…</th>
-						<th>ê°€ì¹˜ê´€</th>
+						<th>ÇÐ¹ø</th>
+						<th>»çÁø</th>
+						<th>ÀÌ¸§</th>
+						<th>ÇÐ³â</th>
+						<th>¹Ý</th>
+						<th>¹øÈ£</th>
+						<th>Èñ¸ÁºÐ¾ß</th>
+						<th>Èñ¸ÁÁ÷Á¾</th>
+						<th>°¡Ä¡°ü</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -71,7 +71,7 @@
 					<tr>
 						<td>0</td>
 						<td>0</td>
-						<td>í•™ìƒëª…ë‹¨ì´ ì—†ìŠµë‹ˆë‹¤.</td>
+						<td>ÇÐ»ý¸í´ÜÀÌ ¾ø½À´Ï´Ù.</td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -116,7 +116,7 @@
 	
 	
 	<div>
-		<h2>í•™ìƒ 20ëª… í†µê³„</h2>
+		<h2>ÇÐ»ý 20¸í Åë°è</h2>
 	</div>
 </body>
 </html>

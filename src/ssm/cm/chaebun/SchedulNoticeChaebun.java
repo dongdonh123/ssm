@@ -6,7 +6,7 @@ public class SchedulNoticeChaebun {
 	
 	public static String snchaebun(String no){
 		
-		for(int i=no.length();i<4;i++){//1 ,2,3 3�� 
+		for(int i=no.length();i<4;i++){//1 ,2,3 3 
 			no = "0" + no;
 		}
 		

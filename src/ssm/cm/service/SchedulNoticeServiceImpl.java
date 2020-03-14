@@ -35,7 +35,12 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 	@Override
 	public int snInsert(SchedulNoticeVO svo) {
 		int result = 0;
-		result=schedulnoticedao.snInsert(svo);
+		try {
+//			System.out.println("서비스 >>> : " + svo.getSnTitle());
+//			svo.setSnTitle(new String(svo.getSnTitle().getBytes("EUC-KR"), "MS949"));
+//			System.out.println("서비스 변환 이후 >>> : " + svo.getSnTitle());
+			result=schedulnoticedao.snInsert(svo);	
+		}catch(Exception e){}
 		return result;
 	}
 

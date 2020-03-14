@@ -1,51 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import="ssm.cm.vo.FamilyLetterVO" %>    
     
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>ê¸€ ìƒì„¸ ë³´ê¸°</title>
+	<meta charset="EUC-KR">
+	<title>±Û »ó¼¼ º¸±â</title>
  	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
-		var butChk =0; //ìˆ˜ì •ë²„íŠ¼ê³¼ ì‚­ì œë²„íŠ¼ì„ êµ¬ë³„í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
+		var butChk =0; //¼öÁ¤¹öÆ°°ú »èÁ¦¹öÆ°À» ±¸º°ÇÏ±â À§ÇÑ º¯¼ö
 		$(function(){
 			$("#pwdChk").hide();
 			
 			
-			/*ìˆ˜ì • ë²„íŠ¼ í´ë¦­ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
-			$("#updateForm").click(function(){
+			/*¼öÁ¤ ¹öÆ° Å¬¸¯½Ã Ã³¸® ÀÌº¥Æ®*/
+			$("#updatebutton").click(function(){
 				$("#pwdChk").show();
-				$("#msg").text("ì‘ì„±ì‹œ ì…ë ¥í•œ ë¹„ë¹Œë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”").css("color","#000099");
+				$("#buttons").hide();
+				$("#msg").text("ÀÛ¼º½Ã ÀÔ·ÂÇÑ ºñºô¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä").css("color","#000099");
 				butChk=1;
 			});
 			
 			$("#cancelBut").click(function(){
 				$("#pwdChk").hide();
+				$("#buttons").show();
 			});
 			
-			/*ì‚­ì œ ë²„íŠ¼ í´ë¦­ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
-			$("#boardDelete").click(function(){
+			/*»èÁ¦ ¹öÆ° Å¬¸¯½Ã Ã³¸® ÀÌº¥Æ®*/
+			$("#deletebutton").click(function(){
 				$("#pwdChk").show();
-				$("#msg").text("ì‘ì„±ì‹œ ì…ë ¥í•œ ë¹„ë¹Œë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”").css("color","#000099");
+				$("#buttons").hide();
+				$("#msg").text("ÀÛ¼º½Ã ÀÔ·ÂÇÑ ºñºô¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä").css("color","#000099");
 				butChk=2;
 			});
 			
 
-			/* ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+			/* ºñ¹Ğ¹øÈ£ È®ÀÎ ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
 			$("#pwdBut").click(function(){
 				pwdConfirm();
 			});
 			
-			/* ëª©ë¡ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸ */
-			$("#boardList").click(function(){
-				location.href="/familyletter/fllist.ssm";
-			});
-			
-		});//end of í‘ì…˜
+		});//end of Æã¼Ç
 		
-		/* ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ í´ë¦­ì‹œ ì‹¤ì§ˆì ì¸ ì²˜ë¦¬ í•¨ìˆ˜*/
+		/* ºñ¹Ğ¹øÈ£ È®ÀÎ ¹öÆ° Å¬¸¯½Ã ½ÇÁúÀûÀÎ Ã³¸® ÇÔ¼ö*/
 		
 		function pwdConfirm(){
 			
@@ -54,13 +52,13 @@
 					type:"POST",
 					data:$("#pwcheckform").serialize(),
 					error:function(){
-						alert('ì‹œìŠ¤í…œ ì˜¤ë¥˜ì…ë‹ˆë‹¤ ê´€ë¦¬ìì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”');
+						alert('½Ã½ºÅÛ ¿À·ùÀÔ´Ï´Ù °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä');
 					},
 					success:function(resultData){
 						var goUrl="";
 						if(resultData ==0){
-							$("#msg").text("ì‘ì„±ì‹œ ì…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.").css("color","red");
-						}else if(resultData ==1){ //ì¼ì¹˜í•  ê²½ìš°
+							$("#msg").text("ÀÛ¼º½Ã ÀÔ·ÂÇÑ ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.").css("color","red");
+						}else if(resultData ==1){ //ÀÏÄ¡ÇÒ °æ¿ì
 							$("#msg").text("");
 							if(butChk==1){
 								goUrl="/familyletter/flupdateForm.ssm";
@@ -74,7 +72,13 @@
 				});	
 				
 		
-		}	
+		}
+		
+		/* ÇĞ»ı¹øÈ£°¡ÀÖÀ¸¸é ±Û¾²±â¹öÆ°À» ¼û°Ü¶ó (¼¼¼Ç)
+		var ssno = "S7180001"; */
+		if(ssno != "null" && ssno != ""){
+			$("#buttons").hide();
+		}
 	</script>
 </head>
 <body>
@@ -84,15 +88,15 @@
 	System.out.println(flFile);
 	flFile = flFile.substring(10);
 	%>
-	<h3>ê¸€ìƒì„¸</h3>
+	<h3>±Û»ó¼¼</h3>
 	<form name="f_data" id="f_data" method="POST">
 		<input type="hidden" id="flNo" name="flNo" value="<%=fvo.getFlNo() %>" />
 		<input type="hidden" name="flfile" value="<%=fvo.getFlFile() %>" />
 	</form>
 	
-	<%-- ========================ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ ë° ë²„íŠ¼ ì¶”ê°€ ì¢…ë£Œ ================================ --%>
+	<%-- ========================ºñ¹Ğ¹øÈ£ È®ÀÎ ¹öÆ° ¹× ¹öÆ° Ãß°¡ Á¾·á ================================ --%>
 	
-	<%-- ======================ìƒì„¸ ì •ë³´ ë³´ì—¬ì£¼ê¸° ì‹œì‘ ========================================== --%>
+	<%-- ======================»ó¼¼ Á¤º¸ º¸¿©ÁÖ±â ½ÃÀÛ ========================================== --%>
 	<div id="boardDetail">
 		<table border="1">
 			<colgroup>
@@ -103,58 +107,59 @@
 				</colgroup>
 			<tbody>
 				<tr>
-					<td>ì‘ì„±ì</td>
+					<td>ÀÛ¼ºÀÚ</td>
 					<td><%=fvo.gettMembervo().getTtName() %></td>
-					<td>ì‘ì„±ì¼:<%=fvo.getFlInsertdate() %></td>
-					<td>ìˆ˜ì •ì¼:<%=fvo.getFlUpdatedate() %></td>
+					<td>ÀÛ¼ºÀÏ:<%=fvo.getFlInsertdate() %></td>
+					<td>¼öÁ¤ÀÏ:<%=fvo.getFlUpdatedate() %></td>
 				</tr>
 				<tr>
-					<td>ì œëª©</td>
+					<td>Á¦¸ñ</td>
 					<td colspan="3"><%=fvo.getFlTitle() %></td>
 				</tr>
 				<tr>
-					<td>ì²¨ë¶€íŒŒì¼</td>
+					<td>Ã·ºÎÆÄÀÏ</td>
 					<td colspan="3">
 					<%
 					if(flFile.equals("null")){
 					%>
-					ì²¨ë¶€íŒŒì¼ ì—†ìŠµë‹ˆë‹¤.</td>
+					Ã·ºÎÆÄÀÏ ¾ø½À´Ï´Ù.</td>
 					<%
 					}else{
 					%>
-					<p><%=flFile%>&nbsp;&nbsp;&nbsp;<a href="/familyletter/flDownload.ssm?filename=<%=flFile%>">ë‹¤ìš´ë¡œë“œ</a></p></td>
+					<p><%=flFile%>&nbsp;&nbsp;&nbsp;<a href="/familyletter/flDownload.ssm?filename=<%=flFile%>">´Ù¿î·Îµå</a></p></td>
 					<%	
 					}
 					%>
 				</tr>
 				<tr height="300px">
-					<td>ë‚´ìš©</td>
+					<td>³»¿ë</td>
 					<td colspan="3" ><%=fvo.getFlContents() %></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<%-- ======================ìƒì„¸ ì •ë³´ ë³´ì—¬ì£¼ê¸° ì¢…ë£Œ ========================================== --%>
-	<%--===============================ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ë²„íŠ¼ ë° ë²„íŠ¼ ì¶”ê°€ ì‹œì‘======================== --%>
+	<%-- ======================»ó¼¼ Á¤º¸ º¸¿©ÁÖ±â Á¾·á ========================================== --%>
+	<%--===============================ºñ¹Ğ¹øÈ£ È®ÀÎ ¹öÆ° ¹× ¹öÆ° Ãß°¡ ½ÃÀÛ======================== --%>
 	<table id="boardPwdBut">
 		<tr>
 			<td>
 				<div id="pwdChk">
 					<form name="pwcheckform" id="pwcheckform">
-						<label for="ttpw" id="l_pwd">ë¹„ë°€ë²ˆí˜¸ : </label>
+						<label for="ttpw" id="l_pwd">ºñ¹Ğ¹øÈ£ : </label>
 						<input type="password" name="ttPw" id="ttPw" />
 						<input type="hidden" name="flNo" id="flNo" value="<%=fvo.getFlNo()%>"/>
-						<input type="button" name="pwdBut" id="pwdBut" value="í™•ì¸" />
-						<input type="button" name="cancelBut" id="cancelBut" value="ì·¨ì†Œ" />
+						<input type="button" name="pwdBut" id="pwdBut" value="È®ÀÎ" />
+						<input type="button" name="cancelBut" id="cancelBut" value="Ãë¼Ò" />
 						
 						<span id="msg"></span>
 					</form>
 				</div>
 			</td>
 			<td>
-				<input type="button" value="ìˆ˜ì •" id="updateForm">
-				<input type="button" value="ì‚­ì œ" id="boardDelete">
-				<input type="button" value="ëª©ë¡" id="boardList">
+				<div id="buttons">
+					<input type="button" value="¼öÁ¤" id="updatebutton">
+					<input type="button" value="»èÁ¦" id="deletebutton">
+				</div>	
 			</td>
 		</tr>
 	</table>

@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="EUC-KR"?>
 
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 
 
 <mapper namespace="ssm.cm.dao.SchedulNoticeDao">
@@ -37,8 +38,8 @@
 					A.SN_NO, 
 					A.SN_TITLE, 
 					A.SN_INSERTDATE,
-					A.SN_STARTDATE,
-					A.SN_ENDDATE,
+					TO_CHAR(A.SN_STARTDATE, 'YYYY-MM-DD') AS SN_STARTDATE,
+					TO_CHAR(A.SN_ENDDATE, 'YYYY-MM-DD') AS SN_ENDDATE,
 					CEIL(ROW_NUMBER() OVER(ORDER BY A.SN_NO DESC)/#{listSize}) PAGENO,
 	     			COUNT(A.SN_NO) OVER() AS TOTALCOUNT 
 			FROM SCHEDULE_NOTICE A
@@ -66,8 +67,8 @@
 	
 	<insert id="snInsert" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
-		INSERT INTO SCHEDULE_NOTICE(SN_NO,TT_NO,SN_TITLE,SN_STARTDATE,SN_ENDDATE,SN_INSERTDATE,SN_DELETEYN,SN_FILE)
-		VALUES(#{snNo},#{ttNo},#{snTitle},#{snStartdate},#{snEnddate},SYSDATE,'Y',#{snFile})
+		INSERT INTO SCHEDULE_NOTICE(SN_NO,SN_TITLE,SN_STARTDATE,SN_ENDDATE,SN_INSERTDATE,SN_DELETEYN)
+		VALUES(#{snNo},#{snTitle},#{snStartdate},#{snEnddate},SYSDATE,'Y')
 	
 	</insert>
 	
@@ -86,8 +87,8 @@
 	
 		UPDATE SCHEDULE_NOTICE SET 
 								 SN_TITLE = #{snTitle}
-								,SN_CONTENTS = #{snContents}
-								,SN_DATE = #{snDate}
+								,SN_STARTDATE = #{snStartdate}
+								,SN_ENDDATE = #{snEnddate}
 								,SN_UPDATEDATE = SYSDATE
 		WHERE 					 SN_NO = #{snNo}						
 		AND  					 SN_DELETEYN = 'Y'
@@ -102,31 +103,16 @@
 		AND  					 SN_DELETEYN = 'Y'
 	</update>
 	
-	<select id="snDetail" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
-		SELECT
-				A.SN_NO, 
-				B.TT_NAME, 
-				A.SN_TITLE, 
-				A.SN_DATE, 
-				A.SN_CONTENTS, 
-				A.SN_INSERTDATE, 
-				A.SN_UPDATEDATE,
-				A.SN_DELETEYN
-		FROM SCHEDULE_NOTICE A, T_MEMBER B
-		WHERE SN_NO =#{snNo}
-		AND SN_DELETEYN='Y'
-		AND A.TT_NO = B.TT_NO
-	</select>
-	
 	<select id="snlistajax" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 		SELECT
 				A.SN_NO, 
 				A.SN_TITLE, 
-				A.SN_STARTDATE, 
-				A.SN_ENDDATE,
+				TO_CHAR(A.SN_STARTDATE, 'YYYY-MM-DD') AS SN_STARTDATE,
+				TO_CHAR(A.SN_ENDDATE, 'YYYY-MM-DD') AS SN_ENDDATE,
 				A.SN_FILE 
 		FROM SCHEDULE_NOTICE A
 		WHERE SN_DELETEYN='Y'
+		ORDER BY A.SN_NO
 	</select>
 	
 </mapper>

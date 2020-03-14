@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%
 	String qbno= (String)request.getAttribute("QbNo");
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
@@ -24,13 +24,13 @@
 				type:"POST",
 				data:$("#pwcheckForm").serialize(),
 				error:function(){
-					alert('ì‹œìŠ¤í…œ ì˜¤ë¥˜ì…ë‹ˆë‹¤ ê´€ë¦¬ìì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”');
+					alert('½Ã½ºÅÛ ¿À·ùÀÔ´Ï´Ù °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä');
 				},
 				success:function(resultData){
 					var goUrl="";
 					if(resultData ==0){
-						$("#msg").text("ì…ë ¥í•œ ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.").css("color","red");
-					}else if(resultData ==1){ //ì¼ì¹˜í•  ê²½ìš°
+						$("#msg").text("ÀÔ·ÂÇÑ ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.").css("color","red");
+					}else if(resultData ==1){ //ÀÏÄ¡ÇÒ °æ¿ì
 						$("#msg").text("");
 						goUrl="/qnaboard/qbDetail.ssm";
 						$("#pwcheckForm").attr("action",goUrl);
@@ -46,11 +46,11 @@
 	</script>
 </head>
 <body>
-ë¹„ë°€ê¸€ì…ë‹ˆë‹¤ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”!
+ºñ¹Ğ±ÛÀÔ´Ï´Ù ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä!
 <div>
 	<form id="pwcheckForm" name="pwcheckForm">
 		<input type="text" id="ssPw" name="ssPw">
-		<input type="button" id="submitbutton" name="submitbutton" value="ë³´ë‚´ê¸°">
+		<input type="button" id="submitbutton" name="submitbutton" value="º¸³»±â">
 		<input type="hidden" id="qbNo" name="qbNo" value="<%=qbno%>">
 		<span id="msg"></span>
 	</form>

@@ -1,3 +1,11 @@
 eclipse.preferences.version=1
-encoding//WebContent/WEB-INF/jsp/sn/kdh2.jsp=UTF-8
-encoding/<project>=UTF-8
+encoding//src/ssm/cg/vo/OnlineapplicationVO.java=EUC-KR
+encoding//src/ssm/cm/chaebun/SchedulNoticeChaebun.java=EUC-KR
+encoding//src/ssm/cm/controller/SchedulNoticeController.java=EUC-KR
+encoding//src/ssm/cm/dao/SchedulNoticeDao.java=EUC-KR
+encoding//src/ssm/cm/dao/SchedulNoticeDaoImpl.java=EUC-KR
+encoding//src/ssm/cm/service/SchedulNoticeService.java=EUC-KR
+encoding//src/ssm/cm/service/SchedulNoticeServiceImpl.java=EUC-KR
+encoding//src/ssm/cm/vo/SchedulNoticeVO.java=EUC-KR
+encoding//src/ssm/mi/vo/SmemberVO.java=EUC-KR
+encoding//src/ssm/mi/vo/TmemberVO.java=EUC-KR

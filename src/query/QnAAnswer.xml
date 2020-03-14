@@ -4,11 +4,6 @@
      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssm.cm.dao.QnAAnswerDao">
 
-	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
-	    <result property="ttNo" 			column="TT_NO"/>
-	    <result property="ttName" 			column="TT_NAME"/>
-	</resultMap>
-	
 	<resultMap type="ssm.cm.vo.QnAAnswerVO" id="qaVO">
 	    <result property="qaNo" 			column="QA_NO"/>
 	    <result property="qbNo" 			column="QB_NO"/>
@@ -17,21 +12,24 @@
 	    <result property="qaInsertdate" 	column="QA_INSERTDATE"/>
 	    <result property="qaUpdatedate" 	column="QA_UPDATEDATE"/>
 	    <result property="qaDeleteyn" 		column="QA_DELETEYN"/>
-	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
+	    <result property="ttName" 			column="TT_NAME"/>
 	</resultMap>
 
 
 	<!-- 댓글리스트 조회 -->
 	<select id="qaList" parameterType="ssm.cm.vo.QnAAnswerVO" resultMap="qaVO">
 		SELECT
-		      QA_NO
-		     ,QB_NO
-		     ,TT_NO
-		     ,QA_CONTENTS
-		     ,QA_INSERTDATE
-		     ,QA_UPDATEDATE
-		FROM QNA_ANSWER
+		      A.QA_NO
+		     ,A.QB_NO
+		     ,A.TT_NO
+		     ,A.QA_CONTENTS
+		     ,A.QA_INSERTDATE
+		     ,A.QA_UPDATEDATE
+		     ,B.TT_NAME
+		FROM QNA_ANSWER A,
+			 T_MEMBER B
 		WHERE QB_NO = #{qbNo}
+		AND B.TT_NO=A.TT_NO
 		AND QA_DELETEYN = 'Y'
 		ORDER BY QA_NO ASC
 	</select>

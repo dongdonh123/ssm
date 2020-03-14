@@ -46,23 +46,23 @@ public class EportfolioServiceImpl implements EportfolioService {
 	}
 
 	@Override
-	public List<CareerdesignVO> cdlist(SmemberVO svo,String year) {
+	public List<CareerdesignVO> cdlist(SmemberVO svo) {
 		List<CareerdesignVO> cdlist = null;
-		cdlist =eportfoliodao.cdlist(svo,year);
+		cdlist =eportfoliodao.cdlist(svo);
 		return cdlist;
 	}
 
 	@Override
-	public List<NonprogramVO> brlist(SmemberVO svo,String year) {
+	public List<NonprogramVO> brlist(SmemberVO svo) {
 		List<NonprogramVO> brlist = null;
-		brlist =eportfoliodao.brlist(svo,year);
+		brlist =eportfoliodao.brlist(svo);
 		return brlist;
 	}
 
 	@Override
-	public List<OnlineapplicationVO> cglist(SmemberVO svo,String year) {
+	public List<OnlineapplicationVO> cglist(SmemberVO svo) {
 		List<OnlineapplicationVO> cglist = null;
-		cglist =eportfoliodao.cglist(svo,year);
+		cglist =eportfoliodao.cglist(svo);
 		return cglist;
 	}
 

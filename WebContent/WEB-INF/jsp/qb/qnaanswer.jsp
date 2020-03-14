@@ -1,37 +1,53 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> 
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%> 
 <%@ page import="ssm.cm.vo.QnABoardVO" %>      
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>qnaanswer(ë‹µê¸€í˜ì´ì§€)</title>
-		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+	<title>qnaanswer(´ä±ÛÆäÀÌÁö)</title>
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js?ver=1"></script>
   		<script type="text/javascript">
   		<%
   		QnABoardVO qvo =(QnABoardVO)request.getAttribute("qbdetail");
   		String qbNo=qvo.getQbNo();
+  		
+  		
   		%>
   		
   		
   		$(function(){
-  				//ê¸°ë³¸ ëŒ“ê¸€ ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸°
+  			
+  			//¼¼¼ÇÀÇ·Î °ª³Ö±â
+  			var ssno="";
+  		    if(ssno!=null && ssno !=""){
+  		    	$("#replywritediv").hide();
+  		    }
+  		   
+  				//±âº» ´ñ±Û ¸ñ·Ï ºÒ·¯¿À±â
   				var qbNo = "<%=qvo.getQbNo()%>";
-  				listAll(qbNo); // ëŒ“ê¸€ ë¦¬ìŠ¤íŠ¸ ìš”ì²­í•¨ìˆ˜
+  				listAll(qbNo); // ´ñ±Û ¸®½ºÆ® ¿äÃ»ÇÔ¼ö
   				
   				$('#qnaanswerContainer').hide();
  
-  				if(true){//êµì‚¬ì„¸ì…˜ì´ ìˆìœ¼ë©´ 
+  				if(true){//±³»ç¼¼¼ÇÀÌ ÀÖÀ¸¸é 
   					$('#qnaanswerContainer').show();
   				}
   				
-  				// ëŒ“ê¸€ ë‚´ìš© ì €ì¥ ì´ë²¤íŠ¸
+  				// ´ñ±Û ³»¿ë ÀúÀå ÀÌº¥Æ®
   				$('#qaInsert').click(function(){
-  					alert("ë²„íŠ¼ì´ ëˆŒë¦°ë‹¤!");
+  					/* ¼±»ı¹øÈ£°¡ ¾øÀ¸¸é ¸®ÅÏÇØ¶ó(¼¼¼Ç) */
+  					var ttno = "T8180001";
+  					if(ttno == null && ttno == ""){
+  						alert("¼±»ı´Ô¸¸ ´äº¯ ÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+  						return
+  					}
+  					
+  					alert("2");
 					var insertUrl = "/qnaanswer/qaInsert.ssm";
-					//ê¸€ ì €ì¥ì„ ìœ„í•œ POST ë°©ì‹ì˜ Ajax ì—°ë™ ì²˜ë¦¬
+					//±Û ÀúÀåÀ» À§ÇÑ POST ¹æ½ÄÀÇ Ajax ¿¬µ¿ Ã³¸®
 					$.ajax({
-						url : insertUrl, // ì „ì†¡ URL
+						url : insertUrl, // Àü¼Û URL
 						type : "post",
 						headers : {
 								"Content-Type":"application/json",
@@ -44,13 +60,13 @@
 						}),
 						success : function(resultData){
 							if(resultData == "SUCCESS"){
-								alert("ëŒ“ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤!");
-								dataReset(); // input íƒœê·¸ë“¤ì— ëŒ€í•œ ì´ˆê¸°í™” í•¨ìˆ˜
-								listAll(qbNo); // ë¦¬ìŠ¤íŠ¸ ìš”ì²­ í•¨ìˆ˜
+								alert("´ñ±ÛÀÌ µî·ÏµÇ¾ú½À´Ï´Ù!");
+								dataReset(); // input ÅÂ±×µé¿¡ ´ëÇÑ ÃÊ±âÈ­ ÇÔ¼ö
+								listAll(qbNo); // ¸®½ºÆ® ¿äÃ» ÇÔ¼ö
 							}
 						},
 						error : function(){
-							alert("ì‹œìŠ¤í…œ ì˜¤ë¥˜! ");
+							alert("½Ã½ºÅÛ ¿À·ù! ");
 						}
 						
 						
@@ -60,9 +76,10 @@
   				});
   				
   				
-  				// ìˆ˜ì •ë²„íŠ¼ í´ë¦­ì‹œ ìˆ˜ì •í¼ ì¶œë ¥
-  				$(document).on("click",".update_form",function(){
+  				// ¼öÁ¤¹öÆ° Å¬¸¯½Ã ¼öÁ¤Æû Ãâ·Â
+  				$(document).on("click","#updatebutton",function(){
   					$(".reset_btn").click();
+  					
   					var conText = $(this).parents("li").children().eq(1).html();
   					console.log("conText >>> : "+conText);
   					$(this).parents("li").find("input[type='button']").hide();
@@ -70,15 +87,15 @@
   					var conArea = $(this).parents("li").children().eq(1);
   					
   					conArea.html("");
-  					var data = "<textarea name='content' id='content'>"+conText+"</textarea>";//í…ìŠ¤íŠ¸ë°•ìŠ¤ìƒì„±
-  					data += "<input type='button' class='update_btn' value='ìˆ˜ì •ì™„ë£Œ'>";//ìˆ˜ì •ë²„íŠ¼ìƒì„±
-  					data += "<input type='button' class='reset_btn' value='ìˆ˜ì •ì·¨ì†Œ'>";//ìˆ˜ì •ì·¨ì†Œë²„íŠ¼ìƒì„±
+  					var data = "<textarea name='content' id='content'>"+conText+"</textarea>";//ÅØ½ºÆ®¹Ú½º»ı¼º
+  					data += "<input type='button' class='update_btn' value='¼öÁ¤¿Ï·á'>";//¼öÁ¤¹öÆ°»ı¼º
+  					data += "<input type='button' class='reset_btn' value='¼öÁ¤Ãë¼Ò'>";//¼öÁ¤Ãë¼Ò¹öÆ°»ı¼º
   					conArea.html(data);
   				});
   				
   				
-  				//ì´ˆê¸°í™” ë²„íŠ¼
-  				$(document).on("click",".reset_btn",function(){//ìˆ˜ì •ì·¨ì†Œëˆ„ë¥¼ë•Œ
+  				//ÃÊ±âÈ­ ¹öÆ°
+  				$(document).on("click",".reset_btn",function(){//¼öÁ¤Ãë¼Ò´©¸¦¶§
   					var conText = $(this).parents("li").find("textarea").html();
   					$(this).parents("li").find("input[type=button]").show();
   					var conArea = $(this).parents("li").children().eq(1);
@@ -86,9 +103,9 @@
   				});
   				
   				
-  				//ê¸€ ìˆ˜ì •ì„ ìœ„í•œ Ajax ì—°ë™ ì²˜ë¦¬
-  				$(document).on("click",".update_btn",function(){//ìˆ˜ì •ì™„ë£Œ ëˆ„ë¥¼ë•Œ
-  					alert("ë²„íŠ¼ì´ ëˆŒë¦¬ë‹ˆ ì•ˆëˆŒë¦¬ë‹ˆ");
+  				//±Û ¼öÁ¤À» À§ÇÑ Ajax ¿¬µ¿ Ã³¸®
+  				$(document).on("click",".update_btn",function(){//¼öÁ¤¿Ï·á ´©¸¦¶§
+  					alert("¹öÆ°ÀÌ ´­¸®´Ï ¾È´­¸®´Ï");
   					var qaNo = $(this).parents("li").attr("data-num");
   					var qaContents = $("#content").val();
   					
@@ -104,7 +121,7 @@
 							success : function(result){
 								console.log("result >>> : "+result);
 								if(result == "SUCCESS"){
-									alert("ìˆ˜ì •ì™„ë£Œ!");
+									alert("¼öÁ¤¿Ï·á!");
 									listAll(qbNo);
 								}
 							},
@@ -116,13 +133,13 @@
   				});
   				
   				
-  				// ê¸€ ì‚­ì œë¥¼ ìœ„í•œ Ajax ì—°ë™ ì²˜ë¦¬
-  				$(document).on("click",".delete_btn",function(){
-  					alert("ë²„íŠ¼ì´ ëˆŒë¦¬ë‹ˆ ì•ˆëˆŒë¦¬ë‹ˆ");
+  				// ±Û »èÁ¦¸¦ À§ÇÑ Ajax ¿¬µ¿ Ã³¸®
+  				$(document).on("click","#deletebutton",function(){
+  					
   					var qaNo = $(this).parents("li").attr("data-num");
   					console.log("qaNo >>> : "+qaNo);
   					
-  					if(confirm("ì„ íƒí•˜ì‹  ëŒ“ê¸€ì„ ì‚­ì œ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?")){
+  					if(confirm("¼±ÅÃÇÏ½Å ´ñ±ÛÀ» »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?")){
   						$.ajax({
   							type : "patch",
   							url : "/qnaanswer/delete/"+qaNo+".ssm",
@@ -134,7 +151,7 @@
   							success : function(result){
   								console.log("result >>> : "+result);
   								if(result == "SUCCESS"){
-  									alert("ì‚­ì œì™„ë£Œ!");
+  									alert("»èÁ¦¿Ï·á!");
   									listAll(qbNo);
   								}
   							},
@@ -157,86 +174,97 @@
   					$(data).each(function(){
   						var qaNo = this.qaNo;
   						var ttNo = this.ttNo;
+  						var ttName = this.ttName;
   						var qaContents = this.qaContents;
   						var qaInsertdate = this.qaInsertdate;
   						var qaUpdatedate = this.qaUpdatedate;
-  						addNewItem(qaNo,ttNo,qaContents,qaInsertdate,qaUpdatedate);
+  						addNewItem(qaNo,ttNo,ttName,qaContents,qaInsertdate,qaUpdatedate);
   					});
   				}).fail(function(){
-  					alert("ëŒ“ê¸€ ëª©ë¡ì„ ë¶ˆëŸ¬ì˜¤ëŠ”ë° ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ì ì‹œí›„ì— ë‹¤ì‹œ ì‹œë„ í•´ì£¼ì„¸ìš”!.");
+  					alert("´ñ±Û ¸ñ·ÏÀ» ºÒ·¯¿À´Âµ¥ ½ÇÆĞÇÏ¿´½À´Ï´Ù. Àá½ÃÈÄ¿¡ ´Ù½Ã ½Ãµµ ÇØÁÖ¼¼¿ä!.");
   				});
   			}
   			
-  			// ìƒˆë¡œìš´ ê¸€ì„ í™”ë©´ì— ì¶”ê°€í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
-  			function addNewItem(qaNo,ttNo,qaContents,qaInsertdate,qaUpdatedate){
+  			// »õ·Î¿î ±ÛÀ» È­¸é¿¡ Ãß°¡ÇÏ±â À§ÇÑ ÇÔ¼ö
+  			function addNewItem(qaNo,ttNo,ttName,qaContents,qaInsertdate,qaUpdatedate){
   				
-  				// ìƒˆë¡œìš´ ê¸€ì´ ì¶”ê°€ë  liíƒœê·¸ ê°ì²´
+  				// »õ·Î¿î ±ÛÀÌ Ãß°¡µÉ liÅÂ±× °´Ã¼
   				var new_li = $("<li>");
   				new_li.attr("data-num",qaNo);
   				new_li.addClass("comment_item");
   				
-  				// ì‘ì„±ì ì •ë³´ê°€ ì§€ì •ë  <p>íƒœê·¸
+  				// ÀÛ¼ºÀÚ Á¤º¸°¡ ÁöÁ¤µÉ <p>ÅÂ±×
   				var writer_p = $("<p>");
   				writer_p.addClass("writer");
   				
-  				// ì‘ì„±ìì˜ ì´ë¦„
+  				// ÀÛ¼ºÀÚÀÇ ÀÌ¸§
   				var name_span = $("<span>");
   				name_span.addClass("name");
-  				name_span.html(ttNo+"ë‹˜");
+  				name_span.html(ttName+"¼±»ı´Ô");
   				
-  				//ì‘ì„±ì¼ì‹œ, ìˆ˜ì •ì¼ì‹œ
+  				//ÀÛ¼ºÀÏ½Ã, ¼öÁ¤ÀÏ½Ã
   				var date_span = $("<span>");
-  				date_span.html("/"+qaInsertdate+" "+"/"+qaUpdatedate);
+  				date_span.html("   "+qaInsertdate+" ");
   				
-  				// ìˆ˜ì •í•˜ê¸° ë²„íŠ¼
+  				// ¼öÁ¤ÇÏ±â ¹öÆ°
   				var up_input = $("<input>");
-  				up_input.attr({"type":"button","value":"ìˆ˜ì •í•˜ê¸°"});
-  				up_input.addClass("update_form");
+  				up_input.attr({"type":"button","id":"updatebutton","class":"buttons","value":"¼öÁ¤ÇÏ±â"});
   				
-  				//ì‚­ì œí•˜ê¸° ë²„íŠ¼
+  				//»èÁ¦ÇÏ±â ¹öÆ°
   				var del_input = $("<input>");
-  				del_input.attr({"type":"button","value":"ì‚­ì œí•˜ê¸°"});
-  				del_input.addClass("delete_btn");
+  				del_input.attr({"type":"button","id":"deletebutton","class":"buttons","value":"»èÁ¦ÇÏ±â"});
   				
 
-  				//ë‚´ìš©
+  				//³»¿ë
   				var content_p = $("<p>");
   				content_p.addClass("con");
   				content_p.html(qaContents);
   				
-  				//ì¡°ë¦½í•˜ê¸°
+  				//Á¶¸³ÇÏ±â
   				writer_p.append(name_span).append(date_span).append(up_input).append(del_input);
   				new_li.append(writer_p).append(content_p);
   				$("#comment_list").append(new_li);
+  				
+  				ss(ttNo);
   			}
   			
-  			// INPUT íƒœê·¸ë“¤ì— ëŒ€í•œ ì´ˆê¸°í™” í•¨ìˆ˜
+  			// INPUT ÅÂ±×µé¿¡ ´ëÇÑ ÃÊ±âÈ­ ÇÔ¼ö
   			function dataReset(){
-  				$("#ttNo").val("");
   				$("#qaContents").val("");
   				
   			}
   			
+  			//¼¼¼ÇÀÇ·Î °ª³Ö±â
+  		    function ss(ttNo){
+  		    	var myttno="T8200002";
+  	  		    if(myttno!=ttNo){
+  	  		    	$(".buttons").hide();
+  	  		    }
+  		}
+  			
   		</script>
+  		<style type="text/css">
+  			li {
+  				overflow: hidden;
+  			}
+  		</style>
 	</head>
 	<body>
 		<div id="qnaanswerContainer" >
 			<h1></h1>
 			<div id="qnawrite">
 				<form id="qnaform" name="qnaform">
-					<div>
-						<label for="ttNo">ì‘ì„±ì</label>
-						<input type="text" name="ttNo" id="ttNo">
-						<input type="button" id="qaInsert" value="ì €ì¥í•˜ê¸°">
-					</div>
-					<div>
-						<label for="qaContents">ë‚´ìš©</label>
+					<div id="replywritediv">
+						<!--  ¼¼¼Ç°ª º§·ù ³Ö±â -->
+						<input type="hidden" name="ttNo" id="ttNo" value="T8200002">
+						<label for="qaContents">³»¿ë</label>
+						<input type="button" id="qaInsert" value="ÀúÀåÇÏ±â">
 						<textarea name="qaContents" id="qaContents"></textarea>
 					</div>
 				</form>
 			</div>
 			<ul id="comment_list">
-				<!-- ì—¬ê¸°ì— ë™ì  ìƒì„± ìš”ì†Œê°€ ë“¤ì–´ê°€ê²Œ ë©ë‹ˆë‹¹. -->
+				<!-- ¿©±â¿¡ µ¿Àû »ı¼º ¿ä¼Ò°¡ µé¾î°¡°Ô µË´Ï´ç. -->
 			</ul>
 		</div>
 	</body>

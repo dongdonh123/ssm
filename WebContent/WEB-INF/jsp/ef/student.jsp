@@ -1,146 +1,178 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import ="java.util.List" %>
 <%@ page import ="ssm.mi.vo.SmemberVO" %>
 <%@ page import ="ssm.cd.vo.CareerdesignVO" %>
 <%@ page import ="ssm.br.vo.NonprogramVO" %>
 <%@ page import ="ssm.cg.vo.OnlineapplicationVO" %>
 
-<!--  cdlist brlist cglist ë°›ê¸° -->
+<!--  cdlist brlist cglist ¹Þ±â -->
 <% List<CareerdesignVO> cdlist =(List<CareerdesignVO>)request.getAttribute("cdlist");%>
 <% List<NonprogramVO> brlist =(List<NonprogramVO>)request.getAttribute("brlist");%>
 <% List<OnlineapplicationVO> cglist =(List<OnlineapplicationVO>)request.getAttribute("cglist");%>
 
-<!-- pageNO ë°›ì•„ì˜¨ê±° ë°ì´í„° ì„¤ì • -->
+<!-- pageNO ¹Þ¾Æ¿Â°Å µ¥ÀÌÅÍ ¼³Á¤ -->
 <% SmemberVO svo_ =(SmemberVO)request.getAttribute("pageNo");%>
+<% String brpageNo =svo_.getBrpageNo();%>
+<% String cgpageNo =svo_.getCgpageNo();%>
+<% String cdyearNo =svo_.getCdyearNo();%>
+<% String bryearNo =svo_.getBryearNo();%>
+<% String cgyearNo =svo_.getCgyearNo();%>
 
-<!--  mylist ë°›ì•„ì˜¨ê±° ë°ì´í„° ì„¤ì • -->
+<!--  mylist ¹Þ¾Æ¿Â°Å µ¥ÀÌÅÍ ¼³Á¤ -->
 <% SmemberVO svo =(SmemberVO)request.getAttribute("mylist");%>
 <% String grade = svo.getSsGrade();
 	String fmno=""; String jrno=""; String srno="";
-   if(grade.equals("FM")){ grade="1í•™ë…„"; fmno="20";}
-   else if(grade.equals("JR")){ grade="2í•™ë…„"; fmno="19"; jrno="20";}
-   else if(grade.equals("SR")){ grade="3í•™ë…„"; fmno="18"; jrno="19"; srno="20";}%>
+   if(grade.equals("FM")){ grade="1ÇÐ³â"; fmno="20";}
+   else if(grade.equals("JR")){ grade="2ÇÐ³â"; fmno="19"; jrno="20";}
+   else if(grade.equals("SR")){ grade="3ÇÐ³â"; fmno="18"; jrno="19"; srno="20";}%>
    
 
-<!--  brlist ë°›ì•„ì˜¨ê±° íŽ˜ì´ì§• ë°ì´í„° ì„¤ì • -->   
+<!--  brlist ¹Þ¾Æ¿Â°Å ÆäÀÌÂ¡ µ¥ÀÌÅÍ ¼³Á¤ -->   
 <%  int brpageCount = 0;
 	if(brlist.size() >0){
 		NonprogramVO nvo_ = brlist.get(0);
 		double totalCount = (double)Integer.parseInt(nvo_.getTotalCount()); 
 		int pagelistSize = (int)request.getAttribute("listSize");
 		double dval = (double)pagelistSize;
-		brpageCount = (int)Math.ceil(totalCount/dval); //pageCount ë³€ìˆ˜ ì‚¬ìš©
+		brpageCount = (int)Math.ceil(totalCount/dval); //pageCount º¯¼ö »ç¿ë
 	}
 %>   
    
-<!--  cglist ë°›ì•„ì˜¨ê±° íŽ˜ì´ì§• ë°ì´í„° ì„¤ì • -->   
+<!--  cglist ¹Þ¾Æ¿Â°Å ÆäÀÌÂ¡ µ¥ÀÌÅÍ ¼³Á¤ -->   
 <%  int cgpageCount = 0;
 	if(cglist.size() >0){
 		OnlineapplicationVO ovo_ = cglist.get(0);
 		double totalCount = (double)Integer.parseInt(ovo_.getTotalCount()); 
 		int pagelistSize = (int)request.getAttribute("listSize");
 		double dval = (double)pagelistSize;
-		cgpageCount = (int)Math.ceil(totalCount/dval); //pageCount ë³€ìˆ˜ ì‚¬ìš©
+		cgpageCount = (int)Math.ceil(totalCount/dval); //pageCount º¯¼ö »ç¿ë
 	}
 %>    
    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
+		//Áø·Î¼³°è °á°ú º¸±â ¹öÆ° ´­·¶À»¶§
 		$(".cdlinkbutton").click(function(){
 			var url = $(this).parents("tr").attr("data-num");
 			window.open(url);
-			
 		});
 		
+		//ºñ±³°ú ÇÁ·Î±×·¥ ±ÛÁ¦¸ñ ´­·¶À»¶§
 		$(".brlinkbutton").click(function(){
 			var npNo = $(this).parents("tr").attr("data-num");
 			$("#npNo").val(npNo);
-			$("#linkForm").attr('action','/ì–´ë…¸í…Œì´ì…˜/ì–´ë…¸í…Œì´ì…˜.ssm').submit();
+			$("#linkForm").attr('action','/¾î³ëÅ×ÀÌ¼Ç/¾î³ëÅ×ÀÌ¼Ç.ssm').submit();
 			
 		});
 		
+		//»ó´ã°á°ú °á°ú¹öÆ° ´­·¶À»¶§ (¿Â¶óÀÎ°Ô½ÃÆÇ±Û·Î°¡´Â°Å)
 		$(".cgoalinkbutton").click(function(){
 			var oaNo = $(this).attr("data-num");
 			$("#oaNo").val(oaNo);
 			window.open("","pop1","width=600,height=450");
-			$("#linkForm").attr('action','/ì–´ë…¸í…Œì´ì…˜/ì–´ë…¸í…Œì´ì…˜.ssm');
+			$("#linkForm").attr('action','/¾î³ëÅ×ÀÌ¼Ç/¾î³ëÅ×ÀÌ¼Ç.ssm');
 			$("#linkForm").attr('target','pop1');
 			$("#linkForm").submit();
 		});
 		
+		//»ó´ã°á°ú ¹öÆ°´­·¶À»¶§  (¹æ¹®»ó´ã°Ô½ÃÆÇ½Å ±Û·Î°¡´Â°Å)
 		$(".cgvrlinkbutton").click(function(){
 			var vrNo = $(this).attr("data-num");
 			$("#vrNo").val(vrNo);
 			window.open("","pop2","width=600,height=450");
-			$("#linkForm").attr('action','/ì–´ë…¸í…Œì´ì…˜/ì–´ë…¸í…Œì´ì…˜.ssm');
+			$("#linkForm").attr('action','/¾î³ëÅ×ÀÌ¼Ç/¾î³ëÅ×ÀÌ¼Ç.ssm');
 			$("#linkForm").attr('target','pop2');
 			$("#linkForm").submit();
 		});
 		
+		//Áø·Î¼³°è ÇÐ³â¹öÆ°À¸·Î °Ë»ö
 		$(".cdgradebutton").click(function(){
-			var yearNo = $(this).attr("data-num");
-			var ssNo = $("#ssNo").val();
-			cdgrade(yearNo,ssNo);
+			var cdyearNo = $(this).attr("data-num");
+			$("#cdyearNo").val(cdyearNo);
+			$("#pageNoForm").attr('action','/eportfolio/student.ssm');
+			$("#pageNoForm").submit();
 		});
 		
+		//ºñ±³°úÇÁ·Î±×·¥ ÇÐ³â¹öÆ°À¸·Î °Ë»ö
 		$(".brgradebutton").click(function(){
-			var yearNo = $(this).attr("data-num");
-			var ssNo = $("#ssNo").val();
-			brgrade(yearNo,ssNo);
+			var bryearNo = $(this).attr("data-num");
+			$("#bryearNo").val(bryearNo);
+			$("#pageNoForm").attr('action','/eportfolio/student.ssm');
+			$("#pageNoForm").submit();
 		});
 		
+		//»ó´ã ÇÐ³â¹öÆ°À¸·Î °Ë»ö
 		$(".cggradebutton").click(function(){
-			var yearNo = $(this).attr("data-num");
-			var ssNo = $("#ssNo").val();
-			cggrade(yearNo,ssNo);
+			var cgyearNo = $(this).attr("data-num");
+			$("#cgyearNo").val(cgyearNo);
+			$("#pageNoForm").attr('action','/eportfolio/student.ssm');
+			$("#pageNoForm").submit();
 		});
 		
+		//ºñ±³°ú ÆäÀÌÂ¡ ¿ÞÂÊ ¹öÆ°
 		$("#brpageleftbutton").click(function(){
-			if($("#brpageNo").val() == 1){
-				alert("ì²«ë²ˆì§¸íŽ˜ì´ì§€ìž…ë‹ˆë‹¤!");
+			var brpageNo =$("#brpageNo").val();
+			if(brpageNo == 1){
+				alert("Ã¹¹øÂ°ÆäÀÌÁöÀÔ´Ï´Ù!");
 			}else{
+				brpageNo  = brpageNo-1;
+				$("#brpageNo").val(brpageNo);
 				$("#pageNoForm").attr('action','/eportfolio/student.ssm').submit();
 			}
 		});
 		
+		//ºñ±³°ú ÆäÀÌÂ¡ ¿À¸¥ÂÊ ¹öÆ°
 		$("#brpagerightbutton").click(function(){
-			if($("#brpageNo") >= <%=brpageCount%>){
-				alert("ë§ˆì§€ë§‰íŽ˜ì´ì§€ìž…ë‹ˆë‹¤");
+			var brpageNo =$("#brpageNo").val();
+			if(brpageNo >= <%=brpageCount%>){
+				alert("¸¶Áö¸·ÆäÀÌÁöÀÔ´Ï´Ù");
 			}else{
+				brpageNo  = Number(brpageNo)+1;
+				$("#brpageNo").val(brpageNo);
 				$("#pageNoForm").attr('action','/eportfolio/student.ssm').submit();
 			}
 		});
 		
+		//»ï´ã ÆäÀÌÂ¡ ¿ÞÂÊ ¹öÆ°
 		$("#cgpageleftbutton").click(function(){
-			if($("#cgpageNo").val() == 1){
-				alert("ì²«ë²ˆì§¸íŽ˜ì´ì§€ìž…ë‹ˆë‹¤!");
+			var cgpageNo =$("#cgpageNo").val();
+			if(cgpageNo == 1){
+				alert("Ã¹¹øÂ°ÆäÀÌÁöÀÔ´Ï´Ù!");
 			}else{
+				cgpageNo  = cgpageNo-1;
+				$("#cgpageNo").val(cgpageNo);
 				$("#pageNoForm").attr('action','/eportfolio/student.ssm').submit();
 			}
 		});
 		
+		//»ó´ã ÆäÀÌÂ¡ ¿À¸¥ÂÊ ¹öÆ°
 		$("#cgpagerightbutton").click(function(){
-			if($("#cgpageNo") >= <%=cgpageCount%>){
-				alert("ë§ˆì§€ë§‰íŽ˜ì´ì§€ìž…ë‹ˆë‹¤");
+			var cgpageNo =$("#cgpageNo").val();
+			if(cgpageNo >= <%=cgpageCount%>){
+				alert("¸¶Áö¸·ÆäÀÌÁöÀÔ´Ï´Ù");
 			}else{
+				cgpageNo  = Number(cgpageNo)+1;
+				$("#cgpageNo").val(cgpageNo);
 				$("#pageNoForm").attr('action','/eportfolio/student.ssm').submit();
 			}
 		});
 		
+		//ºñ±³°úÇÁ·Î±×·¥ ÆäÀÌÁö¹øÈ£ ¹öÆ° 
 		$(".brpageNobutton").click(function(){
 			var brpageNo = $(this).attr("data-num");
 			$("#brpageNo").val(brpageNo);
 			$("#pageNoForm").attr('action','/eportfolio/student.ssm').submit();
 		});
 		
+		//»ó´ã ÆäÀÌÁö¹øÈ£ ¹öÆ°
 		$(".cgpageNobutton").click(function(){
 			var cgpageNo = $(this).attr("data-num");
 			$("#cgpageNo").val(cgpageNo);
@@ -150,56 +182,6 @@
 		
 		
 	});
-	
-	function cdgrade(yearNo,ssNo){
-		$.ajax({
-			url:"/eportfolio/cdgradesearch.ssm",
-			type:"POST",
-			data:{'yearNo': yearNo,
-				  'ssNo'  : ssNo	},
-			error:function(){
-				alert('ì‹œìŠ¤í…œ ì˜¤ë¥˜ìž…ë‹ˆë‹¤ ê´€ë¦¬ìžì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”');
-			},
-			success:function(resultData){
-				alert("resultData>>>: "+resultData);
-			}
-		
-		});	
-	}
-	
-	function brgrade(yearNo,ssNo){
-		$.ajax({
-			url:"/eportfolio/brgradesearch.ssm",
-			type:"POST",
-			data:{'yearNo': yearNo,
-				  'ssNo'  : ssNo	},
-			error:function(){
-				alert('ì‹œìŠ¤í…œ ì˜¤ë¥˜ìž…ë‹ˆë‹¤ ê´€ë¦¬ìžì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”');
-			},
-			success:function(resultData){
-				alert("resultData>>>: "+resultData);
-				var a = resultData;
-			}
-		
-		});	
-	}
-	
-	function cggrade(yearNo,ssNo){
-		$.ajax({
-			url:"/eportfolio/cggradesearch.ssm",
-			type:"POST",
-			data:{'yearNo': yearNo,
-				  'ssNo'  : ssNo	},
-			error:function(){
-				alert('ì‹œìŠ¤í…œ ì˜¤ë¥˜ìž…ë‹ˆë‹¤ ê´€ë¦¬ìžì—ê²Œ ë¬¸ì˜í•˜ì„¸ìš”');
-			},
-			success:function(resultData){
-				alert("resultData>>>: "+resultData);
-				var a = resultData;
-			}
-		
-		});	
-	}
 	
 	</script>
 	
@@ -244,19 +226,36 @@
 
 </head>
 <body>
-	<h1>eí¬íŠ¸í´ë¦¬ì˜¤ í•™ìƒíŽ˜ì´ì§€</h1>
+	<h1>eÆ÷Æ®Æú¸®¿À ÇÐ»ýÆäÀÌÁö</h1>
 	<p><%=grade%> <%=svo.getSsName() %></p>
 	<div id="aa" >
-		<h2>ì§„ë¡œì„¤ê³„ê³¼ì • </h2>
-		<input Type="button" class="cdgradebutton" value="1í•™ë…„" data-num="<%=fmno%>">
-		<input Type="button" class="cdgradebutton" value="2í•™ë…„" data-num="<%=jrno%>">
-		<input Type="button" class="cdgradebutton" value="3í•™ë…„" data-num="<%=srno%>">
+		<h2>Áø·Î¼³°è°úÁ¤ </h2>
+		<%
+		if(fmno.equals("20")){
+		%>	
+			<input Type="button" class="cdgradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<%	
+		}
+		if(fmno.equals("19")){
+		%>
+		<input Type="button" class="cdgradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<input Type="button" class="cdgradebutton" value="2ÇÐ³â" data-num="<%=jrno%>">
+		<%
+		}
+		if(fmno.equals("18")){
+		%>
+		<input Type="button" class="cdgradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<input Type="button" class="cdgradebutton" value="2ÇÐ³â" data-num="<%=jrno%>">
+		<input Type="button" class="cdgradebutton" value="3ÇÐ³â" data-num="<%=srno%>">
+		<%
+		}
+		%>
 		<table>
 			<thead>
 				<tr>
-					<th>ê²€ì‚¬ ìœ í˜•</th>
-					<th>ê²€ì‚¬ë‚ ì§œ</th>
-					<th>ê²€ì‚¬ê²°ê³¼</th>
+					<th>°Ë»ç À¯Çü</th>
+					<th>°Ë»ç³¯Â¥</th>
+					<th>°Ë»ç°á°ú</th>
 				</tr>
 			</thead>
 			<tbody>	
@@ -264,12 +263,12 @@
 			%>
 			<tr>
 				<td></td>
-				<td>ë°ì´í„°ê°€ì—†ìŠµë‹ˆë‹¤.</td>
+				<td>µ¥ÀÌÅÍ°¡¾ø½À´Ï´Ù.</td>
 				<td></td>
 			</tr>
 			<%
 			}else{
-				String ja="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"; String ji= "ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"; String ih="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"; String va ="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"; String cm ="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ";
+				String ja="°Ë»ç ¹Ì½Ç½Ã"; String ji= "°Ë»ç ¹Ì½Ç½Ã"; String ih="°Ë»ç ¹Ì½Ç½Ã"; String va ="°Ë»ç ¹Ì½Ç½Ã"; String cm ="°Ë»ç ¹Ì½Ç½Ã";
 				String jaurl="";    String jiurl="";      String ihurl="";    String vaurl="";      String cmurl="";
 				for(int i=0; i<cdlist.size(); i++){
 					CareerdesignVO cvo = cdlist.get(i);
@@ -284,29 +283,29 @@
 				
 			%>
 			<tr data-num="<%=jaurl %>">
-				<td>ì§ì—…ì ì„±ê²€ì‚¬</td>
+				<td>Á÷¾÷Àû¼º°Ë»ç</td>
 				<td><%=ja%></td>
-				<td><%if(ja !="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"){%><input Type="button" class="cdlinkbutton" value="ê²°ê³¼ë³´ê¸°" /><%} %></td>	
+				<td><%if(ja !="°Ë»ç ¹Ì½Ç½Ã"){%><input Type="button" class="cdlinkbutton" value="°á°úº¸±â" /><%} %></td>	
 			</tr>	
 			<tr data-num="<%=jiurl %>">
-				<td>ì§ì—…í¥ë¯¸ê²€ì‚¬(K)</td>
+				<td>Á÷¾÷Èï¹Ì°Ë»ç(K)</td>
 				<td><%=ji%></td>
-				<td><%if(ji !="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"){%><input Type="button" class="cdlinkbutton"  value="ê²°ê³¼ë³´ê¸°" /><%} %></td>	
+				<td><%if(ji !="°Ë»ç ¹Ì½Ç½Ã"){%><input Type="button" class="cdlinkbutton"  value="°á°úº¸±â" /><%} %></td>	
 			</tr>
 			<tr data-num="<%=ihurl %>">
-				<td>ì§ì—…í¥ë¯¸ê²€ì‚¬(H)</td>
+				<td>Á÷¾÷Èï¹Ì°Ë»ç(H)</td>
 				<td><%=ih%></td>
-				<td><%if(ih !="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"){%><input Type="button" class="cdlinkbutton"  value="ê²°ê³¼ë³´ê¸°" /><%} %></td>	
+				<td><%if(ih !="°Ë»ç ¹Ì½Ç½Ã"){%><input Type="button" class="cdlinkbutton"  value="°á°úº¸±â" /><%} %></td>	
 			</tr>
 			<tr data-num="<%=vaurl %>">
-				<td>ì§ì—…ê°€ì¹˜ê´€ê²€ì‚¬</td>
+				<td>Á÷¾÷°¡Ä¡°ü°Ë»ç</td>
 				<td><%=va%></td>
-				<td><%if(va !="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"){%><input Type="button" class="cdlinkbutton"  value="ê²°ê³¼ë³´ê¸°" /><%} %></td>	
+				<td><%if(va !="°Ë»ç ¹Ì½Ç½Ã"){%><input Type="button" class="cdlinkbutton"  value="°á°úº¸±â" /><%} %></td>	
 			</tr>
 			<tr data-num="<%=cmurl %>">
-				<td>ì§ì—…ì„±ìˆ™ë„ê²€ì‚¬</td>
+				<td>Á÷¾÷¼º¼÷µµ°Ë»ç</td>
 				<td><%=cm%></td>
-				<td><%if(cm !="ê²€ì‚¬ ë¯¸ì‹¤ì‹œ"){%><input Type="button" class="cdlinkbutton"  value="ê²°ê³¼ë³´ê¸°" /><%} %></td>	
+				<td><%if(cm !="°Ë»ç ¹Ì½Ç½Ã"){%><input Type="button" class="cdlinkbutton"  value="°á°úº¸±â" /><%} %></td>	
 			</tr>
 			</tbody>	
 			<%
@@ -315,17 +314,34 @@
 		</table>
 	</div>
 	<div id="bb">
-		<h2>ë¹„êµê³¼ í™œë™í˜„í™© (1í•™ë…„)</h2>
-		<input Type="button" class="brgradebutton" value="1í•™ë…„" data-num="<%=fmno%>">
-		<input Type="button" class="brgradebutton" value="2í•™ë…„" data-num="<%=jrno%>">
-		<input Type="button" class="brgradebutton" value="3í•™ë…„" data-num="<%=srno%>">
+		<h2>ºñ±³°ú È°µ¿ÇöÈ²</h2>
+		<%
+		if(fmno.equals("20")){
+		%>	
+			<input Type="button" class="brgradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<%	
+		}
+		if(fmno.equals("19")){
+		%>
+		<input Type="button" class="brgradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<input Type="button" class="brgradebutton" value="2ÇÐ³â" data-num="<%=jrno%>">
+		<%
+		}
+		if(fmno.equals("18")){
+		%>
+		<input Type="button" class="brgradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<input Type="button" class="brgradebutton" value="2ÇÐ³â" data-num="<%=jrno%>">
+		<input Type="button" class="brgradebutton" value="3ÇÐ³â" data-num="<%=srno%>">
+		<%
+		}
+		%>
 			<table>
 			<thead>
 				<tr>
 					<th>no</th>
 					<th>Title</th>
 					<th>Date</th>
-					<th>ìš´ì˜ê¸°ê´€</th>
+					<th>¿î¿µ±â°ü</th>
 				</tr>
 			</thead>
 			<tbody>	
@@ -333,7 +349,7 @@
 			%>
 			<tr>
 				<td></td>
-				<td>ë°ì´í„°ê°€ì—†ìŠµë‹ˆë‹¤.</td>
+				<td>µ¥ÀÌÅÍ°¡¾ø½À´Ï´Ù.</td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -357,7 +373,7 @@
 		</table>
 		<br>
 		<div align="center">
-		<input Type="button" id="brpageleftbutton" value="â—€">
+		<input Type="button" id="brpageleftbutton" value="¢¸">
 		<%
 		for(int i=1 ; i<=brpageCount;i++){
 		%>
@@ -365,23 +381,40 @@
 		<%
 		}
 		%>
-		<input Type="button" id="brpagerightbutton" value="â–¶">
+		<input Type="button" id="brpagerightbutton" value="¢º">
 		</div> 
 	</div>
 	<div id="cc">
-		<h2>ìƒë‹´ê²°ê³¼ (1í•™ë…„)</h2>
-		<input Type="button" class="cggradebutton" value="1í•™ë…„" data-num="<%=fmno%>">
-		<input Type="button" class="cggradebutton" value="2í•™ë…„" data-num="<%=jrno%>">
-		<input Type="button" class="cggradebutton" value="3í•™ë…„" data-num="<%=srno%>">
+		<h2>»ó´ã°á°ú</h2>
+		<%
+		if(fmno.equals("20")){
+		%>	
+			<input Type="button" class="cggradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<%	
+		}
+		if(fmno.equals("19")){
+		%>
+		<input Type="button" class="cggradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<input Type="button" class="cggradebutton" value="2ÇÐ³â" data-num="<%=jrno%>">
+		<%
+		}
+		if(fmno.equals("18")){
+		%>
+		<input Type="button" class="cggradebutton" value="1ÇÐ³â" data-num="<%=fmno%>">
+		<input Type="button" class="cggradebutton" value="2ÇÐ³â" data-num="<%=jrno%>">
+		<input Type="button" class="cggradebutton" value="3ÇÐ³â" data-num="<%=srno%>">
+		<%
+		}
+		%>
 		<table>
 			<thead>
 				<tr>
 					<th>no</th>
 					<th>Date</th>
-					<th>ìƒë‹´ì‚¬</th>
-					<th>ìƒë‹´ë¶„ë¥˜</th>
-					<th>ìƒë‹´ìœ í˜•</th>
-					<th>ìƒë‹´ê²°ê³¼</th>
+					<th>»ó´ã»ç</th>
+					<th>»ó´ãºÐ·ù</th>
+					<th>»ó´ãÀ¯Çü</th>
+					<th>»ó´ã°á°ú</th>
 				</tr>
 			</thead>
 			<tbody>	
@@ -389,7 +422,7 @@
 			%>
 			<tr>
 				<td></td>
-				<td>ë°ì´í„°ê°€ì—†ìŠµë‹ˆë‹¤.</td>
+				<td>µ¥ÀÌÅÍ°¡¾ø½À´Ï´Ù.</td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -402,12 +435,12 @@
 					String no = "00"+ ovo.getRowNo();
 					no = no.substring(no.length()-2, no.length());
 					String oaNo = ovo.getOaNo();
-					String oa= "ì˜¨ë¼ì¸ìƒë‹´";
-					String vr= "ë°©ë¬¸ìƒë‹´";
+					String oa= "¿Â¶óÀÎ»ó´ã";
+					String vr= "¹æ¹®»ó´ã";
 					String oafield = ovo.getOaField();
-					String cac= "ì§„ë¡œìƒë‹´";
-					String lic= "ìƒí™œìƒë‹´";
-					String lec= "í•™ìŠµìƒë‹´";
+					String cac= "Áø·Î»ó´ã";
+					String lic= "»ýÈ°»ó´ã";
+					String lec= "ÇÐ½À»ó´ã";
 			%>
 			<tr>
 				<td><%=no%></td>		
@@ -426,9 +459,9 @@
 						%> <%=vr%></td><%	
 				}%>
 				<td><%if(oaNo.substring(0,2).equals("OA")){
-						%> <input Type="button" class="cgoalinkbutton" value="ê²°ê³¼ë³´ê¸°" data-num="<%=oaNo%>"></td><%
+						%> <input Type="button" class="cgoalinkbutton" value="°á°úº¸±â" data-num="<%=oaNo%>"></td><%
 				}%><%else if(oaNo.substring(0,2).equals("VR")){
-						%> <input Type="button" class="cgvrlinkbutton" value="ê²°ê³¼ë³´ê¸°" data-num="<%=oaNo%>"></td><%	
+						%> <input Type="button" class="cgvrlinkbutton" value="°á°úº¸±â" data-num="<%=oaNo%>"></td><%	
 				}%>		
 			</tr>
 			<% 			
@@ -438,7 +471,7 @@
 		</table>
 		<br>
 		<div align="center">
-		<input Type="button" id="cgpageleftbutton" value="â—€">
+		<input Type="button" id="cgpageleftbutton" value="¢¸">
 		<%
 		for(int i=1 ; i<=cgpageCount;i++){
 		%>
@@ -446,23 +479,27 @@
 		<%
 		}
 		%>
-		<input Type="button" id="cgpagerightbutton" value="â–¶">
+		<input Type="button" id="cgpagerightbutton" value="¢º">
 		</div> 
 	</div>
 	<div id="dd">
-		<h2>ê°€ì¹˜ê´€ì„¤ì •</h2>
-		<input Type="button" id="vsupdatebutton" name="vsupdatebutton" value="ìˆ˜ì •í•˜ê¸°">
+		<h2>°¡Ä¡°ü¼³Á¤</h2>
+		<input Type="button" id="vsupdatebutton" name="vsupdatebutton" value="¼öÁ¤ÇÏ±â">
 	</div>
 	<form id="linkForm" name="linkForm">
 		<input Type="hidden" id="ssNo" name="ssNo" value="<%=svo.getSsNo()%>" />
 		<input Type="hidden" id="npNo" name="npNo" />
 		<input Type="hidden" id="oaNo" name="oaNo" />
 		<input Type="hidden" id="vrNo" name="vrNo" />
+		<input Type="hidden" id="vrNo" name="vrNo" />
 	</form>
 	<form id="pageNoForm">
 		<input Type="hidden" id="ssNo" name="ssNo" value="<%=svo.getSsNo()%>" />
 		<input type="hidden" id="brpageNo" name="brpageNo" value="<%=svo_.getBrpageNo()%>">
 		<input type="hidden" id="cgpageNo" name="cgpageNo" value="<%=svo_.getCgpageNo()%>">
+		<input Type="hidden" id="cdyearNo" name="cdyearNo" value="<%=svo_.getCdyearNo()%>"/>
+		<input Type="hidden" id="bryearNo" name="bryearNo" value="<%=svo_.getBryearNo()%>"/>
+		<input Type="hidden" id="cgyearNo" name="cgyearNo" value="<%=svo_.getCgyearNo()%>"/>
 	</form>
 </body>
 </html>

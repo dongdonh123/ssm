@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import="ssm.cm.vo.QnABoardVO" %>    
 <%@ page import="java.util.List" %>    
 <%
-	request.setCharacterEncoding("UTF-8");	
+	request.setCharacterEncoding("EUC-KR");	
 %>
 <%	
 	QnABoardVO searchdata =(QnABoardVO)request.getAttribute("Searchdata");
@@ -15,36 +15,33 @@
 	double totalCount = (double)Integer.parseInt(qvo_.getTotalCount()); 
 	int pagelistSize = (int)request.getAttribute("listSize");
 	double dval = (double)pagelistSize;
-	pageCount = (int)Math.ceil(totalCount/dval); //pageCount ë³€ìˆ˜ ì‚¬ìš©
-	System.out.println("pageCount>>>:"+ pageCount); //1
-	System.out.println("totalCount>>>:"+ totalCount); //10
-	System.out.println("pagelistSize>>>:"+ pagelistSize);
+	pageCount = (int)Math.ceil(totalCount/dval); //pageCount º¯¼ö »ç¿ë
 	}
 	
 %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		
-		/*ê²€ìƒ‰ ëŒ€ìƒì´ ë³€ê²½ë  ë•Œë§ˆë‹¤ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+	
+		/*°Ë»ö ´ë»óÀÌ º¯°æµÉ ¶§¸¶´Ù Ã³¸® ÀÌº¥Æ®*/
 		$("#search").change(function(){
 			if($("#search").val()=="all"){
-				$("#keyword").val("ì „ì²´ ë°ì´í„° ì¡°íšŒí•©ë‹ˆë‹¤.");
+				$("#keyword").val("ÀüÃ¼ µ¥ÀÌÅÍ Á¶È¸ÇÕ´Ï´Ù.");
 			}else if($("#search").val()!="all"){
 				$("#keyword").val("");
 				$("#keyword").focus();
 			}
 		});
 		
-		/*ê²€ìƒ‰ ë²„íŠ¼ í´ë¦­ ì‹œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+		/*°Ë»ö ¹öÆ° Å¬¸¯ ½Ã Ã³¸® ÀÌº¥Æ®*/
 		$("#searchBut").click(function(){
 			
-			goPage(1);
+			goPage();
 		});
 		
 		$("#insertbutton").click(function(){
@@ -62,15 +59,26 @@
 			$("#f_search").submit();
 		}
 		
-		/*ì œëª© í´ë¦­ì‹œ ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ ì²˜ë¦¬ ì´ë²¤íŠ¸*/
+		/*Á¦¸ñ Å¬¸¯½Ã »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ Ã³¸® ÀÌº¥Æ®*/
 		$(".qbDetail").click(function(){
 			var qbNo = $(this).parents("tr").attr("data-num");
 			
 			if($(this).attr("id") == 'Y'){
-				alert("Y");
-				$("#qbNo").val(qbNo);
-				$("#qbdetailForm").attr('action',"/qnaboard/qbPwcheckform.ssm")
-				.submit();
+				
+				//¼¼¼ÇÀ¸·Î ttno ³Ö±â
+				var ttNo = null;
+				alert("½ÃÀÛ¤»");
+				if(ttNo != null){
+					alert("¼±»ı´Ô ¹øÈ£°¡ ÀÖ´Ù (ºñ¹Ğ±Ûµµ ºñ¹Ğ¹øÈ£¾øÀÌ Á¶È¸)");
+					$("#qbNo").val(qbNo);
+					$("#qbdetailForm").attr('action',"/qnaboard/qbDetail.ssm")
+					.submit();
+				}else{
+					alert("¼±»ı´Ô ¹øÈ£°¡ ¾ø´Ù (ºñ¹Ğ¹øÈ£ ÀÔ·ÂÆäÀÌÁö)");
+					$("#qbNo").val(qbNo);
+					$("#qbdetailForm").attr('action',"/qnaboard/qbPwcheckform.ssm")
+					.submit();
+				}
 			}else{
 				alert("N");
 				$("#qbNo").val(qbNo);
@@ -87,52 +95,57 @@
 			.submit();
 		});
 		
-		if("<%=searchdata.getKeyword()%>" != ""){
-			alert("ì´í”„ì— ë“¤ì–´ì˜¨ë‹¤");
-			$("#keyword").val("<%=searchdata.getKeyword()%>");
-			$("#search").val("<%=searchdata.getSearch()%>");
-			
+		var keyword2 = "<%=searchdata.getKeyword()%>";
+		var search2 = "<%=searchdata.getSearch()%>";
+		if(keyword2 != "null" && keyword2 != ""){ // Å°¿öµå µ¥ÀÌÅÍ°¡ ÀÖÀ»¶§ ½ÇÇà
+			$("#keyword").val(keyword2);
+			$("#search").val(search2);
 		}
 		
-	});
-	
+		/* ¼±»ı¹øÈ£°¡ÀÖÀ¸¸é ±Û¾²±â¹öÆ°À» ¼û°Ü¶ó (¼¼¼Ç)
+		var ttno = "T7180001"; */
+		if(ttno != "null" && ttno != ""){
+			$("#qbinsertbutton").hide();
+		}
+	});	
 	</script>
+	
 </head>
 <body>
 	<div id="boardContainer">
-		<h1>Q&A ê²Œì‹œíŒ</h1>
+		<h1>Q&A °Ô½ÃÆÇ</h1>
 		
-		<%-- ======================ê²€ìƒ‰ê¸°ëŠ¥ ì‹œì‘============================ --%>
+		<%-- ======================°Ë»ö±â´É ½ÃÀÛ============================ --%>
 		
 		<div id="boardSearch">
 			<form id="f_search" name="f_search">
-				<table summary="ê²€ìƒ‰">
+				<table summary="°Ë»ö">
 					<colgroup>
 						<col width="70%"></col>
 						<col width="30%"></col>
 					</colgroup>
 					<tr>
 						<td>
-						<label>ê²€ìƒ‰ì¡°ê±´</label>
+						<label>°Ë»öÁ¶°Ç</label>
 						<select id="search" name="search">
-							<option value="all">ì „ì²´</option>
-							<option value="qbTitle">ì œëª©</option>
-							<option value="qbContents">ë‚´ìš©</option>
-							<option value="ssName">ì‘ì„±ì</option>
+							<option value="all">ÀüÃ¼</option>
+							<option value="qbTitle">Á¦¸ñ</option>
+							<option value="qbContents">³»¿ë</option>
+							<option value="ssName">ÀÛ¼ºÀÚ</option>
 						</select>
 						
-						<input type="text" name="keyword" id="keyword" value="ê²€ìƒ‰ì–´ë¥¼ì…ë ¥í•˜ì„¸ìš”" />
-						<input type="button" value="ê²€ìƒ‰" id="searchBut" />
+						<input type="text" name="keyword" id="keyword" value="°Ë»ö¾î¸¦ÀÔ·ÂÇÏ¼¼¿ä" />
+						<input type="button" value="°Ë»ö" id="searchBut" />
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
 		
-		<%-- =======================ê²€ìƒ‰ê¸°ëŠ¥ ë============================ --%>
+		<%-- =======================°Ë»ö±â´É ³¡============================ --%>
 		
 		<div id="boardlist" style="text-align:center">
-			<table summary="ê²Œì‹œíŒ ë¦¬ìŠ¤íŠ¸">
+			<table summary="°Ô½ÃÆÇ ¸®½ºÆ®">
 				<colgroup>
 					<col width="20%" />
 					<col width="30%" />
@@ -142,11 +155,11 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th>ê¸€ë²ˆí˜¸</th>
-						<th>ê¸€ì œëª©</th>
-						<th>ì‘ì„±ì¼</th>
-						<th>ì‘ì„±ì</th>
-						<th>ë‹µë³€ìƒíƒœ</th>
+						<th>±Û¹øÈ£</th>
+						<th>±ÛÁ¦¸ñ</th>
+						<th>ÀÛ¼ºÀÏ</th>
+						<th>ÀÛ¼ºÀÚ</th>
+						<th>´äº¯»óÅÂ</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -155,7 +168,7 @@
 					%>
 					<tr>
 						<td>0</td>
-						<td>ì‘ì„±ëœ ê¸€ì´ ì—†ìŠµë‹ˆë‹¤.</td>
+						<td>ÀÛ¼ºµÈ ±ÛÀÌ ¾ø½À´Ï´Ù.</td>
 						<td></td>
 						<td></td>
 					</tr>
@@ -171,13 +184,13 @@
 							<td><%=no %></td>
 							
 							<% 
-							if(Secretyn.equals("N") ){//(ssnoê°€ ìˆì„ë•Œ || ttnoê°€ ìˆë•Œ 
+							if(Secretyn.equals("N") ){//(ssno°¡ ÀÖÀ»¶§ || ttno°¡ ÀÖ¶§ 
 							%>
 							<td style="text-align:left" id="N"><span class="qbDetail" id="N"><%=qvo.getQbTitle() %></span></td>
 							<% 
 							}else{
 							%>
-							<td style="text-align:left"><span class="qbDetail" id="Y">ë¹„ë°€ê¸€ì…ë‹ˆë‹¤.</span></td>
+							<td style="text-align:left"><span class="qbDetail" id="Y">ºñ¹Ğ±ÛÀÔ´Ï´Ù.</span></td>
 							
 							<%
 							}
@@ -198,8 +211,8 @@
 					<input type="button" class="pageNobut" id="pageNobut" name="pageNobut" value="<%=i%>" >
 					<input type="hidden" id="pageNo" name="pageNo" value="1">
 					<input type="hidden" id="listSize" name="listSize" value="10">
-					<input type="hidden" id="search" name="search" value="<%=searchdata.getSearch()%>">
-					<input type="hidden" id="keyword" name="keyword" value="<%=searchdata.getKeyword()%>">
+					<input type="hidden" name="search" value="<%=searchdata.getSearch()%>">
+					<input type="hidden" name="keyword" value="<%=searchdata.getKeyword()%>">
 					</form>
 					<%
 					}
@@ -208,9 +221,9 @@
 				</tbody>
 			</table>
 			<form id="qblistform" name="qblistform">
-				<input type="button" id="insertbutton" name="insertbutton" value="ê¸€ì“°ê¸°">
+				<input type="button" id="insertbutton" name="insertbutton" value="±Û¾²±â">
 			</form>
-			<!-- ìƒì„¸ í˜ì´ì§€ ì´ë™ì„ ìœ„í•œ form -->
+			<!-- »ó¼¼ ÆäÀÌÁö ÀÌµ¿À» À§ÇÑ form -->
 			<form name="qbdetailForm" id="qbdetailForm">
 			<input type="hidden" name="qbNo" id="qbNo">
 			</form>

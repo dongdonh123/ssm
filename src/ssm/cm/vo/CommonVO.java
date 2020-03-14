@@ -16,6 +16,10 @@ public class CommonVO {
 	private String brpageNo;
 	private String cgpageNo;
 	
+	//e포트폴리오 학년 검색에 필요한 변수
+	private String cdyearNo;
+	private String bryearNo;
+	private String cgyearNo;
 	
 	public String getSearch() {
 		return search;
@@ -64,6 +68,24 @@ public class CommonVO {
 	}
 	public void setRowNo(String rowNo) {
 		this.rowNo = rowNo;
+	}
+	public String getCdyearNo() {
+		return cdyearNo;
+	}
+	public void setCdyearNo(String cdyearNo) {
+		this.cdyearNo = cdyearNo;
+	}
+	public String getBryearNo() {
+		return bryearNo;
+	}
+	public void setBryearNo(String bryearNo) {
+		this.bryearNo = bryearNo;
+	}
+	public String getCgyearNo() {
+		return cgyearNo;
+	}
+	public void setCgyearNo(String cgyearNo) {
+		this.cgyearNo = cgyearNo;
 	}
 	
 	

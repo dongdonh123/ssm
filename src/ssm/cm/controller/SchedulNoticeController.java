@@ -1,9 +1,12 @@
 package ssm.cm.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
 import org.json.simple.JSONArray;
@@ -19,11 +22,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import ssm.cm.chaebun.FamilyLetterChaebun;
 import ssm.cm.chaebun.NoticeBoardChaebun;
+import ssm.cm.chaebun.QnABoardChaebun;
 import ssm.cm.chaebun.SchedulNoticeChaebun;
 import ssm.cm.service.NoticeBoardService;
 import ssm.cm.service.SchedulNoticeService;
+import ssm.cm.vo.FamilyLetterVO;
 import ssm.cm.vo.NoticeBoardVO;
+import ssm.cm.vo.QnABoardVO;
 import ssm.cm.vo.SchedulNoticeVO;
 import ssm.mi.vo.SmemberVO;
 import ssm.mi.vo.TmemberVO;
@@ -35,89 +42,63 @@ public class SchedulNoticeController {
 	@Autowired
 	private SchedulNoticeService schedulnoticeservice;
 	
-	@RequestMapping(value="snlist")
-	public String sblist(@ModelAttribute SchedulNoticeVO svo, Model model){
-		System.out.println("â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…ì»¨íŠ¸ë¡¤ëŸ¬ listì™”ë‹¤");
-		
-		System.out.println("ê°€ì ¸ì˜¨ í‚¤ì›Œë“œ>>>:" +svo.getKeyword());
-		System.out.println("ê°€ì ¸ì˜¨  ì„œì¹˜>>>:" +svo.getSearch());
-		
-		int ListSize = 10; 
-		
-		
-		if(svo.getListSize()==null){
-			svo.setListSize(ListSize+"");
-			svo.setPageNo("1");
-		}
-		
-		List snlist=schedulnoticeservice.snlist(svo); 
-		
-		
-		model.addAttribute("snlist",snlist);
-		model.addAttribute("listSize",ListSize);
-		model.addAttribute("Searchdata",svo);
-		return "sn/snlist";
+	@RequestMapping(value="sncalendar")
+	public String sncalendar(){
+		System.out.println("");
+
+		return "sn/sncalendar";
 	}
 	
-	@RequestMapping(value="snwirteform")
-	public String snwirteform(){
-		
-		return "sn/snwirteform";
-	}
-	
-	@RequestMapping(value="snwirte")
-	public String sninsert(@ModelAttribute SchedulNoticeVO svo){
-		String url="";
-		int result=0;
-		boolean bval= false;
-		
-		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
-		System.out.println("svo_.getSnNo()>>>: "+svo_.getSnNo());
-		String no =svo_.getSnNo();
-		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
-		System.out.println("svo.getSnNo()"+svo.getSnNo());
-		result=schedulnoticeservice.snInsert(svo);
-		
-		boolean bResult = result > 0;
-			
-		if(bResult) url="sn/snresult";
-		System.out.println("url >>>: " + url);		
-		return url;
-	}
-	@ResponseBody
-	@RequestMapping(value="snwirteajax")
-	public String snwirteajax(@ModelAttribute SchedulNoticeVO svo, HttpServletRequest request){
-		System.out.println("ì—ì´ì‘ìŠ¤ ì™”ì–´ ã… ã… ");
-		System.out.println("ì¼ì •ì œëª©"+ request.getParameter("snTitle"));
-		System.out.println("ì¼ì • ì‹œì‘ë‚ ì§œ"+ request.getParameter("snStartdate"));
-		System.out.println("ì¼ì • ë ë‚ ì§œ"+ request.getParameter("snEnddate"));
-		System.out.println("íŒŒì¼"+ request.getParameter("snFile"));
-		
-		svo.setSnTitle(request.getParameter("snTitle"));
-		svo.setSnStartdate(request.getParameter("snStartdate"));
-		svo.setSnEnddate(request.getParameter("snEnddate"));
-		svo.setSnFile(request.getParameter("snFile"));
-		svo.setTtNo("T8180001");
-		int result=0;
-		String result_ ="NO";
-		
-		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
-		System.out.println("svo_.getSnNo()>>>: "+svo_.getSnNo());
-		String no =svo_.getSnNo();
-		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
-		System.out.println("svo.getSnNo()"+svo.getSnNo());
-		result=schedulnoticeservice.snInsert(svo);
-		
-		boolean bResult = result > 0;
-			
-		if(bResult) result_="OK";
-		return result_;
-	}
+//	@ResponseBody
+//	@RequestMapping(value="snwirteajax")
+//	public String snwirteajax(@ModelAttribute SchedulNoticeVO svo, HttpServletRequest req){
+//		System.out.println("ss >>> "+req.getContentType());
+//		
+////		System.out.println(">>>:" + new String());
+//		try {
+////			req.setCharacterEncoding("EUC-KR");
+//			System.out.println(">>> getCharacterEncoding : " + req.getCharacterEncoding());
+//			System.out.println(">>> snTitle : " + req.getParameter("snTitle"));
+//			
+//			
+//		}catch(Exception e){
+//			System.out.println("error > "+e.getMessage());
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		String sResult ="";
+//		
+//		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
+//		String no =svo_.getSnNo();
+//		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
+//		svo.setTtNo("T8180001");
+//		
+//		String snTitle = req.getParameter("snTitle");
+////		new String(ko.getBytes("UTF-8"),"8859_1")
+//		String snStartdate = req.getParameter("snStartdate");
+//		String snEnddate = req.getParameter("snEnddate");
+//		
+//		svo.setSnTitle(snTitle);
+//		svo.setSnStartdate(snStartdate);
+//		svo.setSnEnddate(snEnddate);
+//		
+//		
+//		int result = schedulnoticeservice.snInsert(svo);
+//		boolean bResult = result > 0;
+//		
+//		if(bResult) sResult="OK";
+//			
+//		return sResult;
+//
+//	
+//	}
 	
 	@ResponseBody
 	@RequestMapping(value="snlistajax")
 	public JSONArray snlistajax(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("ì—ì´ì‘ìŠ¤ ì™”ì–´ snlistajax ã… ã… ");
+		
+		
 		List<SchedulNoticeVO> snlist = schedulnoticeservice.snlistajax();
 		
 		JSONArray jArr = new JSONArray();
@@ -127,17 +108,28 @@ public class SchedulNoticeController {
 			
 			jObj.put("title", snlist.get(i).getSnTitle());
 			jObj.put("start", snlist.get(i).getSnStartdate());
-			jObj.put("end", snlist.get(i).getSnEnddate());
-			System.out.println(">>>" + snlist.get(i).getSnFile());
-			if(snlist.get(i).getSnFile() !=null){
-			jObj.put("url", snlist.get(i).getSnFile());
+			
+			//Ç®Ä¶¸°´õ »ç¿ë¹ı ÁØ¼ö¿¡ ÀÇÇØ  ¿£µåµ¥ÀÌÆ®¿¡ 1À» ´õÇØ¼­ Ãâ·Â
+			String end =snlist.get(i).getSnEnddate();
+			String yy = end.substring(0, 4);
+			String mm = end.substring(5, 7);
+			int dd = Integer.parseInt(end.substring(8), 10)+1;
+			String dd_ = Integer.toString(dd);
+			if(dd<10){
+				dd_ ="0"+dd_;
 			}
+			end = yy+"-"+mm+"-"+dd_;
+			System.out.println("¿Ï¼ºµÈ end>>> : " +end);
+			
+			jObj.put("end",end);
+			jObj.put("no", snlist.get(i).getSnNo());
+			
 			jArr.add(jObj);
 		}
 		
-		//jsonArray ë¡œê·¸ í™•ì¸
 		
 		for(int i = 0; i < jArr.size(); i++){
+			
 			System.out.println("(log)JARR : "+jArr.get(i));
 		}
 
@@ -145,112 +137,117 @@ public class SchedulNoticeController {
         return jArr;
 	}
 	
-	@RequestMapping(value="/snDetail")
-	public String snDetail(@ModelAttribute SchedulNoticeVO svo, Model model){
-		
-		SchedulNoticeVO sndetail = null;
-		sndetail = schedulnoticeservice.snDetail(svo);
+	@RequestMapping(value="snInsert")
+	public String snInsert(@ModelAttribute SchedulNoticeVO svo){
+		System.out.println("ÀÎ¼­Æ® ¿Ô´ç ¤¾¤¾");
 		
 		
-		model.addAttribute("sndetail",sndetail);
-		return "sn/snDetail";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/pwdConfirm")
-	public String pwdConfirm(@ModelAttribute SchedulNoticeVO svo,HttpServletRequest request){
+		String sResult ="";
 		
-		String ttPw =request.getParameter("ttPw");
-	
-		int result = 0;
-		result= schedulnoticeservice.pwdConfirm(svo,ttPw);
+		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
+		String no =svo_.getSnNo();
+		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
 		
-		return result+"";
+		System.out.println("svo.getSnNo()>>>:" + svo.getSnNo());		
+		System.out.println("svo.getSnTitle();>>>:" + svo.getSnTitle());		
+		System.out.println("svo.getSnEnddate()>>>:" + svo.getSnEnddate());		
+		System.out.println("svo.getSnStartdate()>>>:" + svo.getSnStartdate());		
 		
-	}
-	
-	@RequestMapping(value="/snupdateForm")
-	public String sndateForm(@ModelAttribute SchedulNoticeVO svo, Model model){
+		int result = schedulnoticeservice.snInsert(svo);
 		
-		SchedulNoticeVO updateData =null;
-		updateData= schedulnoticeservice.snDetail(svo);
-		
-		model.addAttribute("updateData",updateData);
-		return "sn/snupdateform";
-		
-	}
-	
-	/*ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½*/
-	@RequestMapping(value="snupdate")
-	public String snupdate(@ModelAttribute SchedulNoticeVO svo){
-		
-		String url="";
-		int result=0;
-			
-		result=schedulnoticeservice.snUpdate(svo);
 		boolean bResult = result > 0;
+		
+		System.out.println("¸®ÀıÆ®´Â Æ®·çÀÎ°¡>>>?" +result );
+		if(bResult) sResult="/schedulnotice/sncalendar.ssm";
 			
-		if(bResult) url="sn/snresult";
-		return url;
+		return "redirect:"+sResult ;
+
+	
 	}
 	
-	@RequestMapping(value="/snDelete")
+//	@RequestMapping(value="snInsert")
+//	public String snInsert(@ModelAttribute SchedulNoticeVO svo, HttpServletRequest req){
+//		System.out.println("ÀÎ¼­Æ® ¿Ô´ç ¤¾¤¾");
+//		String url="";
+//		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
+//		String daFileName="";
+//		int result=0;
+//		boolean bval= false;
+//		int size=10*1024*1024;
+//		try{
+//			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
+//			
+//			Enumeration files=multi.getFileNames();
+//			String file=(String)files.nextElement();
+//			String fileName=multi.getFilesystemName(file);
+//			daFileName="../"+"upload"+"/"+fileName;
+//			
+//			String snTitle=multi.getParameter("snTitle");
+//			String snStartdate=multi.getParameter("snStartdate");
+//			String snEnddate=multi.getParameter("snEnddate");
+//			
+//			System.out.println("¹Ş¾Æ¿Â Á¦¸ñ>>>:"+ snTitle);
+//			System.out.println("¹Ş¾Æ¿Â snStartdate>>>:"+ snStartdate);
+//			System.out.println("¹Ş¾Æ¿ÂsnEnddate>>>:"+ snEnddate);
+//			System.out.println("¹Ş¾Æ¿Âsnfile>>>:"+ daFileName);
+//			svo.setSnTitle(snTitle);
+//			svo.setSnStartdate(snStartdate);
+//			svo.setSnEnddate(snEnddate);
+//			svo.setSnFile(daFileName);
+//			
+//			SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
+//			String no =svo_.getSnNo();
+//			svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
+//			System.out.println(svo.getSnNo());
+//			result=schedulnoticeservice.snInsert(svo);
+//			System.out.println("result>>>:"+ result);	
+//		}catch(Exception e){
+//			System.out.println("¿¡·¯°¡>>>:"+ e);
+//		}
+//		boolean bResult = result > 0;
+//		if(bResult) url="/schedulnotice/sncalendar.ssm";
+//		return "redirect:"+url;
+//	}
+	
+	@RequestMapping(value="snUpdate")
+	public String snUpdate(@ModelAttribute SchedulNoticeVO svo){
+		System.out.println("ÀÎ¼­Æ® ¿Ô´ç ¤¾¤¾");
+		String url = "";
+		
+		System.out.println("svo.getSnNo()>>>:" + svo.getSnNo());		
+		System.out.println("svo.getSnTitle();>>>:" + svo.getSnTitle());		
+		System.out.println("svo.getSnEnddate()>>>:" + svo.getSnEnddate());		
+		System.out.println("svo.getSnStartdate()>>>:" + svo.getSnStartdate());		
+		
+		int result = schedulnoticeservice.snUpdate(svo);
+		
+		boolean bResult = result > 0;
+		
+		System.out.println("¸®ÀıÆ®´Â Æ®·çÀÎ°¡>>>?" +result );
+		if(bResult) url="/schedulnotice/sncalendar.ssm";
+			
+		return "redirect:/schedulnotice/sncalendar.ssm" ;
+
+	
+	}
+	
+	@RequestMapping(value="snDelete")
 	public String snDelete(@ModelAttribute SchedulNoticeVO svo){
+		System.out.println("ÀÎ¼­Æ® ¿Ô´ç ¤¾¤¾");
+		String url = "";
 		
-		String url="";
-		int result = 0;
+		System.out.println("svo.getSnNo()>>>:" + svo.getSnNo());		
 		
-		result= schedulnoticeservice.snDelete(svo);
+		int result = schedulnoticeservice.snDelete(svo);
 		
 		boolean bResult = result > 0;
 		
-		if(bResult) url="/schedulnotice/snlist.ssm";
-		return "redirect:"+url;
-		
-		
-	}
-	
-	@RequestMapping(value="sncalendar")
-	public String sncalendar(@ModelAttribute NoticeBoardVO nvo, Model model){
-		System.out.println("â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…ì»¨íŠ¸ë¡¤ëŸ¬ ìº˜ë¦°ë”ì™”ë‹¤");
+		System.out.println("¸®ÀıÆ®´Â Æ®·çÀÎ°¡>>>?" +result );
+		if(bResult) url="/schedulnotice/sncalendar.ssm";
+			
+		return "redirect:/schedulnotice/sncalendar.ssm" ;
 
-		return "sn/kdh";
-	}
 	
-	@RequestMapping(value="sncalendar2")
-	public String sncalendar2(@ModelAttribute NoticeBoardVO nvo, Model model){
-		System.out.println("â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…ì»¨íŠ¸ë¡¤ëŸ¬ ìº˜ë¦°ë”2ì™”ë‹¤");
-
-		return "sn/kdh2";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/sncalendarajaxlist")
-	public List sncalendarajaxlist(@ModelAttribute SchedulNoticeVO svo,HttpServletRequest request){
-		System.out.println("ì—ì´ì‘ìŠ¤ë¦¬ìŠ¤íŠ¸ì™”ì—‰");
-		
-		List snlist= null; 
-		return snlist;
-		
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/sncalendarajaxinsert")
-	public String sncalendarajaxinsert(@ModelAttribute SchedulNoticeVO svo,HttpServletRequest request){
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		System.out.println("ì—ì´ì‘ìŠ¤ì¸ì„œíŠ¸ì™”ì—‰");
-		
-		int result = 0;
-		
-		return result+"";
-		
 	}
 	
 }

@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@ page import="ssm.cm.vo.NoticeBoardVO" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 	<title>Insert title here</title>
-	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
 	    $(document).ready(function(){
@@ -15,7 +15,7 @@
 	    	nhn.husky.EZCreator.createInIFrame({
 	    	 oAppRef: oEditors,
 	    	 elPlaceHolder: "nbContents",
-	    	 sSkinURI: "/navereditor/SmartEditor2Skin_ko_KR.html",
+	    	 sSkinURI: "/navereditor/SmartEditor2Skin_ko_KR1.html",
 	    	 fCreator: "createSEditor2"
 	    	});
 	    	
@@ -66,10 +66,10 @@
 				<col width="800px"></col>
 			</colgroup>
 			<tr>
-				<td colspan="2">ê³µì§€ì‚¬í•­ê²Œì‹œíŒ ê¸€ìˆ˜ì •í•˜ê¸°<td>
+				<td colspan="2">°øÁö»çÇ×°Ô½ÃÆÇ ±Û¼öÁ¤ÇÏ±â<td>
 			</tr>
 			<tr>
-				<td>ê¸€ì œëª©</td>
+				<td>±ÛÁ¦¸ñ</td>
 				<td><input type="text" id="nbTitle" name="nbTitle" size="110"value="<%=nvo.getNbTitle()%>" class="A">
 					<div class="bytes-wrapper">
         				<span class="C">0</span>bytes
@@ -77,16 +77,16 @@
 				</td>
 			</tr>
 			<tr>
-				<td>ê¸€ë‚´ìš©</td>
+				<td>±Û³»¿ë</td>
 			<td><textarea name="nbContents" id="nbContents" rows="10" cols="100" ><%=nvo.getNbContents()%></textarea></td>
 			</tr>
 			<tr>
-				<td>ì²¨ë¶€íŒŒì¼1</td>
+				<td>Ã·ºÎÆÄÀÏ</td>
 				<td><input type="file" id="nbFile" name="nbFile"></td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="button" id ="submitbutton" name="submitbutton" value="ìˆ˜ì •">
+					<input type="button" id ="submitbutton" name="submitbutton" value="¼öÁ¤">
 					<input type="hidden" id ="nbNo" name="nbNo" value="<%=nvo.getNbNo()%>">
 				</td>
 			</tr>
