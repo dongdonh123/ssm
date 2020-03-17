@@ -1,0 +1,107 @@
+html, body, div, span, form, img, ul{
+	text-align : center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+html {
+	background-color: #E0E3DA;
+}
+
+hr {
+	margin : 0;
+}
+		
+/* ul 기본속성 */
+ul {
+	display : table;
+	margin : 0px;
+	list-style : none;
+  	padding:0;
+  	overflow : hidden;
+}
+
+/* 링크 기본 속성 */
+a {
+	text-decoration : none;
+	font-size : 10px;
+}
+
+/* header */
+header {
+	display : inline-block;
+	width : 1240px;
+    margin : 5px;
+}
+
+/* 비트고등학교 */
+header #headerTit {
+	font-size : 20px;
+}
+
+/* header 구분선 */
+header hr  {
+    margin: 5px 0px 5px;
+    height: 2px;
+    background-color: #353866;
+    border: 0px;
+}
+
+/* footer */
+footer {
+	display : inline-block;
+	width : 1240px;
+	font-size : 10px;
+	color : grey;
+}
+
+/* footer 구분선 */
+footer>.footerTxt hr  {
+    height: 2px;
+    background-color: #353866;
+    border: 0px;
+}
+
+
+/* =================================*/
+
+/* 전체 div */
+#wrap {
+	width : 1260px;
+	height : 800px;
+	margin : auto;
+	border : 1px;
+}
+
+/* 상단 메뉴바 ul */
+.menuList {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* 메뉴 색상 */
+.menuList li{
+	float : left;
+	height : 42px;
+/* 	background-color : #492540; */
+}
+
+/* 상단 메뉴바 a */
+nav>.wrapMenu>.menuList a {
+    width: 236px;
+    display: inline-block;
+    padding: 15px 0px;
+    font-size: 10px;
+}
+
+/* 상단 메뉴바 a:hover */
+.menuList a:hover {
+	background-color : #181842;
+	color : #c72e45;
+    transition: all .4s ease;
+}
+
