@@ -14,12 +14,13 @@ public class SchedulNoticeDaoImpl implements SchedulNoticeDao {
 	@Autowired
 	private SqlSession session;
 	
-	@Override
-	public List<SchedulNoticeVO> snlist(SchedulNoticeVO svo) {
-		// TODO Auto-generated method stub
-		return session.selectList("snlist");
-	}
 
+	@Override
+	public List<SchedulNoticeVO> snlistajax() {
+		// TODO Auto-generated method stub
+		return session.selectList("snlistajax");
+	}
+	
 	@Override
 	public SchedulNoticeVO snChaebun() {
 		// TODO Auto-generated method stub
@@ -33,18 +34,6 @@ public class SchedulNoticeDaoImpl implements SchedulNoticeDao {
 	}
 
 	@Override
-	public SchedulNoticeVO snDetail(SchedulNoticeVO svo) {
-		// TODO Auto-generated method stub
-		return session.selectOne("snDetail");
-	}
-
-	@Override
-	public int pwdConfirm(SchedulNoticeVO svo,String pw) {
-		// TODO Auto-generated method stub
-		return session.selectOne("pwdConfirm");
-	}
-
-	@Override
 	public int snUpdate(SchedulNoticeVO svo) {
 		// TODO Auto-generated method stub
 		return session.update("snUpdate");
@@ -55,12 +44,5 @@ public class SchedulNoticeDaoImpl implements SchedulNoticeDao {
 		// TODO Auto-generated method stub
 		return session.update("snDelete");
 	}
-
-	@Override
-	public List<SchedulNoticeVO> snlistajax() {
-		// TODO Auto-generated method stub
-		return session.selectList("snlistajax");
-	}
-
 
 }

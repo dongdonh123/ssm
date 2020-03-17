@@ -29,18 +29,20 @@ public class NoticeBoardController {
 	@Autowired
 	private NoticeBoardService noticeboardservice;
 	
+	//글조회
 	@RequestMapping(value="nblist")
 	public String nblist(@ModelAttribute NoticeBoardVO nvo, Model model){
 		
 		
 		int ListSize = 10; 
 		
+		//페이징 초기설정
 		if(nvo.getListSize()==null){
 			nvo.setListSize(ListSize+"");
 			nvo.setPageNo("1");
 		}
 		
-
+		
 		List nblist=noticeboardservice.nblist(nvo); 
 		
 		model.addAttribute("nblist",nblist);
@@ -50,13 +52,14 @@ public class NoticeBoardController {
 		return "nb/nblist";
 	}
 	
+	//글작성페이지 이동
 	@RequestMapping(value="nbwirteform")
 	public String nbwirteform(){
 		
 		return "nb/nbwirteform";
 	}
 	
-
+	//글작성
 	@RequestMapping(value="nbwirte")
 	public String nbinsert(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
 		
@@ -78,19 +81,17 @@ public class NoticeBoardController {
 			String nbTitle=multi.getParameter("nbTitle");
 			String nbContents=multi.getParameter("nbContents");
 			
-			System.out.println("받아온 제목>>>:"+ nbTitle);
-			System.out.println("받아온 내용>>>:"+ nbContents);
-			
 			nvo.setTtNo(ttNo);
 			nvo.setNbTitle(nbTitle);
 			nvo.setNbContents(nbContents);
 			nvo.setNbFile(daFileName);
 			
+			//채번감
 			NoticeBoardVO nvo_ =noticeboardservice.nbChaebun(nvo); 
-			System.out.println(nvo_.getNbNo());
 			String no =nvo_.getNbNo();
 			nvo.setNbNo(NoticeBoardChaebun.nbchaebun(no));
-			System.out.println(nvo.getNbNo());
+			
+			//쿼리감
 			result=noticeboardservice.nbInsert(nvo);
 		}catch(Exception e){
 		}
@@ -101,6 +102,7 @@ public class NoticeBoardController {
 		return "redirect:"+url;
 	}
 	
+	//글상세페이지 이동
 	@RequestMapping(value="/nbDetail")
 	public String nbDetail(@ModelAttribute NoticeBoardVO nvo, Model model){
 		
@@ -117,6 +119,7 @@ public class NoticeBoardController {
 		return "nb/nbDetail";
 	}
 	
+	//글 수정이나 삭제시 글작성자의 비밀번호검색 ajax
 	@ResponseBody
 	@RequestMapping(value="/pwdConfirm")
 	public String pwdConfirm(@ModelAttribute NoticeBoardVO nvo,HttpServletRequest request){
@@ -129,6 +132,7 @@ public class NoticeBoardController {
 		
 	}
 	
+	//글수정페이지 이동
 	@RequestMapping(value="/nbupdateForm")
 	public String updateForm(@ModelAttribute NoticeBoardVO nvo, Model model){
 		
@@ -140,7 +144,7 @@ public class NoticeBoardController {
 		
 	}
 	
-	
+	//글수정
 	@RequestMapping(value="nbupdate")
 	public String nbupdate(@ModelAttribute NoticeBoardVO nvo, HttpServletRequest req){
 		
@@ -176,6 +180,7 @@ public class NoticeBoardController {
 		return "redirect:"+url;
 	}
 	
+	//글삭제
 	@RequestMapping(value="/nbDelete")
 	public String nbDelete(@ModelAttribute NoticeBoardVO nvo){
 		String url="";
@@ -191,6 +196,7 @@ public class NoticeBoardController {
 		
 	}
 	
+	//다운로드
 	@RequestMapping(value="/nbDownload")
 	public String nbDownload(@ModelAttribute NoticeBoardVO nvo,HttpServletRequest request,Model model){
 		String filename =(String) request.getParameter("filename");

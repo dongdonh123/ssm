@@ -1,6 +1,6 @@
 package ssm.br.vo;
 
-import ssm.cm.vo.CommonVO;
+import ssm.common.vo.CommonVO;
 
 public class NonprogramVO extends CommonVO{
 

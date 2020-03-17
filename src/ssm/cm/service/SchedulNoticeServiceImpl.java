@@ -17,14 +17,14 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 
 	@Autowired
 	private SchedulNoticeDao schedulnoticedao;
-	
+
 	@Override
-	public List<SchedulNoticeVO> snlist(SchedulNoticeVO svo) {
+	public List<SchedulNoticeVO> snlistajax() {
 		List<SchedulNoticeVO> snlist = null;
-		snlist =schedulnoticedao.snlist(svo);
+		snlist =schedulnoticedao.snlistajax();
 		return snlist;
 	}
-
+	
 	@Override
 	public SchedulNoticeVO snChaebun() {
 		SchedulNoticeVO svo_ = null;
@@ -35,26 +35,7 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 	@Override
 	public int snInsert(SchedulNoticeVO svo) {
 		int result = 0;
-		try {
-//			System.out.println("서비스 >>> : " + svo.getSnTitle());
-//			svo.setSnTitle(new String(svo.getSnTitle().getBytes("EUC-KR"), "MS949"));
-//			System.out.println("서비스 변환 이후 >>> : " + svo.getSnTitle());
-			result=schedulnoticedao.snInsert(svo);	
-		}catch(Exception e){}
-		return result;
-	}
-
-	@Override
-	public SchedulNoticeVO snDetail(SchedulNoticeVO svo) {
-		SchedulNoticeVO svo_ = null;
-		svo_ =schedulnoticedao.snDetail(svo);
-		return svo_;
-	}
-
-	@Override
-	public int pwdConfirm(SchedulNoticeVO svo, String ttPw) {
-		int result = 0;
-		result=schedulnoticedao.pwdConfirm(svo,ttPw);
+		result=schedulnoticedao.snInsert(svo);	
 		return result;
 	}
 
@@ -71,13 +52,5 @@ public class SchedulNoticeServiceImpl implements SchedulNoticeService {
 		result=schedulnoticedao.snDelete(svo);
 		return result;
 	}
-
-	@Override
-	public List<SchedulNoticeVO> snlistajax() {
-		List<SchedulNoticeVO> snlist = null;
-		snlist =schedulnoticedao.snlistajax();
-		return snlist;
-	}
-
 
 }

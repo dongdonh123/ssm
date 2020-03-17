@@ -8,14 +8,15 @@
 <mapper namespace="ssm.ef.dao.EportfolioDao">
 
 	<!-- 조인 하는넘들--> 
-	
+	<!-- fm jr sr 세개중 선택된데이터 1개를 받아가지만 fmvo에 넣어가서 꺼내서 사용하겠다 -->
 	<resultMap type="ssm.mi.vo.FmmemberVO" id="FmmemberVO">
 	    <result property="fmGrade" 			column="FM_GRADE"/>
 	    <result property="fmClass" 			column="FM_CLASS"/>
 	    <result property="fmNum" 			column="FM_NUM"/>
 	</resultMap>
 	
-	<resultMap type="ssm.mi.vo.JrmemberVO" id="JrmemberVO">
+	
+	<!--<resultMap type="ssm.mi.vo.JrmemberVO" id="JrmemberVO">
 	    <result property="jrGrade" 			column="JR_GRADE"/>
 	    <result property="jrClass" 			column="JR_CLASS"/>
 	    <result property="jrNum" 			column="JR_NUM"/>
@@ -25,15 +26,22 @@
 	    <result property="srGrade" 			column="SR_GRADE"/>
 	    <result property="srClass" 			column="SR_CLASS"/>
 	    <result property="srNum" 			column="SR_NUM"/>
-	</resultMap>
+	</resultMap> -->
 	
+	<!-- 기초조사VO -->
 	<resultMap type="ssm.cd.vo.BasicinpormationVO" id="BasicinpormationVO">
-	    <result property="biWf" 			column="BI_WF"/>
-	    <result property="biWi" 			column="BI_WI"/>
+	    <result property="biWf" 			column="BI_WF"/> <!-- 희망하는 직무 -->
+	    <result property="biWi" 			column="BI_WI"/> <!-- 희망하는 산업 -->
 	</resultMap>
 	
+	<!-- 가치관설립VO -->
 	<resultMap type="ssm.cd.vo.ValuesettingVO" id="ValuesettingVO">
+	    <result property="ssNo" 			column="SS_NO"/>
 	    <result property="vsFirst" 			column="VS_FIRST"/>
+	    <result property="vsSecond" 		column="VS_SECOND"/>
+	    <result property="vsThird" 			column="VS_THIRD"/>
+	    <result property="vsInsertdate" 	column="VS_INSERTDATE"/>
+	    <result property="vsUpdatedate" 	column="VS_UPDATEDATE"/>
 	</resultMap>
 	
 	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
@@ -47,7 +55,7 @@
 	    <result property="ssName" 					column="SS_NAME"/>
 		<result property="ssImage"					column="SS_IMAGE"/>
 		<result property="ssGrade"					column="SS_GRADE"/>
-		<collection property="fmMembervo" 			resultMap="FmmemberVO"/>
+		<collection property="fmMembervo" 			resultMap="FmmemberVO"/> <!-- fm jr sr 세개중 선택된데이터 1개를 받아가지만 fmvo에 넣어가서 꺼내서 사용하겠다 -->
 		<collection property="basicInpormationvo" 	resultMap="BasicinpormationVO"/>
 		<collection property="valueSettingvo" 		resultMap="ValuesettingVO"/>
 	</resultMap>
@@ -91,10 +99,11 @@
 		<result property="cgpageNo"		    column="PAGENO"/>
 		<result property="listSize"		   	column=""/>
 		<result property="totalCount"		column="TOTALCOUNT"/>
-		<result property="rowNo"		column="ROWNO"/>
+		<result property="rowNo"			column="ROWNO"/>
 		<collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
+	<!-- 선생님 반학생 리스트 뽑아오는거 -->
 	<select id ="eflist" parameterType="ssm.mi.vo.TmemberVO" resultMap="smVO">
 	
 		SELECT DISTINCT					
@@ -171,15 +180,7 @@
         
 	</select>
 	
-	<select id ="teacherlogin" parameterType="ssm.mi.vo.TmemberVO" resultType="int">
-	
-			SELECT NVL((SELECT 1 
-            FROM T_MEMBER  
-            WHERE TT_ID = #{ttId}
-            AND TT_PW = #{ttPw}),0)as result
-			FROM dual
-	</select>
-	
+	<!-- 진로설계 리스트 뽑아오는거-->
 	<select id ="cdlist" parameterType="ssm.mi.vo.SmemberVO" resultMap="CareerdesignVO">
 	
 			SELECT distinct
@@ -196,6 +197,7 @@
 			AND 	SUBSTR(A.CD_INSERTDATE,0,2) =#{cdyearNo}
 	</select>
 	
+	<!-- 비교과뽑아오는거-->
 	<select id ="brlist" parameterType="ssm.mi.vo.SmemberVO" resultMap="NonprogramVO">
 	
 			SELECT * FROM
@@ -223,7 +225,8 @@
             ORDER BY NP_PSDATE DESC
 	</select>
 	
-	  <select id ="cglist" parameterType="ssm.mi.vo.SmemberVO" resultMap="OnlineapplicationVO">
+	<!-- 상담뽑아오는거-->
+	<select id ="cglist" parameterType="ssm.mi.vo.SmemberVO" resultMap="OnlineapplicationVO">
 	
 			SELECT *FROM(SELECT  
             OA_NO,
@@ -267,6 +270,24 @@
             WHERE ABC.PAGENO = #{cgpageNo}
             ORDER BY OA_INSERTDATE DESC 
 	</select>
+	
+	<!-- 가치관설립 뽑아오는거-->
+	<select id ="vslist" parameterType="ssm.mi.vo.SmemberVO" resultMap="ValuesettingVO">
+	
+			SELECT
+			                SS_NO,
+			                VS_FIRST,
+			                VS_SECOND,
+			                VS_THIRD,
+			                VS_INSERTDATE,
+			                VS_UPDATEDATE
+		     
+			FROM VALUE_SETTING
+			WHERE SS_NO = #{ssNo}
+							
+			 
+	</select>
+	
 	
 	<select id ="mylist" parameterType="ssm.mi.vo.SmemberVO" resultMap="smVO">
 	

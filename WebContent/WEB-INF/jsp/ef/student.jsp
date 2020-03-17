@@ -5,11 +5,13 @@
 <%@ page import ="ssm.cd.vo.CareerdesignVO" %>
 <%@ page import ="ssm.br.vo.NonprogramVO" %>
 <%@ page import ="ssm.cg.vo.OnlineapplicationVO" %>
+<%@ page import ="ssm.cd.vo.ValuesettingVO" %>
 
-<!--  cdlist brlist cglist 받기 -->
+<!--  cdlist brlist cglist vslist받기 -->
 <% List<CareerdesignVO> cdlist =(List<CareerdesignVO>)request.getAttribute("cdlist");%>
 <% List<NonprogramVO> brlist =(List<NonprogramVO>)request.getAttribute("brlist");%>
 <% List<OnlineapplicationVO> cglist =(List<OnlineapplicationVO>)request.getAttribute("cglist");%>
+<% ValuesettingVO vvo =(ValuesettingVO)request.getAttribute("vslist");%>
 
 <!-- pageNO 받아온거 데이터 설정 -->
 <% SmemberVO svo_ =(SmemberVO)request.getAttribute("pageNo");%>
@@ -48,7 +50,8 @@
 		double dval = (double)pagelistSize;
 		cgpageCount = (int)Math.ceil(totalCount/dval); //pageCount 변수 사용
 	}
-%>    
+%>
+
    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -485,6 +488,21 @@
 	<div id="dd">
 		<h2>가치관설정</h2>
 		<input Type="button" id="vsupdatebutton" name="vsupdatebutton" value="수정하기">
+		<%if(vvo !=null){
+			String vsfirst =vvo.getVsFirst();
+			String vssecond =vvo.getVsSecond();
+			String vsthird =vvo.getVsThird();
+			%>
+			<img alt="데이터가 없습니다." src="/image/<%=vsfirst%>.png">
+			<img alt="데이터가 없습니다." src="/image/<%=vssecond%>.png">
+			<img alt="데이터가 없습니다." src="/image/<%=vsthird%>.png">
+			<%
+		}else{
+			%>
+			가치관 설정을 하지 않으셨습니다.
+			<%
+		}
+		 %>
 	</div>
 	<form id="linkForm" name="linkForm">
 		<input Type="hidden" id="ssNo" name="ssNo" value="<%=svo.getSsNo()%>" />

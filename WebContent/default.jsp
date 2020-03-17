@@ -13,23 +13,24 @@
  <br><br>
  <a href="/familyletter/fllist.ssm">[가정통신문 게시판](완료)</a><br>
  <br><br>
- <a href="/qnaboard/qblist.ssm">[Q&A 게시판]</a><br>
+ <a href="/qnaboard/qblist.ssm">[Q&A 게시판](완료)</a><br>
  <br><br>
- <a href="/eportfolio/student.ssm">[e포트폴리오 학생페이지]</a><br>
+ <a href="/eportfolio/student.ssm">[e포트폴리오 학생페이지](완료)</a><br>
  <br><br>
- <a href="/eportfolio/teacher.ssm">[e포르톨리오 교사페이지]</a><br>
+ <a href="/eportfolio/teacher.ssm">[e포르톨리오 교사페이지](완료)</a><br>
  <br><br>
 
  
 
- 
+ zzzzz
  <br><br>
  해야할거 정리: <br>
 <br> 
-div테이블 고정 시키기 (css)<br> 
-세션적용<br>
-css<br>
-e포트폴리오학생페이지 가치관설정(css)<br>
+공지사항게시판하고 가정통신문 게시판 똑같아요 공지사항게시판에주석써놨어요 <br> 
+세션적용하는곳에 주석으로 표시해놨어요<br>
+e포트폴리오학생페이지 가치관설정(css) 이거 못했는데 다하고 소스보내줄게요 없이 통합작업하세요<br>
+mivo cdvo brvo cgvo 는 담당자꺼 파일사용하기 내꺼는 몇개안쓴게 있을수 있음 <br>
+
 <br>
 </body>
 </html>

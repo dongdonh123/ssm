@@ -13,6 +13,7 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
+		//tr 클릭시 페이지 이동
 		$("#kdhtable tr").click(function(){
 			var ssNo= $(this).attr("data-num");
 			$("#ssNo").val(ssNo);
@@ -113,10 +114,5 @@
 		
 		</form>
 	
-	
-	
-	<div>
-		<h2>학생 20명 통계</h2>
-	</div>
 </body>
 </html>

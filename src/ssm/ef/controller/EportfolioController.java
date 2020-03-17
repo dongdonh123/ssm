@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import ssm.br.vo.NonprogramVO;
 import ssm.cd.vo.CareerdesignVO;
+import ssm.cd.vo.ValuesettingVO;
 import ssm.cg.vo.OnlineapplicationVO;
 import ssm.cm.chaebun.FamilyLetterChaebun;
 import ssm.cm.chaebun.NoticeBoardChaebun;
@@ -75,11 +76,13 @@ public class EportfolioController {
 		List<CareerdesignVO> cdlist=eportfolioservice.cdlist(svo);
 		List<NonprogramVO> brlist=eportfolioservice.brlist(svo);
 		List<OnlineapplicationVO> cglist=eportfolioservice.cglist(svo); 
+		ValuesettingVO vslist=eportfolioservice.vslist(svo); 
 		
 		model.addAttribute("mylist",svo_);
 		model.addAttribute("cdlist",cdlist);
 		model.addAttribute("brlist",brlist);
 		model.addAttribute("cglist",cglist);
+		model.addAttribute("vslist",vslist);
 		model.addAttribute("listSize",listSize);
 		model.addAttribute("pageNo",svo);
 		return "ef/student";

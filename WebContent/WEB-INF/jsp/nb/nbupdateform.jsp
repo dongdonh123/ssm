@@ -9,8 +9,9 @@
 	<script type="text/javascript" src="/navereditor/js/service/HuskyEZCreator.js" charset="EUC-KR"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
+    
 	    $(document).ready(function(){
-	    
+	    	
 	    	var oEditors = [];
 	    	nhn.husky.EZCreator.createInIFrame({
 	    	 oAppRef: oEditors,

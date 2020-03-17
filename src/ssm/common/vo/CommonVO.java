@@ -1,22 +1,22 @@
-package ssm.cm.vo;
+package ssm.common.vo;
 
 public class CommonVO {
 	
-	//ê³µí†µ í˜ì´ì§€ ë³€ìˆ˜
+	//ÆäÀÌÁö¿¡´ëÇÑ º¯¼öµé
 	private String pageNo;
 	private String listSize;
 	private String totalCount;
 	private String rowNo;
 	
-	//ì»¤ë®¤ë‹ˆí‹°ê²Œì‹œíŒ ê²€ìƒ‰ ë³€ìˆ˜
+	//°Ë»ö¿¡´ëÇÑ º¯¼öµé
 	private String search; 
 	private String keyword;
 	
-	//eí¬íŠ¸í´ë¦¬ì˜¤ í˜ì´ì§€ì— í•„ìš”í•œ ë³€ìˆ˜
+	//eÆ÷Æ®Æú¸®¿À ºñ±³°úÆäÀÌÁö¹øÈ£¿Í »ó´ãÆäÀÌÁö¹øÈ£ º¯¼ö
 	private String brpageNo;
 	private String cgpageNo;
 	
-	//eí¬íŠ¸í´ë¦¬ì˜¤ í•™ë…„ ê²€ìƒ‰ì— í•„ìš”í•œ ë³€ìˆ˜
+	//eÆ÷Æ®Æú¸®¿À Áø·Î¼³°è,ºñ±³°ú,»ó´ã ÇĞ³â¸¶´Ù °Ë»öÇÒ¶§ »ç¿ëÇÏ´Â º¯¼öµé
 	private String cdyearNo;
 	private String bryearNo;
 	private String cgyearNo;

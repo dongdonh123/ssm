@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ssm.br.vo.NonprogramVO;
 import ssm.cd.vo.CareerdesignVO;
+import ssm.cd.vo.ValuesettingVO;
 import ssm.cg.vo.OnlineapplicationVO;
 import ssm.cm.dao.FamilyLetterDao;
 import ssm.cm.vo.FamilyLetterVO;
@@ -31,21 +32,6 @@ public class EportfolioServiceImpl implements EportfolioService {
 	}
 
 	@Override
-	public int teacherlogin(TmemberVO tvo) {
-		// TODO Auto-generated method stub
-		int result =0;
-		result =eportfoliodao.teacherlogin(tvo);
-		return result;
-	}
-
-	@Override
-	public TmemberVO a(TmemberVO tvo) {
-		TmemberVO tvo_ =null;
-		tvo_=eportfoliodao.a(tvo);
-		return tvo_;
-	}
-
-	@Override
 	public List<CareerdesignVO> cdlist(SmemberVO svo) {
 		List<CareerdesignVO> cdlist = null;
 		cdlist =eportfoliodao.cdlist(svo);
@@ -66,6 +52,13 @@ public class EportfolioServiceImpl implements EportfolioService {
 		return cglist;
 	}
 
+	@Override
+	public ValuesettingVO vslist(SmemberVO svo) {
+		ValuesettingVO vslist = null;
+		vslist =eportfoliodao.vslist(svo);
+		return vslist;
+	}
+	
 	@Override
 	public SmemberVO mylist(SmemberVO svo) {
 		SmemberVO mylist =eportfoliodao.mylist(svo);

@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>    
    
 <%
+	//페이징에대한 설정
 	request.setCharacterEncoding("EUC-KR");
 	NoticeBoardVO searchdata =(NoticeBoardVO)request.getAttribute("Searchdata");
 	int pageCount = 0;
@@ -41,15 +42,6 @@
 		
 		/*검색 버튼 클릭 시 처리 이벤트*/
 		$("#searchBut").click(function(){
-			
-			goPage(1);
-		});
-		
-		$("#nbinsertbutton").click(function(){
-			$(location).attr('href',"/noticeboard/nbwirteform.ssm");
-		});
-		
-		function goPage(){
 			if($("#search").val()=="all"){
 				$("#keyword").val("");
 			}
@@ -59,7 +51,12 @@
 				"action":"/noticeboard/nblist.ssm"
 			});
 			$("#f_search").submit();
-		}
+		});
+		
+		//글입력 버튼눌렀을때 이벤트
+		$("#nbinsertbutton").click(function(){
+			$(location).attr('href',"/noticeboard/nbwirteform.ssm");
+		});
 		
 		/*제목 클릭시 상세 페이지 이동을 위한 처리 이벤트*/
 		$(".nbDetail").click(function(){
@@ -69,6 +66,7 @@
 			.submit();
 		});
 		
+		//페이지버튼눌렀을때 이벤트
 		$(".pageNobut").click(function(){
 			var pageNo = $(this).val();
 			$("#pageNo").val(pageNo);
@@ -77,6 +75,7 @@
 			.submit();
 		});
 		
+		//키워드검색시 검색한내용 유지하게하는 설정
 		var keyword2 = "<%=searchdata.getKeyword()%>";
 		var search2 = "<%=searchdata.getSearch()%>";
 		if(keyword2 != "null" && keyword2 != ""){ // 키워드 데이터가 있을때 실행
@@ -84,7 +83,7 @@
 			$("#search").val(search2);
 		}
 		
-		/* 학생번호가있으면 글쓰기버튼을 숨겨라 (세션)
+		/* 학생번호가있으면 글쓰기버튼을 숨겨라 (세션사용하기)
 		var ssno = "S7180001"; */
 		if(ssno != "null" && ssno != ""){
 			$("#nbinsertbutton").hide();

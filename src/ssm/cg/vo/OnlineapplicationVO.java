@@ -1,6 +1,6 @@
 package ssm.cg.vo;
 
-import ssm.cm.vo.CommonVO;
+import ssm.common.vo.CommonVO;
 import ssm.mi.vo.TmemberVO;
 
 public class OnlineapplicationVO extends CommonVO{

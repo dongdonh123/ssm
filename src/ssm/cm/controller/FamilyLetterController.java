@@ -29,14 +29,13 @@ public class FamilyLetterController {
 	@Autowired
 	private FamilyLetterService familyletterservice;
 	
+	//글 목록 조회
 	@RequestMapping(value="/fllist")
 	public String nblist(@ModelAttribute FamilyLetterVO fvo, Model model){
 		
-		System.out.println("fvo.getSearch()>>>: "+ fvo.getSearch());
-		System.out.println("fvo.getKeyword()>>>: "+ fvo.getKeyword());
-		
 		int listSize = 10; 
 		
+		//초기페이지 설정
 		if(fvo.getListSize()==null){
 			fvo.setListSize(listSize+"");
 			fvo.setPageNo("1");

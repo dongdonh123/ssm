@@ -2,7 +2,7 @@ package ssm.mi.vo;
 
 import ssm.cd.vo.BasicinpormationVO;
 import ssm.cd.vo.ValuesettingVO;
-import ssm.cm.vo.CommonVO;
+import ssm.common.vo.CommonVO;
 
 public class SmemberVO extends CommonVO {
 
@@ -24,8 +24,6 @@ public class SmemberVO extends CommonVO {
     private String ssUpdatedate;
     private String ssAdmindate;
     private FmmemberVO fmMembervo;
-	private JrmemberVO jrMembervo;
-	private SrmemberVO srMembervo;
 	private BasicinpormationVO basicInpormationvo;
 	private ValuesettingVO valueSettingvo;
    
@@ -136,18 +134,6 @@ public class SmemberVO extends CommonVO {
 	}
 	public void setFmMembervo(FmmemberVO fmMembervo) {
 		this.fmMembervo = fmMembervo;
-	}
-	public JrmemberVO getJrMembervo() {
-		return jrMembervo;
-	}
-	public void setJrMembervo(JrmemberVO jrMembervo) {
-		this.jrMembervo = jrMembervo;
-	}
-	public SrmemberVO getSrMembervo() {
-		return srMembervo;
-	}
-	public void setSrMembervo(SrmemberVO srMembervo) {
-		this.srMembervo = srMembervo;
 	}
 	public BasicinpormationVO getBasicInpormationvo() {
 		return basicInpormationvo;

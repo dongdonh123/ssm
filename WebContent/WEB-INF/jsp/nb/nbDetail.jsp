@@ -22,6 +22,7 @@
 				butChk=1;
 			});
 			
+			//취소버튼
 			$("#cancelBut").click(function(){
 				$("#pwdChk").hide();
 				$("#buttons").show();
@@ -44,7 +45,6 @@
 		});//end of 펑션
 		
 		/* 비밀번호 확인 버튼 클릭시 실질적인 처리 함수*/
-		
 		function pwdConfirm(){
 			
 				$.ajax({

@@ -8,54 +8,30 @@
 
 <mapper namespace="ssm.cm.dao.SchedulNoticeDao">
 	
-	<resultMap type="ssm.mi.vo.TmemberVO" id="TmemberVO">
-	    <result property="ttNo" 			column="TT_NO"/>
-	    <result property="ttName" 			column="TT_NAME"/>
-	    <result property="ttPw" 			column="TT_PW"/>
-	</resultMap>
 	
 	<resultMap type="ssm.cm.vo.SchedulNoticeVO" id="snVO">
 	    <result property="snNo" 			column="SN_NO"/>
 	    <result property="snTitle" 			column="SN_TITLE"/>
-	    <result property="ttNo" 			column="TT_NO"/>
 	    <result property="snStartdate" 		column="SN_STARTDATE"/>
 	    <result property="snEnddate" 		column="SN_ENDDATE"/>
 	    <result property="snInsertdate" 	column="SN_INSERTDATE"/>
 	    <result property="snUpdatedate" 	column="SN_UPDATEDATE"/>
 	    <result property="snDeleteyn" 		column="SN_DELETEYN"/>
-	    <result property="snFile" 			column="SN_FILE"/>
-	    <result property="pageNo"		    column="PAGENO"/>
-		<result property="listSize"		    column=""/>
-		<result property="totalCount"		column="TOTALCOUNT"/>
-	    <collection property="tMembervo" 	resultMap="TmemberVO"/>
 	</resultMap>
 	
-	<select id ="snlist" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
-		SELECT 
-		*
-		FROM
-			(SELECT 
-					A.SN_NO, 
-					A.SN_TITLE, 
-					A.SN_INSERTDATE,
-					TO_CHAR(A.SN_STARTDATE, 'YYYY-MM-DD') AS SN_STARTDATE,
-					TO_CHAR(A.SN_ENDDATE, 'YYYY-MM-DD') AS SN_ENDDATE,
-					CEIL(ROW_NUMBER() OVER(ORDER BY A.SN_NO DESC)/#{listSize}) PAGENO,
-	     			COUNT(A.SN_NO) OVER() AS TOTALCOUNT 
-			FROM SCHEDULE_NOTICE A
-			WHERE SN_DELETEYN ='Y'
-			<trim prefix="AND" >
-			<if test="search=='snTitle' ">
-				<![CDATA[SN_TITLE LIKE '%'|| #{keyword} ||'%']]>
-			</if>
-			<if test="search=='snsearchDate'">
-				<![CDATA[SN_CONTENTS LIKE '%'|| #{keyword} ||'%']]>
-			</if>
-			</trim>
-			) ABC
-				WHERE ABC.PAGENO = #{pageNo}
-				ORDER BY SN_NO DESC
+	
+	<select id="snlistajax" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
+		SELECT
+				A.SN_NO, 
+				A.SN_TITLE, 
+				TO_CHAR(A.SN_STARTDATE, 'YYYY-MM-DD') AS SN_STARTDATE,
+				TO_CHAR(A.SN_ENDDATE, 'YYYY-MM-DD') AS SN_ENDDATE,
+				A.SN_FILE 
+		FROM SCHEDULE_NOTICE A
+		WHERE SN_DELETEYN='Y'
+		ORDER BY A.SN_NO
 	</select>
+	
 	
 	<select id="snChaebun" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
 		
@@ -65,23 +41,13 @@
 		
 	</select>
 	
+	
 	<insert id="snInsert" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
 		INSERT INTO SCHEDULE_NOTICE(SN_NO,SN_TITLE,SN_STARTDATE,SN_ENDDATE,SN_INSERTDATE,SN_DELETEYN)
 		VALUES(#{snNo},#{snTitle},#{snStartdate},#{snEnddate},SYSDATE,'Y')
 	
 	</insert>
-	
-	
-	
-	<select id="pwdConfirm" parameterType="map" resultType="int">
-		SELECT NVL((SELECT 1 
-            FROM SCHEDULE_NOTICE A, T_MEMBER B 
-            WHERE A.TT_NO = B.TT_NO
-            AND A.SN_NO = #{param1.snNo}
-            AND B.TT_PW = #{param2}),0)as result
-		FROM dual
-	</select>
 	
 	<update id="snUpdate" parameterType="ssm.cm.vo.SchedulNoticeVO">
 	
@@ -103,16 +69,5 @@
 		AND  					 SN_DELETEYN = 'Y'
 	</update>
 	
-	<select id="snlistajax" parameterType="ssm.cm.vo.SchedulNoticeVO" resultMap="snVO">
-		SELECT
-				A.SN_NO, 
-				A.SN_TITLE, 
-				TO_CHAR(A.SN_STARTDATE, 'YYYY-MM-DD') AS SN_STARTDATE,
-				TO_CHAR(A.SN_ENDDATE, 'YYYY-MM-DD') AS SN_ENDDATE,
-				A.SN_FILE 
-		FROM SCHEDULE_NOTICE A
-		WHERE SN_DELETEYN='Y'
-		ORDER BY A.SN_NO
-	</select>
 	
 </mapper>

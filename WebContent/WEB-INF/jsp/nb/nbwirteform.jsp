@@ -11,6 +11,7 @@
 	    
 	    $(document).ready(function(){
 	    
+	    	
 	    	var oEditors = [];
 	    	nhn.husky.EZCreator.createInIFrame({
 	    	 oAppRef: oEditors,
@@ -25,6 +26,7 @@
 	    		
 	    		$("#nbwirteform").attr('action','/noticeboard/nbwirte.ssm').submit();
 	    	});
+	    	
 	    	
 	    	$('.A').keydown(function(){
 	            cut_28(this);

@@ -42,67 +42,24 @@ public class SchedulNoticeController {
 	@Autowired
 	private SchedulNoticeService schedulnoticeservice;
 	
+	//학교일정게시판으로이동
 	@RequestMapping(value="sncalendar")
 	public String sncalendar(){
-		System.out.println("");
-
+		System.out.println("학교일정게시판으로 이동");
 		return "sn/sncalendar";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value="snwirteajax")
-//	public String snwirteajax(@ModelAttribute SchedulNoticeVO svo, HttpServletRequest req){
-//		System.out.println("ss >>> "+req.getContentType());
-//		
-////		System.out.println(">>>:" + new String());
-//		try {
-////			req.setCharacterEncoding("EUC-KR");
-//			System.out.println(">>> getCharacterEncoding : " + req.getCharacterEncoding());
-//			System.out.println(">>> snTitle : " + req.getParameter("snTitle"));
-//			
-//			
-//		}catch(Exception e){
-//			System.out.println("error > "+e.getMessage());
-//			e.printStackTrace();
-//		}
-//		
-//		
-//		String sResult ="";
-//		
-//		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
-//		String no =svo_.getSnNo();
-//		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
-//		svo.setTtNo("T8180001");
-//		
-//		String snTitle = req.getParameter("snTitle");
-////		new String(ko.getBytes("UTF-8"),"8859_1")
-//		String snStartdate = req.getParameter("snStartdate");
-//		String snEnddate = req.getParameter("snEnddate");
-//		
-//		svo.setSnTitle(snTitle);
-//		svo.setSnStartdate(snStartdate);
-//		svo.setSnEnddate(snEnddate);
-//		
-//		
-//		int result = schedulnoticeservice.snInsert(svo);
-//		boolean bResult = result > 0;
-//		
-//		if(bResult) sResult="OK";
-//			
-//		return sResult;
-//
-//	
-//	}
-	
+	//리스트 불러오는거(select)
 	@ResponseBody
 	@RequestMapping(value="snlistajax")
 	public JSONArray snlistajax(@ModelAttribute SchedulNoticeVO svo){
 		
-		
+		//데이터 xml에서 가져오고
 		List<SchedulNoticeVO> snlist = schedulnoticeservice.snlistajax();
 		
 		JSONArray jArr = new JSONArray();
 
+		//JSONArray에  list를 담는다
 		for(int i = 0; i < snlist.size(); i++){
 			JSONObject jObj =  new JSONObject();
 			
@@ -119,31 +76,29 @@ public class SchedulNoticeController {
 				dd_ ="0"+dd_;
 			}
 			end = yy+"-"+mm+"-"+dd_;
-			System.out.println("완성된 end>>> : " +end);
-			
 			jObj.put("end",end);
 			jObj.put("no", snlist.get(i).getSnNo());
 			
 			jArr.add(jObj);
 		}
 		
-		
-		for(int i = 0; i < jArr.size(); i++){
+		//출력해보는거
+		/*for(int i = 0; i < jArr.size(); i++){
 			
 			System.out.println("(log)JARR : "+jArr.get(i));
-		}
+		}*/
 
 		
         return jArr;
 	}
 	
+	//데이터 입력(insert)
 	@RequestMapping(value="snInsert")
 	public String snInsert(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("인서트 왔당 ㅎㅎ");
-		
 		
 		String sResult ="";
 		
+		//채번감
 		SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
 		String no =svo_.getSnNo();
 		svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
@@ -165,59 +120,11 @@ public class SchedulNoticeController {
 	
 	}
 	
-//	@RequestMapping(value="snInsert")
-//	public String snInsert(@ModelAttribute SchedulNoticeVO svo, HttpServletRequest req){
-//		System.out.println("인서트 왔당 ㅎㅎ");
-//		String url="";
-//		String uploadPath=req.getSession().getServletContext().getRealPath("/upload");
-//		String daFileName="";
-//		int result=0;
-//		boolean bval= false;
-//		int size=10*1024*1024;
-//		try{
-//			MultipartRequest multi = new MultipartRequest(req,uploadPath,size,"EUC-KR",new DefaultFileRenamePolicy());
-//			
-//			Enumeration files=multi.getFileNames();
-//			String file=(String)files.nextElement();
-//			String fileName=multi.getFilesystemName(file);
-//			daFileName="../"+"upload"+"/"+fileName;
-//			
-//			String snTitle=multi.getParameter("snTitle");
-//			String snStartdate=multi.getParameter("snStartdate");
-//			String snEnddate=multi.getParameter("snEnddate");
-//			
-//			System.out.println("받아온 제목>>>:"+ snTitle);
-//			System.out.println("받아온 snStartdate>>>:"+ snStartdate);
-//			System.out.println("받아온snEnddate>>>:"+ snEnddate);
-//			System.out.println("받아온snfile>>>:"+ daFileName);
-//			svo.setSnTitle(snTitle);
-//			svo.setSnStartdate(snStartdate);
-//			svo.setSnEnddate(snEnddate);
-//			svo.setSnFile(daFileName);
-//			
-//			SchedulNoticeVO svo_ =schedulnoticeservice.snChaebun(); 
-//			String no =svo_.getSnNo();
-//			svo.setSnNo(SchedulNoticeChaebun.snchaebun(no));
-//			System.out.println(svo.getSnNo());
-//			result=schedulnoticeservice.snInsert(svo);
-//			System.out.println("result>>>:"+ result);	
-//		}catch(Exception e){
-//			System.out.println("에러가>>>:"+ e);
-//		}
-//		boolean bResult = result > 0;
-//		if(bResult) url="/schedulnotice/sncalendar.ssm";
-//		return "redirect:"+url;
-//	}
-	
+	//글 수정
 	@RequestMapping(value="snUpdate")
 	public String snUpdate(@ModelAttribute SchedulNoticeVO svo){
 		System.out.println("인서트 왔당 ㅎㅎ");
 		String url = "";
-		
-		System.out.println("svo.getSnNo()>>>:" + svo.getSnNo());		
-		System.out.println("svo.getSnTitle();>>>:" + svo.getSnTitle());		
-		System.out.println("svo.getSnEnddate()>>>:" + svo.getSnEnddate());		
-		System.out.println("svo.getSnStartdate()>>>:" + svo.getSnStartdate());		
 		
 		int result = schedulnoticeservice.snUpdate(svo);
 		
@@ -227,13 +134,12 @@ public class SchedulNoticeController {
 		if(bResult) url="/schedulnotice/sncalendar.ssm";
 			
 		return "redirect:/schedulnotice/sncalendar.ssm" ;
-
 	
 	}
 	
+	//글 삭제
 	@RequestMapping(value="snDelete")
 	public String snDelete(@ModelAttribute SchedulNoticeVO svo){
-		System.out.println("인서트 왔당 ㅎㅎ");
 		String url = "";
 		
 		System.out.println("svo.getSnNo()>>>:" + svo.getSnNo());		
