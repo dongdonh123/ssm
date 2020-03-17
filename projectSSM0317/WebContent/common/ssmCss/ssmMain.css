@@ -1,0 +1,196 @@
+/* ============================ 배경색 */
+
+#goLink li, #noticeBox, #goVideo, 
+#nonSubject, #school, #exLink {
+	background-color: #353866;
+}
+
+#loginBox a {
+	background-color: #181842;
+}
+
+#loginBox {
+	background-color: #353866;
+}
+
+/* 배경색 ============================*/
+
+section {
+	height: 610px;
+	color : white;
+}
+
+
+
+/* subWrap_1 (왼쪽) */
+section>.subWrap_1 {
+	float: left;
+	width: 330px;
+	height: 600px;
+}
+
+/* 로그인 박스  div */
+.subWrap_1>#loginBox {
+	float: left;
+    width: 300px;
+    height: 325px;
+    padding: 5px;
+    margin: 0px 10px 10px;
+}
+
+/*로그인 사용자 선택 리스트(ul 가운데 정렬) */
+#loginForm>.list {
+	margin: 10px auto;
+}
+
+/* 사용자 선택 버튼 */
+.list li .imgBtn {
+	border : 1px;
+	padding : 3px;
+	padding-bottom: 15px;
+	background : url("include/img/sick.png");
+}
+
+/*로그인 사용자 선택 리스트(li) */
+#loginForm>.list li {
+   	float: left;
+    text-align: center;
+    font-size: 10px;
+    width: 70px;
+    height: 94px;
+    margin: 10px;
+}
+
+/* 로그인 입력창 */
+#loginForm>#loginId, #loginPw {
+	width: 250px;
+    height: 42px;
+    margin: 5px 5px;
+}
+
+/* 로그인 버튼 */
+#loginForm> #loginBtn{
+	color: white;
+	text-align: center;
+	margin: 5px;
+	display: inline-block;
+	padding: 18px 0px;
+	width: 256px;
+	font-weight: bold;
+}
+
+/* 공지 박스 */
+.subWrap_1>#noticeBox {
+	clear: both;
+	width: 300px;
+	height: 245px;
+	padding: 5px;
+	margin: 5px 10px;
+}
+
+
+
+/* subWrap_2 (중앙) */
+section>.subWrap_2 {
+	float: left;
+	width: 600px;
+	height: 540px;
+}
+
+/* 중앙 메인이미지 */
+.subWrap_2>#mainImg {
+	width: 590px;
+	height: 520px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+/* 중앙 하단 외부 링크 네비게이션 */
+nav>.navWrap {
+	width: 600px;
+	height: 60px;
+}
+
+/* 하단링크 li 첫번째 요소 오른쪽 마진 제거 */
+.etcList li:nth-last-child(1){
+	margin-right : 0;	
+}
+
+/* 하단 링크 li 마지막 요소 왼쪽 마진 제거 */
+.etcList li:nth-child(1) {
+	margin-left : 0;	
+}
+
+/* 하단 링크 ul 중앙정렬 */
+#outLink>.etcList {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* 하단 링크 li */
+.etcList li {
+	float: left;
+	width: 142.5px;
+	height: 60px;
+	margin: 0px 5px;
+}
+
+/* 하단 링크이미지 */
+.etcList img {
+	width : 142.5px;
+	height : 60px;
+}
+
+
+
+/* subWrap_3 (오른쪽) */
+section>.subWrap_3 {
+	float: right;
+	width: 330px;
+	height: 600px;
+}
+
+/* 학교 공지 */
+.subWrap_3>#schoolLink {
+	margin: 5px;
+}
+
+/* 학교홈페이지 링크, 외부링크 div */
+#schoolLink #exLink {
+	float: left;
+	height: 135px;
+	width: 150px;
+	margin: 0px 5px;
+}
+
+/* 학교링크 */
+#schoolLink #school {
+	float: left;
+	height: 135px;
+	width: 150px;
+	margin-left: 5px;
+}
+
+/* 영상 */
+#schoolLink>#goVideo {
+	clear: both;
+	float: left;
+	width: 310px;
+	height: 180px;
+	margin: 10px 5px;
+}
+
+/* 영상 video 태그 */
+#goVideo vedio {
+	width : 3100px;
+	height : 180px;
+}
+
+/* 비교과 프로그램 */
+.subWrap_3>#nonSubject {
+    width: 300px;
+    height: 255px;
+    padding: 5px;
+    margin: 0px 10px 10px;
+}

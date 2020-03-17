@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="EUC-KR"?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ssm.mi.dao.AdminDao">
+	<resultMap type="ssm.mi.vo.TMemberVO" id="tMember">
+		<result property="ttNo" column="TT_NO" />
+		<result property="ttName" column="TT_NAME" />
+		<result property="ttBirth" column="TT_BIRTH"/>
+		<result property="ttGender" column="TT_GENDER" />
+		<result property="ttAuthority" column="TT_AUTHORITY" />
+		<result property="sjtCode" column="SJTCODE" />
+		<result property="ttId" column="TT_ID" />
+		<result property="ttPw" column="TT_PW" />
+		<result property="ttTransferyear" column="TT_TRANSFERYEAR" />
+		<result property="ttPn" column="TT_PN" />
+		<result property="ttEmail" column="TT_EMAIL" />
+		<result property="ttImage" column="TT_IMAGE" />
+		<result property="ttGrade" column="TT_GRADE" />
+		<result property="ttClass" column="TT_CLASS" />
+		<result property="ttDeleteyn" column="TT_DELETEYN" />
+		<result property="ttInsertdate" column="TT_INSERTDATE" />
+		<result property="ttUpdatedate" column="TT_UPDATEDATE" />
+		<result property="ttAdmindate" column="TT_ADMINDATE" />
+
+	</resultMap>
+
+	<select id ="listTMemberAll" resultMap="tMember">
+		/* Mapper - listTMemberAll*/	
+		SELECT A.TT_NO, A.TT_NAME, A.TT_BIRTH
+       		 , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_GENDER=B.CODE) AS TT_GENDER
+       		 , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_AUTHORITY=B.CODE) AS TT_AUTHORITY
+       		 , (SELECT B.NAME FROM CODE_TABLE B WHERE A.SJTCODE=B.CODE) AS SJTCODE
+            , A.TT_ID, A.TT_PW, A.TT_TRANSFERYEAR, A.TT_PN
+            ,(SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_GRADE=B.CODE) AS TT_GRADE
+            , A.TT_CLASS
+			,TT_EMAIL	,TT_IMAGE	,TT_DELETEYN,TT_INSERTDATE	,TT_UPDATEDATE, TT_ADMINDATE
+			FROM T_MEMBER A
+			WHERE TT_AUTHORITY IN ('2','3')
+			AND TT_DELETEYN='Y'
+			ORDER BY 1
+	</select>
+	
+	<select id ="listTMemberN" resultMap="tMember">
+		/* Mapper - listTMember*/	
+			SELECT TT_NO, TT_NAME, TT_BIRTH, TT_GENDER, TT_AUTHORITY, SJTCODE, TT_ID, TT_PW, TT_TRANSFERYEAR, TT_PN	
+			,TT_EMAIL	,TT_IMAGE	,TT_DELETEYN	,TT_ADMINDATE
+			FROM T_MEMBER
+			WHERE TT_AUTHORITY = 'N'
+			ORDER BY 1
+	</select>
+	
+	<select id ="listTMemberY" resultMap="tMember">
+		/* Mapper - listTMember*/	
+		SELECT A.TT_NO, A.TT_NAME, A.TT_BIRTH
+        , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_GENDER=B.CODE) AS TT_GENDER
+        , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_AUTHORITY=B.CODE) AS TT_AUTHORITY
+        , (SELECT B.NAME FROM CODE_TABLE B WHERE A.SJTCODE=B.CODE) AS SJTCODE
+            , A.TT_ID, A.TT_PW, A.TT_TRANSFERYEAR, A.TT_PN
+            , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_GRADE=B.CODE) AS TT_GRADE
+            , A.TT_CLASS
+			,TT_EMAIL	,TT_IMAGE	,TT_DELETEYN,TT_INSERTDATE	,TT_UPDATEDATE, TT_ADMINDATE
+			FROM T_MEMBER A
+			WHERE TT_AUTHORITY = 'Y'
+			ORDER BY 1
+	</select>
+	
+	<!-- 채번 -->
+	<select id="selectChaebun" parameterType="String" resultMap="tMember">
+	 /* Mapper - selectChaebun */
+		 SELECT 
+			NVL(MAX(SUBSTR(TT_NO,-4)),0)+1 AS TT_NO 
+			FROM T_MEMBER
+			WHERE SUBSTR(TT_NO,2,3) = #{ttNo,jdbcType=VARCHAR}
+	</select>
+	
+	<insert id="tMemberInsert" parameterType="ssm.mi.vo.TMemberVO">
+		/*Mapper - tMemberInsert*/
+			INSERT INTO T_MEMBER (TT_NO, TT_NAME, TT_BIRTH, TT_GENDER,TT_PN, TT_TRANSFERYEAR,TT_ADMINDATE,TT_AUTHORITY)
+			VALUES (#{ttNo,jdbcType=VARCHAR}
+			,#{ttName,jdbcType=VARCHAR} 
+			,#{ttBirth,jdbcType=VARCHAR}
+			,#{ttGender,jdbcType=VARCHAR}
+			,#{ttPn,jdbcType=VARCHAR}
+			,#{ttTransferyear,jdbcType=VARCHAR}
+			,SYSDATE,'N')
+	</insert>
+
+	
+	<update id="tMemberYUpdate" parameterType="ssm.mi.vo.TMemberVO">
+		/*Mapper - "updateTMember"*/
+		UPDATE T_MEMBER
+		SET TT_AUTHORITY = #{ttAuthority}
+			,TT_ADMINDATE = SYSDATE
+		WHERE TT_NO = #{ttNo}
+		AND TT_DELETEYN = 'Y'
+	</update>
+	<select id="tMemberDetail" parameterType="ssm.mi.vo.TMemberVO" resultMap="tMember">
+		/* Mapper - tMemberDetail*/	
+		SELECT A.TT_NO, A.TT_NAME, A.TT_BIRTH
+       		 , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_GENDER=B.CODE) AS TT_GENDER
+       		 , (SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_AUTHORITY=B.CODE) AS TT_AUTHORITY
+       		 , (SELECT B.NAME FROM CODE_TABLE B WHERE A.SJTCODE=B.CODE) AS SJTCODE
+            , A.TT_ID, A.TT_PW, A.TT_TRANSFERYEAR, A.TT_PN
+            ,(SELECT B.NAME FROM CODE_TABLE B WHERE A.TT_GRADE=B.CODE) AS TT_GRADE
+            , A.TT_CLASS
+			,TT_EMAIL	,TT_IMAGE	,TT_DELETEYN,TT_INSERTDATE	,TT_UPDATEDATE, TT_ADMINDATE
+			FROM T_MEMBER A
+			WHERE A.TT_NO = #{ttNo}
+	</select>
+
+	<update id="ttUpdate" parameterType="ssm.mi.vo.TMemberVO">
+		/*Mapper - ttDelete*/
+		UPDATE T_MEMBER
+		SET 
+
+		WHERE TT_NO =#{ttNo}
+		AND TT_DELETEYN = 'Y'
+	</update>
+	
+	<update id="ttDelete" parameterType="ssm.mi.vo.TMemberVO">
+		/*Mapper - ttDelete*/
+		UPDATE T_MEMBER
+		SET 
+			TT_NAME=#{ttName,jdbcType=VARCHAR}
+			, TT_BIRTH=#{ttBirth,jdbcType=VARCHAR}
+			, TT_GENDER=#{ttGender,jdbcType=VARCHAR}
+			, TT_AUTHORITY=#{ttAuthority,jdbcType=VARCHAR}
+			, SJTCODE=#{sjtCode,jdbcType=VARCHAR}
+			, TT_PW=#{ttPw,jdbcType=VARCHAR}
+			, TT_TRANSFERYEAR=#{ttTransferyear,jdbcType=VARCHAR}
+			, TT_PN	=#{ttPn,jdbcType=VARCHAR}
+			,TT_EMAIL	=#{ttEmail,jdbcType=VARCHAR}
+			,TT_IMAGE	=#{ttImage,jdbcType=VARCHAR}
+			,TT_UPDATEDATE = SYSDATE
+		WHERE TT_NO =#{ttNo,jdbcType=VARCHAR}
+		AND TT_DELETEYN = 'Y'
+	</update>
+</mapper>

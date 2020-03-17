@@ -1,0 +1,31 @@
+package ssm.mi.dao;
+
+import java.util.List;
+
+import ssm.mi.vo.SMemberGrVO;
+import ssm.mi.vo.SMemberVO;
+import ssm.mi.vo.TMemberVO;
+
+public interface SMemberDao {
+
+	SMemberVO checkInfo(SMemberVO smvo);
+	
+	SMemberGrVO checkFM_Member(SMemberVO svo);
+	
+	SMemberGrVO checkJR_Member(SMemberVO svo);
+	
+	SMemberGrVO checkSR_Member(SMemberVO svo);
+	
+	
+	int insertInfo(SMemberVO smvo);
+
+	TMemberVO teacherInfo(SMemberGrVO sgvo);
+
+	int insertGr(SMemberGrVO sgvo);
+
+	int chaebunGr(SMemberGrVO sgvo);
+
+	List<SMemberVO> smListAll();
+
+	SMemberVO ajaxIdCheck(SMemberVO svo);
+}
