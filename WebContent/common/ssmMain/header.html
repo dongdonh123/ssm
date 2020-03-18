@@ -1,0 +1,26 @@
+<%String sessionAU = BabySession.getSessionAU(request);
+	System.out.println("sessionAU>>>:"+ sessionAU);
+	if(sessionAU == null){
+		sessionAU = "";
+	}
+%>
+
+
+<p style="text-align : center; margin : 15px 5px ;">
+	<span>
+		<a href="../main_1.jsp" id="headerTit">비트고등학교</a>
+	</span>
+</p>
+<hr>
+<nav>
+	<div class="wrapMenu">
+		<ul class="menuList">
+			<li><a href="javascript:goCareerDesign()">진로설계</a></li>
+			<li><a href="javascript:goCounseling()">상담창구</a></li>
+			<li><a href="javascript:goBigyogwaRecommend()">비교과추천</a></li>
+			<li><a href="javascript:goEportfolio()">E-포트폴리오</a></li>
+			<li><a href="javascript:goCommunity()">커뮤니티</a></li>
+		</ul>
+	</div>
+</nav>
+<hr>

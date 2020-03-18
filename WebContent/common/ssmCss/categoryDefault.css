@@ -1,0 +1,57 @@
+nav>.wrapSide {
+	float: left;
+}
+#sideLink {
+	width: 180px;
+    height: 590px;
+    background-color: #181842;
+    margin: 0px 10px 10px;
+    padding: 5px;
+}
+
+h2 {
+	margin : 10px;	
+}
+
+#userImg img{
+	width : 140px;
+	height : 160px;
+	margin-top : 10px;
+	display :inline-block;
+}
+.menuTit {
+	width: 190px;
+    margin: 0px 10px 10px;
+    padding: 10px 0px;
+    background-color: red;
+}
+
+.userLink, .sideList{
+	display : table;
+	margin : 5px;	
+}
+
+#sideLink>.sideList li {
+	font-size : 3px;
+	width: 160px;
+    height: 30px;
+    background-color: aliceblue;
+    margin: 5px 0px;
+    padding: 5px;
+}
+
+
+#sideLink>.sideList .comm {
+	background-color : grey;
+}
+
+/* section {
+	float : left;
+	height : 610px;
+} */
+section>.container {
+	position : absolute;
+	width: 1000px;
+    height: 560px;
+    padding : 20px;
+}
